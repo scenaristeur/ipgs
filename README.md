@@ -1,4 +1,7 @@
 # IPGS
+
+InterPlanetary Graph System based on Solid & Ipfs
+
 - https://github.com/scenaristeur/ipgs
 - https://ipfs.io
 - https://js.ipfs.io/
@@ -6,7 +9,7 @@
 - https://github.com/ipfs-shipyard/ipfs-desktop
 
 
-
+------------------------------------
 # Porfolio WebApp
 - all data are stored on solid user's POD : https://github.com/solid/solid-spec/
 - Portfolio webapp hosted on github gh-pages : https://scenaristeur.github.io/portfolio/

@@ -1,6 +1,8 @@
 <template>
   <b-container fluid>
     Storage : {{ storage}}
+    <br>https://spoggy-test9.solidcommunity.net/public/table/workspaces/4e5f404a-a61a-4432-b4c7-36c79c6e10f2.ttl
+    <br>https://spoggy-test9.solidcommunity.net/contacts/5d5889f7-d439-448a-bfa7-709249f0576c.jsonld
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
@@ -14,8 +16,12 @@
 <script>
 // modele https://github.com/scenaristeur/solid-vue-panes/blob/master/src/components/semapps/SemappsNetwork.vue
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
-
 import { mapState } from 'vuex';
+//import { v4 as uuidv4 } from 'uuid';
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
+const myWorker = new Worker("workers/worker.js");
 
 export default {
   name: 'NetworkView',
@@ -52,6 +58,62 @@ export default {
           navigationButtons: true,
         },
       }
+    }
+  },
+  created(){
+    if (this.$route.query.url != undefined ){
+      this.url = this.$route.query.url
+      console.info("URL1",this.url)
+      this.getData({url:this.url})
+    }
+  },
+  methods: {
+    async getData(source) {
+
+      if (window.Worker) {
+
+
+        if(source.url.endsWith('/')){
+          let folder = await fc.readFolder(source.url)
+          console.log(source.group, folder)
+
+          folder.folders.forEach((fo) => {
+            myWorker.postMessage({nodes: this.nodes, nouveau: fo});
+            console.log(fo)
+          });
+          folder.files.forEach((fi) => {
+            myWorker.postMessage({nodes: this.nodes, nouveau: fi});
+            console.log(fi)
+          });
+
+
+          console.log('Message posted to worker');
+
+
+        }else{
+          let file = await fc.readFile(source.url)
+          console.log(source.group,file)
+        }
+
+
+        myWorker.onmessage = function(e) {
+          console.log('result',e)
+          this.nodes = e.data.nodes
+          console.log('Message received from worker');
+        }
+      } else {
+        alert('Your browser doesn\'t support web workers.')
+      }
+
+
+
+
+    },
+
+  },
+  watch:{
+    async storage(){
+      this.getData({url: this.storage, group:"storage"})
     }
   },
   computed: mapState({
