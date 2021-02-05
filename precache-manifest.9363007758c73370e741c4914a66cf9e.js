@@ -32,12 +32,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/solid.png"
   },
   {
-    "revision": "63a320a989db0d7e242b",
+    "revision": "a23270256d20e9883725",
     "url": "/ipgs/css/app.4eefdf34.css"
   },
   {
-    "revision": "61c9a91fd40a4561e55e",
-    "url": "/ipgs/css/chunk-18191773.6b103c8a.css"
+    "revision": "e0c33a92dd0e090d40e5",
+    "url": "/ipgs/css/chunk-40dd353a.6b103c8a.css"
   },
   {
     "revision": "0f6feadef1b58127d1d1",
@@ -96,7 +96,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "a079e87a4bb6906386ef3eac6a0f62b3",
+    "revision": "2732e3a21e41a3ecaf3a70bf1116badd",
     "url": "/ipgs/index.html"
   },
   {
@@ -104,24 +104,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/about.2b074ec7.js"
   },
   {
-    "revision": "63a320a989db0d7e242b",
-    "url": "/ipgs/js/app.465fa8a5.js"
-  },
-  {
-    "revision": "61c9a91fd40a4561e55e",
-    "url": "/ipgs/js/chunk-18191773.fca30d3a.js"
+    "revision": "a23270256d20e9883725",
+    "url": "/ipgs/js/app.480c9532.js"
   },
   {
     "revision": "6eac4f74c7200cbf49bd",
     "url": "/ipgs/js/chunk-2d0a3369.89afb4b2.js"
   },
   {
-    "revision": "f9d035ddc2e7662beb08",
-    "url": "/ipgs/js/chunk-2d226c5a.9f0e4ac3.js"
+    "revision": "056befd6010740ff2b27",
+    "url": "/ipgs/js/chunk-2d226c5a.8de03f6f.js"
   },
   {
-    "revision": "2a13e7a3d42c7f63820b",
-    "url": "/ipgs/js/chunk-bdccffe8.2687cff7.js"
+    "revision": "e0c33a92dd0e090d40e5",
+    "url": "/ipgs/js/chunk-40dd353a.6480ef71.js"
+  },
+  {
+    "revision": "8fac4b4c424eae540ff4",
+    "url": "/ipgs/js/chunk-bdccffe8.da9600c5.js"
   },
   {
     "revision": "0f6feadef1b58127d1d1",
