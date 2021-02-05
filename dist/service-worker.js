@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ipgs/precache-manifest.9363007758c73370e741c4914a66cf9e.js"
+  "/ipgs/precache-manifest.2493759465cfb468f48d6d8ac7a0b2f8.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "Ipgs"});

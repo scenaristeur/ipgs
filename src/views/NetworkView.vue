@@ -1,11 +1,12 @@
 <template>
   <b-container fluid>
-
+    <b-button @click="getStorage">{{ storage}}</b-button>
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
     :edges="edges"
     @select-node="onSelectNode"
+    @double-click="onDoubleClick"
     :options="options">
   </network>
 
@@ -26,6 +27,8 @@ import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 const myWorker = new Worker("workers/worker.js");
+import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
+import { getSolidDataset/*, saveSolidDatasetAt*/ } from "@inrupt/solid-client";
 
 export default {
   name: 'NetworkView',
@@ -73,6 +76,11 @@ export default {
     }
   },
   methods: {
+    onDoubleClick(e){
+      console.log(e)
+      this.clear()
+      this.getData({ url: e.nodes[0], group: ""})
+    },
     onSelectNode(e){
       console.log(e)
       this.getData({ url: e.nodes[0], group: ""})
@@ -92,6 +100,23 @@ export default {
 
         var index = this.nodes.findIndex(x => x.id==folder.id);
         index === -1 ? this.nodes.push(folder) : console.log("object already exists")
+
+        let parent = {
+          id: folder.parent,
+          label: folder.parent,
+          shape: "image",
+          image: "./assets/parentfolder.png",
+          size: 20,
+        }
+        var indexP = this.nodes.findIndex(x => x.id==parent.id);
+        indexP === -1 ? this.nodes.push(parent) : console.log("object already exists")
+
+        let edgeP = {from: folder.id, to: parent.id, label: "parent"}
+        var indexPE = this.edges.findIndex(x => x.from==edgeP.from && x.to == edgeP.to && x.label == edgeP.label);
+        indexPE === -1 ? this.edges.push(edgeP) : console.log("object already exists")
+
+
+
 
         console.log(source.group, folder)
         folder.folders.forEach((fo) => {
@@ -125,9 +150,86 @@ export default {
         });
         console.log(this.nodes)
       }else{
-        let file = await fc.readFile(source.url)
-        console.log(source.group,file)
+        var extension = source.url.split('.').pop();
+            let app = this
+        let file = {}
+        let json = {}
+        let dataset = {}
+        console.log(extension)
+        switch (extension) {
+          case 'rdf':
+          case 'ttl':
+          case 'n3':
+          case 'n3t':
+          case 'owl':
+          console.log(extension)
+          dataset = await getSolidDataset(source.url, { fetch: fetch });
+          console.log(dataset)
+
+          dataset.quads.forEach(async function (q)  {
+            let [s,p,o] = [
+              {id:q.subject.id, label: await app.lastPart(q.subject.id)},
+              q.predicate.id,
+              {id:q.object.id, label: await app.lastPart(q.object.id)}
+            ]
+            console.log(s,p,o)
+
+            var indexS = app.nodes.findIndex(x => x.id==s.id);
+            indexS === -1 ? app.nodes.push(s) : console.log("object already exists")
+            var indexO = app.nodes.findIndex(x => x.id==o.id);
+            indexO === -1 ? app.nodes.push(o) : console.log("object already exists")
+            let edge = {from: s.id, to: o.id, label: await app.lastPart(p)}
+            var indexP = app.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+            indexP === -1 ? app.edges.push(edge) : console.log("object already exists")
+
+
+
+          });
+
+
+          break;
+          case 'json':
+          case 'jsonld':
+          console.log(extension)
+          file = await fc.readFile(source.url)
+          json = JSON.parse(file)
+          console.log(source.group,file, json)
+          json.id == null ? json.id = json['@id'] : ''
+          var indexS = app.nodes.findIndex(x => x.id==json.id);
+          indexS === -1 ? app.nodes.push(json) : console.log("object already exists")
+
+          for (const [key, value] of Object.entries(json)) {
+            if (key != 'id' && key != '@id' && key != '@context'){
+              console.log(key,value)
+              var indexO = app.nodes.findIndex(x => x.id==value);
+              indexO === -1 ? app.nodes.push({id: value, label: await app.lastPart(value)}) : console.log("object already exists")
+              let edge = {from: json.id, to: value, label: await app.lastPart(key)}
+              var indexE = app.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+              indexE === -1 ? app.edges.push(edge) : console.log("object already exists")
+            }
+          }
+
+
+
+
+
+          break;
+          default :
+
+        }
+
       }
+    },
+    async lastPart(text){
+      if (text.startsWith('http')){
+        var n = text.lastIndexOf('/');
+        return text.substring(n + 1);
+      }
+      else{
+        return text
+      }
+
+
     },
     async getData1(source) {
       if (window.Worker) {
@@ -159,14 +261,15 @@ export default {
     clear(){
       this.nodes = []
       this.edges = []
+    },
+    getStorage(){
+      this.clear()
+      this.getData({url: this.storage, group:"storage"})
     }
   },
   watch:{
     async storage(){
-      //  if (this.url != undefined){
-      this.clear()
-      this.getData({url: this.storage, group:"storage"})
-      //}
+      this.getStorage()
     }
   },
   computed: mapState({
