@@ -5,6 +5,7 @@
     class="wrapper"
     :nodes="nodes"
     :edges="edges"
+    @select-node="onSelectNode"
     :options="options">
   </network>
 
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+//https://github.com/r3code/vue-vis-network
 // modele https://github.com/scenaristeur/solid-vue-panes/blob/master/src/components/semapps/SemappsNetwork.vue
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import { mapState } from 'vuex';
@@ -71,7 +73,12 @@ export default {
     }
   },
   methods: {
+    onSelectNode(e){
+      console.log(e)
+      this.getData({ url: e.nodes[0], group: ""})
+    },
     async getData(source){
+
       if(source.url.endsWith('/')){
         let folder = await fc.readFolder(source.url)
 
@@ -82,7 +89,9 @@ export default {
         folder.size = 20
         delete folder.url
         delete folder.name
-        this.nodes.push(folder)
+
+        var index = this.nodes.findIndex(x => x.id==folder.id);
+        index === -1 ? this.nodes.push(folder) : console.log("object already exists")
 
         console.log(source.group, folder)
         folder.folders.forEach((fo) => {
@@ -93,10 +102,14 @@ export default {
           fo.size = 20
           delete fo.url
           delete fo.name
-          this.nodes.push(fo)
+          var index = this.nodes.findIndex(x => x.id==fo.id);
+          index === -1 ? this.nodes.push(fo) : console.log("object already exists")
+          let edge = {from: folder.id, to: fo.id, label: "contains"}
+          var indexE = this.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+          indexE === -1 ? this.edges.push(edge) : console.log("object already exists")
+
         });
         folder.files.forEach((fi) => {
-          this.nodes.push(fi)
           fi.id = fi.url
           fi.label = fi.name
           fi.shape = "image"
@@ -104,7 +117,13 @@ export default {
           fi.size = 20
           delete fi.url
           delete fi.name
+          var index = this.nodes.findIndex(x => x.id==fi.id);
+          index === -1 ? this.nodes.push(fi) : console.log("object already exists")
+          let edge = {from: folder.id, to: fi.id, label: "contains"}
+          var indexE = this.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+          indexE === -1 ? this.edges.push(edge) : console.log("object already exists")
         });
+        console.log(this.nodes)
       }else{
         let file = await fc.readFile(source.url)
         console.log(source.group,file)
@@ -137,10 +156,17 @@ export default {
         alert('Your browser doesn\'t support web workers.')
       }
     },
+    clear(){
+      this.nodes = []
+      this.edges = []
+    }
   },
   watch:{
     async storage(){
+      //  if (this.url != undefined){
+      this.clear()
       this.getData({url: this.storage, group:"storage"})
+      //}
     }
   },
   computed: mapState({

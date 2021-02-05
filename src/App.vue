@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <b-container fluid id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
@@ -7,7 +7,7 @@
     </div>
     <router-view/>
     <SolidTrackSession />
-  </div>
+  </b-container>
 </template>
 <script>
 
