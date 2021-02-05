@@ -1,14 +1,16 @@
 <template>
   <b-container fluid>
-    Storage : {{ storage}}
-    <br>https://spoggy-test9.solidcommunity.net/public/table/workspaces/4e5f404a-a61a-4432-b4c7-36c79c6e10f2.ttl
-    <br>https://spoggy-test9.solidcommunity.net/contacts/5d5889f7-d439-448a-bfa7-709249f0576c.jsonld
+
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
     :edges="edges"
     :options="options">
   </network>
+
+  Storage : {{ storage}}
+  <br>https://spoggy-test9.solidcommunity.net/public/table/workspaces/4e5f404a-a61a-4432-b4c7-36c79c6e10f2.ttl
+  <br>https://spoggy-test9.solidcommunity.net/contacts/5d5889f7-d439-448a-bfa7-709249f0576c.jsonld
 
 </b-container>
 </template>
@@ -48,6 +50,7 @@ export default {
       ],
       options: {
         nodes: {
+
           //  borderWidth: 4
         },
         edges: {
@@ -68,15 +71,50 @@ export default {
     }
   },
   methods: {
-    async getData(source) {
+    async getData(source){
+      if(source.url.endsWith('/')){
+        let folder = await fc.readFolder(source.url)
 
+        folder.id = folder.url
+        folder.label = folder.name
+        folder.shape = "image"
+        folder.image = "./assets/parentfolder.png"
+        folder.size = 20
+        delete folder.url
+        delete folder.name
+        this.nodes.push(folder)
+
+        console.log(source.group, folder)
+        folder.folders.forEach((fo) => {
+          fo.id = fo.url
+          fo.label = fo.name
+          fo.shape = "image"
+          fo.image = "./assets/folder.png"
+          fo.size = 20
+          delete fo.url
+          delete fo.name
+          this.nodes.push(fo)
+        });
+        folder.files.forEach((fi) => {
+          this.nodes.push(fi)
+          fi.id = fi.url
+          fi.label = fi.name
+          fi.shape = "image"
+          fi.image = "./assets/document.png"
+          fi.size = 20
+          delete fi.url
+          delete fi.name
+        });
+      }else{
+        let file = await fc.readFile(source.url)
+        console.log(source.group,file)
+      }
+    },
+    async getData1(source) {
       if (window.Worker) {
-
-
         if(source.url.endsWith('/')){
           let folder = await fc.readFolder(source.url)
           console.log(source.group, folder)
-
           folder.folders.forEach((fo) => {
             myWorker.postMessage({nodes: this.nodes, nouveau: fo});
             console.log(fo)
@@ -85,17 +123,11 @@ export default {
             myWorker.postMessage({nodes: this.nodes, nouveau: fi});
             console.log(fi)
           });
-
-
           console.log('Message posted to worker');
-
-
         }else{
           let file = await fc.readFile(source.url)
           console.log(source.group,file)
         }
-
-
         myWorker.onmessage = function(e) {
           console.log('result',e)
           this.nodes = e.data.nodes
@@ -104,12 +136,7 @@ export default {
       } else {
         alert('Your browser doesn\'t support web workers.')
       }
-
-
-
-
     },
-
   },
   watch:{
     async storage(){

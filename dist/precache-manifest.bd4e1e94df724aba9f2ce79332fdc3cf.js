@@ -1,11 +1,43 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "02db1e3058c7146d747a",
+    "revision": "fb4ace7b1ae29de1beaec2c87ede8ece",
+    "url": "/ipgs/assets/document.png"
+  },
+  {
+    "revision": "4e920cbd4ef963f88495f52af07c4792",
+    "url": "/ipgs/assets/folder.png"
+  },
+  {
+    "revision": "82b9c7a5a3f405032b1db71a25f67021",
+    "url": "/ipgs/assets/logo.png"
+  },
+  {
+    "revision": "4f94faebfb322551b9274498d0453767",
+    "url": "/ipgs/assets/organization.svg"
+  },
+  {
+    "revision": "2a054dd6e16a472fd868c6f73066c778",
+    "url": "/ipgs/assets/parentfolder.png"
+  },
+  {
+    "revision": "bc576ce7e483bbba86dde159895a8ccf",
+    "url": "/ipgs/assets/profile.svg"
+  },
+  {
+    "revision": "93693591e90e8a3fb93b4597514aa1cb",
+    "url": "/ipgs/assets/rdf.gif"
+  },
+  {
+    "revision": "4f8b33a14a7f6f9bfb59caced614f866",
+    "url": "/ipgs/assets/solid.png"
+  },
+  {
+    "revision": "63a320a989db0d7e242b",
     "url": "/ipgs/css/app.4eefdf34.css"
   },
   {
-    "revision": "a4a7587383a2f91e6b71",
-    "url": "/ipgs/css/chunk-292e3931.6b103c8a.css"
+    "revision": "61c9a91fd40a4561e55e",
+    "url": "/ipgs/css/chunk-18191773.6b103c8a.css"
   },
   {
     "revision": "0f6feadef1b58127d1d1",
@@ -64,7 +96,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "48562dec95b7832bff8e75c47068daa7",
+    "revision": "a079e87a4bb6906386ef3eac6a0f62b3",
     "url": "/ipgs/index.html"
   },
   {
@@ -72,12 +104,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/about.2b074ec7.js"
   },
   {
-    "revision": "02db1e3058c7146d747a",
-    "url": "/ipgs/js/app.09b98a08.js"
+    "revision": "63a320a989db0d7e242b",
+    "url": "/ipgs/js/app.465fa8a5.js"
   },
   {
-    "revision": "a4a7587383a2f91e6b71",
-    "url": "/ipgs/js/chunk-292e3931.c7a18592.js"
+    "revision": "61c9a91fd40a4561e55e",
+    "url": "/ipgs/js/chunk-18191773.fca30d3a.js"
   },
   {
     "revision": "6eac4f74c7200cbf49bd",
