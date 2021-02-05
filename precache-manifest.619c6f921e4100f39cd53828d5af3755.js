@@ -64,7 +64,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "87ae07059182ca6fe0cac6fafbf91a01",
+    "revision": "476611392149b40d7747420c5b856347",
     "url": "/ipgs/index.html"
   },
   {
@@ -96,7 +96,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-vendors.5eda6058.js"
   },
   {
-    "revision": "1770c2524b653c4741436956a1f7f256",
+    "revision": "fdd89eb6e6f3f1c1694f20f0cde840f2",
     "url": "/ipgs/manifest.json"
   },
   {

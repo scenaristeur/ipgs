@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ipgs/precache-manifest.01e290582c30a22612c766e7de164317.js"
+  "/ipgs/precache-manifest.619c6f921e4100f39cd53828d5af3755.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "portfolio"});
+workbox.core.setCacheNameDetails({prefix: "Ipgs"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
