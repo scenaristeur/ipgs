@@ -1,5 +1,5 @@
 {
-  "name": "portfolio",
+  "name": "Ipgs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -18,6 +18,8 @@
     "solid-file-client": "^1.2.2",
     "vue": "^2.6.12",
     "vue-router": "^3.2.0",
+    "vue-vis-network": "^1.0.2",
+    "vue-visjs": "^0.4.1",
     "vuex": "^3.4.0",
     "watermarkjs": "^2.1.1"
   },

@@ -2,11 +2,26 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <SolidLoginButton />
     </div>
     <router-view/>
+    <SolidTrackSession />
   </div>
 </template>
+<script>
+
+export default {
+  name: 'App',
+  components: {
+    //  'Contacts': () => import('@/views/Contacts'),
+    'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+
+    //  'Fab': () => import('@/components/basic/Fab.vue')
+}
+}
+</script>
 
 <style>
 #app {

@@ -1,33 +1,29 @@
 <template>
-  <div>
-    <b-button variant="success" v-if="webId == null" @click="login">Login</b-button>
-    <b-button variant="danger" v-else @click="logout">Logout</b-button>
-  </div>
+  <span class="m-2">
+    <b-button variant="success" v-if="webId == null" @click="login" size="sm">Login</b-button>
+    <b-button variant="outline-warning" size="sm" v-else @click="logout" >Logout</b-button>
+  </span>
 </template>
 
 <script>
 import auth from 'solid-auth-client';
+let popupUri = './solid-auth-login/popup.html';
 
 export default {
-  name: 'SolidLoginButton',
-  data: function () {
-    return {
-      webId: null
-    }
-  },
+  name: 'SolidLogin',
   methods: {
     async login() {
       let session = await auth.currentSession();
-      let popupUri = 'https://solidcommunity.net/common/popup.html';
-      if (!session){
-        session = await auth.popupLogin({ popupUri });
-      }
-      this.webId = session.webId
+      if (!session){session = await auth.popupLogin({ popupUri });}
     },
     async logout(){
-      await  auth.logout()
-      this.webId = null
-    },
-  }
+      await auth.logout()
+    }
+  },
+  computed:{
+    webId() {
+      return this.$store.state.solid.webId
+    }
+  },
 }
 </script>

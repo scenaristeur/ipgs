@@ -11,6 +11,10 @@ Vue.use(IconsPlugin)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import { Network } from "vue-vis-network";
+Vue.component('network', Network);
+import "vis-network/dist/vis-network.esm.min.js";
+
 Vue.config.productionTip = false
 
 new Vue({
