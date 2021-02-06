@@ -35,6 +35,20 @@
       name="checkbox-1">
       Expand on click
     </b-form-checkbox>
+
+    Path : {{ path }}
+    <b-input v-model="temp_name"></b-input>
+
+
+    <b-form-group label="Resource Content Type" v-slot="{ ariaDescribedby }">
+      <b-form-radio v-for="ct in contentTypeOptions" :key="ct.value.ct"
+      v-model="contentTypeCreate"
+      :aria-describedby="ariaDescribedby" name="ct-radios" :value="ct.value">{{ct.text}}</b-form-radio>
+    </b-form-group>
+
+
+    <b-button @click="createResource">Create</b-button><b-button @click="createFolder">Create Folder</b-button>
+
   </p>
 
 
@@ -70,7 +84,15 @@ export default {
   },
   data() {
     return {
-      expandOnClick: false,
+      path: '',
+      temp_name: 'MustChange',
+      contentTypeCreate: {ct: 'application/json', ext: 'json'},
+      contentTypeOptions: [
+        {value: {ct: 'application/ld+json', ext:'jsonld'}, text: 'jsonld'},
+        {value: {ct: 'application/json', ext: 'json'}, text:'json'},
+        {value: {ct: 'text/turtle', ext: 'ttl'}, text: 'ttl'}
+      ],
+      expandOnClick: true,
       modalTitle: "InterPlanetary Graph System IPGS",
       nodes: [
         {id: 1,  label: 'circle',  shape: 'circle' },
@@ -112,9 +134,40 @@ export default {
       console.info("URL1",this.url)
       this.clear()
       this.getData({url:this.url})
+    }else{
+      this.path = this.storage
     }
   },
   methods: {
+    async createResource(){
+      let resource = this.path+this.temp_name
+      console.log(resource)
+      try{
+        let content = {'@id' : resource+'.'+this.contentTypeCreate.ext, '@type': 'Resource','rdf:label': this.temp_name}
+        await fc.postFile(resource, JSON.stringify(content), this.contentTypeCreate.ct).then(
+          f => {
+            console.log(f)
+            console.log(f.headers.get('location'))
+            let res_url = f.headers.get('location').startsWith('/') ? this.storage + f.headers.get('location').substring(1) : f.headers.get('location')
+            console.log(res_url)
+            this.getData({url: res_url, group: ""})
+          }
+        )
+
+      }catch(e){
+        alert(e)
+      }
+    },
+    async createFolder(){
+      let resource = this.path+this.temp_name+'/'
+      console.log(resource)
+      try{
+        await fc.createFolder(resource)
+        this.getData({url: resource, group: ""})
+      }catch(e){
+        alert(e)
+      }
+    },
     onContext(params){
 
       console.log(params)
@@ -157,6 +210,7 @@ export default {
 
       try{
         if(source.url.endsWith('/')){
+          this.path = source.url
           let folder = await fc.readFolder(source.url)
 
           folder.id = folder.url
@@ -339,6 +393,7 @@ export default {
   watch:{
     async storage(){
       this.getStorage()
+      this.path = this.storage
     }
   },
   computed: mapState({
