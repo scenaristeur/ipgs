@@ -8,6 +8,7 @@
     @select-node="onSelectNode"
     @double-click="onDoubleClick"
     @oncontext="onContext"
+    @click="onClick"
     :options="options">
   </network>
 
@@ -91,6 +92,11 @@ export default {
       //     top: params.event.pageY + "px",
       //     left: params.event.pageX + "px"
       // });
+      this.$bvModal.show('contextual-menu')
+    },
+    onClick(params){
+      console.log(params)
+      params.event.preventDefault();
       this.$bvModal.show('contextual-menu')
     },
     onDoubleClick(e){

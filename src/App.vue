@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <SolidLoginButton />
+
     </div>
     <router-view/>
     <SolidTrackSession />
@@ -16,8 +16,7 @@ export default {
   components: {
     //  'Contacts': () => import('@/views/Contacts'),
     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
-    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
-
+  
     //  'Fab': () => import('@/components/basic/Fab.vue')
   }
 }
