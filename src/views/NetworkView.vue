@@ -7,12 +7,18 @@
     :edges="edges"
     @select-node="onSelectNode"
     @double-click="onDoubleClick"
+    @oncontext="onContext"
     :options="options">
   </network>
 
   Storage : {{ storage}}
   <br>https://spoggy-test9.solidcommunity.net/public/table/workspaces/4e5f404a-a61a-4432-b4c7-36c79c6e10f2.ttl
   <br>https://spoggy-test9.solidcommunity.net/contacts/5d5889f7-d439-448a-bfa7-709249f0576c.jsonld
+
+
+  <b-modal id="contextual-menu" title="BootstrapVue">
+    <p class="my-4">Hello from modal!</p>
+  </b-modal>
 
 </div>
 </template>
@@ -76,6 +82,17 @@ export default {
     }
   },
   methods: {
+    onContext(params){
+
+      console.log(params)
+      params.event.preventDefault();
+      // $(".custom-menu").finish().toggle(100);
+      // $(".custom-menu").css({
+      //     top: params.event.pageY + "px",
+      //     left: params.event.pageX + "px"
+      // });
+      this.$bvModal.show('contextual-menu')
+    },
     onDoubleClick(e){
       console.log(e)
       this.clear()
