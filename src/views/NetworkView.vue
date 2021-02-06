@@ -88,9 +88,10 @@ export default {
       temp_name: 'MustChange',
       contentTypeCreate: {ct: 'application/json', ext: 'json'},
       contentTypeOptions: [
-        {value: {ct: 'application/ld+json', ext:'jsonld'}, text: 'jsonld'},
         {value: {ct: 'application/json', ext: 'json'}, text:'json'},
-    //    {value: {ct: 'text/turtle', ext: 'ttl'}, text: 'ttl'}
+        {value: {ct: 'application/ld+json', ext:'jsonld'}, text: 'jsonld'},
+
+        //    {value: {ct: 'text/turtle', ext: 'ttl'}, text: 'ttl'}
       ],
       expandOnClick: true,
       modalTitle: "InterPlanetary Graph System IPGS",
@@ -340,23 +341,23 @@ export default {
               for (const [key, value] of Object.entries(json)) {
                 if (key != 'id' && key != '@id' && key != '@context'){
                   console.log(key,value)
-                if(Array.isArray(value)){
-                  value.forEach(async function(v) {
-                    var indexO = app.nodes.findIndex(x => x.id==v);
-                    indexO === -1 ? app.nodes.push({id: v, label: await app.lastPart(v)}) : console.log("object already exists")
-                    let edge = {from: json.id, to: v, label: await app.lastPart(key)}
+                  if(Array.isArray(value)){
+                    value.forEach(async function(v) {
+                      var indexO = app.nodes.findIndex(x => x.id==v);
+                      indexO === -1 ? app.nodes.push({id: v, label: await app.lastPart(v)}) : console.log("object already exists")
+                      let edge = {from: json.id, to: v, label: await app.lastPart(key)}
+                      var indexE = app.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+                      indexE === -1 ? app.edges.push(edge) : console.log("object already exists")
+
+                    });
+
+                  }else{
+                    var indexO = app.nodes.findIndex(x => x.id==value);
+                    indexO === -1 ? app.nodes.push({id: value, label: await app.lastPart(value)}) : console.log("object already exists")
+                    let edge = {from: json.id, to: value, label: await app.lastPart(key)}
                     var indexE = app.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
                     indexE === -1 ? app.edges.push(edge) : console.log("object already exists")
-
-                  });
-
-                }else{
-                  var indexO = app.nodes.findIndex(x => x.id==value);
-                  indexO === -1 ? app.nodes.push({id: value, label: await app.lastPart(value)}) : console.log("object already exists")
-                  let edge = {from: json.id, to: value, label: await app.lastPart(key)}
-                  var indexE = app.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
-                  indexE === -1 ? app.edges.push(edge) : console.log("object already exists")
-                }
+                  }
                 }
               }
 
