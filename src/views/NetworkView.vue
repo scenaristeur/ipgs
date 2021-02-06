@@ -1,6 +1,6 @@
 <template>
-  <b-container fluid>
-    <b-button @click="getStorage">{{ storage}}</b-button>
+  <div>
+    <b-button @click="getStorage" size="sm">{{ storage}}</b-button>
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
@@ -14,7 +14,7 @@
   <br>https://spoggy-test9.solidcommunity.net/public/table/workspaces/4e5f404a-a61a-4432-b4c7-36c79c6e10f2.ttl
   <br>https://spoggy-test9.solidcommunity.net/contacts/5d5889f7-d439-448a-bfa7-709249f0576c.jsonld
 
-</b-container>
+</div>
 </template>
 
 <script>
@@ -151,7 +151,7 @@ export default {
         console.log(this.nodes)
       }else{
         var extension = source.url.split('.').pop();
-            let app = this
+        let app = this
         let file = {}
         let json = {}
         let dataset = {}

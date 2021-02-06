@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid id="app">
+  <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
@@ -7,7 +7,7 @@
     </div>
     <router-view/>
     <SolidTrackSession />
-  </b-container>
+  </div>
 </template>
 <script>
 
@@ -19,7 +19,7 @@ export default {
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
 
     //  'Fab': () => import('@/components/basic/Fab.vue')
-}
+  }
 }
 </script>
 

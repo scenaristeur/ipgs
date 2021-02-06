@@ -1,11 +1,7 @@
 <template>
-  <b-container fluid>
-
 
     <NetworkView />
-    <!-- <Upload /> -->
-    <!-- <HelloWorld msg="Welcome to Portfolio WebApp based on Solid Specifications"/> -->
-  </b-container>
+
 </template>
 
 <script>
