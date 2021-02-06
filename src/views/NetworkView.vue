@@ -25,36 +25,69 @@
       </b-button>
 
     </template>
-    <SolidLoginButton />
-    <b-button @click="getStorage" size="sm" variant="primary" v-if="storage != null"><small>{{ storage}}</small></b-button>
-    <p class="my-4">
+    <SolidLoginButton />     <b-form-checkbox
+    id="checkbox-expandOnClick"
+    v-model="expandOnClick"
+    name="checkbox-1">
+    Expand on click
+  </b-form-checkbox>
 
-      <b-form-checkbox
-      id="checkbox-expandOnClick"
-      v-model="expandOnClick"
-      name="checkbox-1">
-      Expand on click
-    </b-form-checkbox>
+  <!-- <p class="my-4">
+  <b-button @click="getStorage" size="sm" variant="primary" v-if="storage != null"><small>{{ storage}}</small></b-button>
+  <b-button @click="getPath" size="sm" variant="outline-primary" v-if="path != null"><small>{{ path}}</small></b-button>
+  <b-button @click="getUrl" size="sm" variant="outline-primary" v-if="url != null"><small>{{ url}}</small></b-button>
+</p> -->
+<div>
+  <b-button-group size="sm" variant="primary" >
 
-    Path : {{ path }}
-    <b-input v-model="temp_name"></b-input>
+    <b-dropdown text="Navigation" size="sm" block variant="primary">
+      <b-button @click="getStorage" v-if="storage != null"><i>Storage:</i>{{ storage}}</b-button>
+      <b-dropdown-item @click="getPath" v-if="path != null">Last folder: {{path}}</b-dropdown-item>
+      <b-dropdown-item @click="getUrl" v-if="url != null">last url: {{ url}}</b-dropdown-item>
+      <!-- <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item>Item 3</b-dropdown-item> -->
+    </b-dropdown>
+    <b-dropdown text="Edition" size="sm" block variant="primary">
+      <b-container fluid >
 
-
-    <b-form-group label="Resource Content Type" v-slot="{ ariaDescribedby }">
-      <b-form-radio v-for="ct in contentTypeOptions" :key="ct.value.ct"
-      v-model="contentTypeCreate"
-      :aria-describedby="ariaDescribedby" name="ct-radios" :value="ct.value">{{ct.text}}</b-form-radio>
-    </b-form-group>
-
-
-    <b-button @click="createResource">Create</b-button><b-button @click="createFolder">Create Folder</b-button>
-
-  </p>
-
+        <label for="input-temp_name" ><small>Name of folder or resource:</small></label>
+        <b-input id="input-temp_name" v-model="temp_name" placeholder="name"></b-input>
 
 
-  <br>https://spoggy-test9.solidcommunity.net/public/table/workspaces/4e5f404a-a61a-4432-b4c7-36c79c6e10f2.ttl
-  <br>https://spoggy-test9.solidcommunity.net/contacts/5d5889f7-d439-448a-bfa7-709249f0576c.jsonld
+        <b-dropdown-item @click="createFolder" variant="primary">Create Folder</b-dropdown-item>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-form-group label="or create resource" v-slot="{ ariaDescribedby }">
+          <b-form-radio v-for="ct in contentTypeOptions" :key="ct.value.ct"
+          v-model="contentTypeCreate"
+          :aria-describedby="ariaDescribedby" name="ct-radios" :value="ct.value">{{ct.text}}</b-form-radio>
+        </b-form-group>
+        <b-dropdown-item @click="createResource" variant="primary">Create Resource</b-dropdown-item>
+      </b-container>
+      <!--  <b-dropdown-item>Item 3</b-dropdown-item> -->
+    </b-dropdown>
+  </b-button-group>
+</div>
+
+
+
+
+<!-- <p class="my-4">
+<b-input v-model="temp_name"></b-input>
+<b-form-group label="Resource Content Type" v-slot="{ ariaDescribedby }">
+<b-form-radio v-for="ct in contentTypeOptions" :key="ct.value.ct"
+v-model="contentTypeCreate"
+:aria-describedby="ariaDescribedby" name="ct-radios" :value="ct.value">{{ct.text}}</b-form-radio>
+</b-form-group>
+
+
+<b-button @click="createResource">Create</b-button><b-button @click="createFolder">Create Folder</b-button>
+
+</p> -->
+
+
+
+<!-- <br>https://spoggy-test9.solidcommunity.net/public/table/workspaces/4e5f404a-a61a-4432-b4c7-36c79c6e10f2.ttl
+<br>https://spoggy-test9.solidcommunity.net/contacts/5d5889f7-d439-448a-bfa7-709249f0576c.jsonld -->
 
 </b-modal>
 
@@ -84,8 +117,9 @@ export default {
   },
   data() {
     return {
-      path: '',
-      temp_name: 'MustChange',
+      path: null,
+      url: null,
+      temp_name: '',
       contentTypeCreate: {ct: 'application/json', ext: 'json'},
       contentTypeOptions: [
         {value: {ct: 'application/json', ext: 'json'}, text:'json'},
@@ -141,6 +175,10 @@ export default {
   },
   methods: {
     async createResource(){
+      if (this.temp_name.length == 0){
+        alert('the resource name must be at least one character long')
+        return
+      }
       let resource = this.path+this.temp_name
       console.log(resource)
       try{
@@ -173,8 +211,13 @@ export default {
         }catch(e){
           alert(e)
         }
+        this.temp_name = ""
       },
       async createFolder(){
+        if (this.temp_name.length == 0){
+          alert('the floder name must be at least one character long')
+          return
+        }
         let resource = this.path+this.temp_name+'/'
         console.log(resource)
         try{
@@ -183,6 +226,7 @@ export default {
         }catch(e){
           alert(e)
         }
+        this.temp_name = ""
       },
       onContext(params){
 
@@ -289,6 +333,7 @@ export default {
             });
             console.log(this.nodes)
           }else{
+            this.url = source.url
             var extension = source.url.split('.').pop();
             let app = this
             let file = {}
@@ -418,6 +463,14 @@ export default {
       getStorage(){
         this.clear()
         this.getData({url: this.storage, group:"storage"})
+      },
+      getPath(){
+        this.clear()
+        this.getData({url: this.path, group:""})
+      },
+      getUrl(){
+        this.clear()
+        this.getData({url: this.url, group:""})
       }
     },
     watch:{

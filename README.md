@@ -82,3 +82,9 @@ https://zurb.com/playground/css3-polaroids
 - https://www.npmjs.com/package/natural / https://www.npmjs.com/package/naturali
 - https://medium.com/better-programming/natural-language-processing-with-node-js-afb62729c1a2
 - compromise https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj  / https://observablehq.com/@spencermountain/compromise-tags , ++ https://github.com/spencermountain/compromise , http://compromise.cool/
+
+# synchro
+- https://braid.news/
+- https://m-ld.org/
+- lists https://m-ld.org/news/#truth-and-just-lists
+- json-rql query jsonld https://json-rql.org/
