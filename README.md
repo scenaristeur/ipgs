@@ -9,6 +9,16 @@ InterPlanetary Graph System based on Solid & Ipfs
 - https://github.com/ipfs-shipyard/ipfs-desktop
 
 
+# jsonld fragments identifiers
+https://tools.ietf.org/html/rfc3987#section-2
+```
+IRI : The absolute form of an IRI containing a scheme along with a path and optional query and fragment segments.
+```
+- https://github.com/json-ld/json-ld.org/issues/107
+- https://www.w3.org/TR/rdf11-concepts/#section-fragID
+- https://sitebulb.com/resources/guides/node-identifiers-from-structured-data-to-linked-data/
+
+
 ------------------------------------
 # Porfolio WebApp
 - all data are stored on solid user's POD : https://github.com/solid/solid-spec/
