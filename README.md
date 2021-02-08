@@ -8,6 +8,8 @@ InterPlanetary Graph System based on Solid & Ipfs
 - https://docs.ipfs.io/
 - https://github.com/ipfs-shipyard/ipfs-desktop
 
+# json-ld processor js
+- https://github.com/digitalbazaar/jsonld.js/
 
 # jsonld fragments identifiers
 https://tools.ietf.org/html/rfc3987#section-2
@@ -17,6 +19,49 @@ IRI : The absolute form of an IRI containing a scheme along with a path and opti
 - https://github.com/json-ld/json-ld.org/issues/107
 - https://www.w3.org/TR/rdf11-concepts/#section-fragID
 - https://sitebulb.com/resources/guides/node-identifiers-from-structured-data-to-linked-data/
+
+# jsonld @graphs ? @includes ?
+@ graph -> reference to the top level object / @includes = includes Blocks https://w3c.github.io/json-ld-syntax/#included-blocks no reference to the top level object
+- named_graph https://w3c.github.io/json-ld-syntax/#example-115-identifying-and-making-statements-about-a-graph
+
+```
+{
+  "@context": {
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "Person": "http://xmlns.com/foaf/0.1/Person",
+    "name": "http://xmlns.com/foaf/0.1/name",
+    "knows": {"@id": "http://xmlns.com/foaf/0.1/knows", "@type": "@id"}
+  },
+  "@id": "https://spoggy-test9.solidcommunity.net/MustChange/named_graph.json",
+  "generatedAt": "2012-04-09T00:00:00",
+  "@graph": [
+    {
+      "@id": "http://manu.sporny.org/about#manu",
+      "@type": "Person",
+      "name": "Manu Sporny",
+      "knows": "https://greggkellogg.net/foaf#me"
+    }, {
+      "@id": "https://greggkellogg.net/foaf#me",
+      "@type": "Person",
+      "name": "Gregg Kellogg",
+      "knows": "http://manu.sporny.org/about#manu"
+    }
+  ]
+}
+```
+
+
+
+
+# ldp servers
+- https://www.w3.org/wiki/LDP_Implementations
+- query https://github.com/library-data-platform/ldp/blob/main/doc/User_Guide.md
+
+
+
 
 # font icons
 - https://visjs.github.io/vis-network/examples/network/nodeStyles/icons.html

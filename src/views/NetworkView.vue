@@ -179,6 +179,7 @@ export default {
       navigation_mode: true,
       node: {},
       edge:{},
+      jsonContent: {},
       file: null,
       tmp_file: null,
       path: null,
@@ -297,6 +298,65 @@ export default {
       // @graph ? https://json-ld.org/spec/latest/json-ld/#example-62-implicitly-named-graph
       console.log( "todo writetofile",this.url, e)
       console.log(this.nodes,this.edges)
+
+      //       this.jsonContent['@graph'] = []
+      //       this.jsonContent['@graph'].push(this.nodes)
+      //       this.jsonContent['@graph'].push(this.edges)
+      // console.log(this.jsonContent)
+
+      let content = {
+        "@context": {
+          "generatedAt": {
+            "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+          },
+          "Person": "http://xmlns.com/foaf/0.1/Person",
+          "name": "http://xmlns.com/foaf/0.1/name",
+          "knows": {"@id": "http://xmlns.com/foaf/0.1/knows", "@type": "@id"}
+        },
+        "@id": this.url,
+        "generatedAt": "2012-04-09T00:00:00",
+        "@graph": [
+          {
+            "@id": "http://manu.sporny.org/about#manu",
+            "@type": "Person",
+            "name": "Manu Sporny",
+            "knows": "https://greggkellogg.net/foaf#me"
+          }, {
+            "@id": "https://greggkellogg.net/foaf#me",
+            "@type": "Person",
+            "name": "Gregg Kellogg",
+            "knows": "http://manu.sporny.org/about#manu"
+          }
+        ]
+      }
+
+      //let content = this.jsonContent
+      content['@graph'] = []
+      content['terms:created'] = new Date().toISOString() // '"2021-01-29T01:02:40Z"^^XML:dateTime'
+      this.nodes.forEach((n) => {
+        n['@id'] = n.id
+        delete n.id
+        content['@graph'].push(n)
+      });
+      this.edges.forEach((e) => {
+        e['@id'] = e.id
+        delete e.id
+        content['@graph'].push(e)
+      });
+
+      console.log('writing',this.url,content)
+
+      await fc.createFile(this.url, JSON.stringify(content), 'application/json').then(
+        f => {
+          console.log(f)
+          // console.log(f.headers.get('location'))
+          // let res_url = f.headers.get('location').startsWith('/') ? this.storage + f.headers.get('location').substring(1) : f.headers.get('location')
+          // console.log(res_url)
+          this.getData({url: this.url, group: ""})
+        }
+      )
+
     },
     // async  writeEdgeToFile1(e){
     //   if (this.tmp_file != null){
@@ -656,6 +716,7 @@ export default {
             console.log(extension)
             file = await fc.readFile(source.url)
             json = JSON.parse(file)
+            this.jsonContent = json
             console.log(source.group,file, json)
             json.id == null ? json.id = json['@id'] : ''
             var indexS = app.nodes.findIndex(x => x.id==json.id);
@@ -696,8 +757,10 @@ export default {
 
     },
     async lastPart(text){
-      console.log(text)
-      if (text.startsWith('http')){
+      console.log(text, typeof text)
+      if (typeof text == 'object' && text['rdfs:labale'] != undefined){
+        return text['rdfs:label']
+      }else if (typeof text == 'string' && text.startsWith('http')){
         var n = text.lastIndexOf('/');
         return text.substring(n + 1);
       }
