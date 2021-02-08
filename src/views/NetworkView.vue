@@ -2,8 +2,14 @@
   <div>
     <div>
       <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="#">NavBar</b-navbar-brand>
-        <b-nav-item @click="openconfig">Config</b-nav-item>
+        <b-navbar-brand href="#">IPGS</b-navbar-brand>
+
+        <b-form-checkbox v-model="navigation_mode" name="check-button" switch>
+          {{ navigation_mode ? 'Navigation' : 'Edition'}}
+        </b-form-checkbox>
+        <b-navbar-nav>
+          <b-nav-item @click="openconfig">Config</b-nav-item>
+        </b-navbar-nav>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
@@ -44,47 +50,49 @@
     :nodes="nodes"
     :edges="edges"
 
-    @nodes-add="nodeAdd"
-    @nodes-update="nodeUpdate"
-    @nodes-remove="nodeRemove"
-    @edges-add="edgeAdd"
-    @edges-update="edgeUpdate"
-    @edges-remove="edgeRemove"
+
     @select-node="onSelectNode"
     @double-click="onDoubleClick"
     @oncontext="onContext"
 
     :options="options">
   </network>
-  <!--    @click="onClick"-->
+  <!--    @click="onClick"
+  @nodes-add="nodeAdd"
+  @nodes-update="nodeUpdate"
+  @nodes-remove="nodeRemove"
+  @edges-add="edgeAdd"
+  @edges-update="edgeUpdate"
+  @edges-remove="edgeRemove"
+-->
 
 
-  <NodeModal v-model="node" @ok="saveNode"/>
-  <EdgeModal v-model="edge" @ok="saveEdge"/>
+<NodeModal v-model="node" @ok="saveNode"/>
+<EdgeModal v-model="edge" @ok="saveEdge"/>
 
 
-  <b-modal id="contextual-menu" no-close-on-backdrop size="xl" cancel-disabled>
+<b-modal id="contextual-menu" no-close-on-backdrop size="xl" cancel-disabled>
 
-    <template #modal-header="{ close }" class="row">
+  <template #modal-header="{ close }" class="row">
 
-      <h5>{{modalTitle}}</h5>
-      <!-- Emulate built in modal header close button action -->
-      <b-button size="sm" variant="outline-danger" @click="close()">
-        X
-      </b-button>
+    <h5>{{modalTitle}}</h5>
+    <!-- Emulate built in modal header close button action -->
+    <b-button size="sm" variant="outline-danger" @click="close()">
+      X
+    </b-button>
 
-    </template>
-    <SolidLoginButton />     <b-form-checkbox
-    id="checkbox-expandOnClick"
-    v-model="expandOnClick"
-    name="checkbox-1">
-    Expand on click
-  </b-form-checkbox>
+  </template>
+  <SolidLoginButton />     <b-form-checkbox
+  id="checkbox-navigation"
+  v-model="navigation_mode"
+  name="checkbox-1">
+  Expand on click
+</b-form-checkbox>
 
-  <!-- <p class="my-4">
-  <b-button @click="getStorage" size="sm" variant="primary" v-if="storage != null"><small>{{ storage}}</small></b-button>
-  <b-button @click="getPath" size="sm" variant="outline-primary" v-if="path != null"><small>{{ path}}</small></b-button>
-  <b-button @click="getUrl" size="sm" variant="outline-primary" v-if="url != null"><small>{{ url}}</small></b-button>
+<!-- <p class="my-4">
+<b-button @click="getStorage" size="sm" variant="primary" v-if="storage != null"><small>{{ storage}}</small></b-button>
+<b-button @click="getPath" size="sm" variant="outline-primary" v-if="path != null"><small>{{ path}}</small></b-button>
+<b-button @click="getUrl" size="sm" variant="outline-primary" v-if="url != null"><small>{{ url}}</small></b-button>
 </p> -->
 <div>
   <b-button-group size="sm" variant="primary" >
@@ -168,7 +176,7 @@ export default {
   },
   data() {
     return {
-      self: this, // to use in visjs options manipulation
+      navigation_mode: true,
       node: {},
       edge:{},
       file: null,
@@ -176,6 +184,7 @@ export default {
       path: null,
       url: null,
       temp_name: '',
+      networks:{navigation: {nodes:[], edges: []}, edition: {nodes: [], edges: []}},
       contentTypeCreate: {ct: 'application/json', ext: 'json'},
       contentTypeOptions: [
         {value: {ct: 'application/json', ext: 'json'}, text:'json'},
@@ -183,7 +192,7 @@ export default {
 
         //    {value: {ct: 'text/turtle', ext: 'ttl'}, text: 'ttl'}
       ],
-      expandOnClick: true,
+
       modalTitle: "InterPlanetary Graph System IPGS",
       nodes: [
         {id: 1,  label: 'circle',  shape: 'circle' },
@@ -238,16 +247,19 @@ export default {
       // }
       initiallyActive: true,
       addNode: async (node, callback) => {
-        callback() // Node will be added via reactivity from Vuex
+        //  callback() // Node will be added via reactivity from Vuex
         // if (self.tmp_file != null ){
         //   self.file = self.tmp_file
         // }
         // node.id = self.file.url+"#"+node.id
-        //console.log(node)
+        console.log(node)
+        //  let id = uuidv4()
+        //  node.id = this.url+"#"+id
+        //  node.label = id
         app.editNode(node, callback)
       },
       editNode: async (node, callback) => {
-        callback() // Node will be added via reactivity from Vuex
+        //  callback() // Node will be added via reactivity from Vuex
         //console.log(node)
         app.editNode(node, callback)
       },
@@ -273,13 +285,18 @@ export default {
       if(index > -1){
         this.nodes.splice(index, 1);
         //console.log(  this.nodes[index])
+        this.nodes[index].id = this.url+"#"+n.label
         this.nodes[index].label = n.label
       }else{
+        n.id = this.url+"#"+n.label
         this.nodes.push(n)
       }
+      console.log(n)
     },
     async writeEdgeToFile(e){
-      console.log( "todo writetofile",e)
+      // @graph ? https://json-ld.org/spec/latest/json-ld/#example-62-implicitly-named-graph
+      console.log( "todo writetofile",this.url, e)
+      console.log(this.nodes,this.edges)
     },
     // async  writeEdgeToFile1(e){
     //   if (this.tmp_file != null){
@@ -312,7 +329,7 @@ export default {
     saveEdge(e){
       //console.log("saveEdge",e)
       //  this.callback(n)
-        console.log('saveedge',e)
+      console.log('saveedge',e)
       var index = this.edges.map(x => {
         return x.id;
       }).indexOf(e.id);
@@ -333,7 +350,7 @@ export default {
       //  console.log(node, callback)
       //  callback(node)
       //  this.callback = callback
-       //callback()
+      //callback()
       /*  document.getElementById('node-label').value = data.label;
       document.getElementById('node-saveButton').onclick = this.saveNodeData.bind(this, data, callback);
       document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
@@ -413,24 +430,24 @@ export default {
     callback(data);
   },
   /////////////////////////////
-  async nodeAdd(e){
-    console.log(e)
-  },
-  async nodeUpdate(e){
-    console.log(e)
-  },
-  async nodeRemove(e){
-    console.log(e)
-  },
-  async edgeAdd(e){
-    console.log(e)
-  },
-  async edgeUpdate(e){
-    console.log(e)
-  },
-  async edgeRemove(e){
-    console.log(e)
-  },
+  // async nodeAdd(e){
+  //   console.log(e)
+  // },
+  // async nodeUpdate(e){
+  //   console.log(e)
+  // },
+  // async nodeRemove(e){
+  //   console.log(e)
+  // },
+  // async edgeAdd(e){
+  //   console.log(e)
+  // },
+  // async edgeUpdate(e){
+  //   console.log(e)
+  // },
+  // async edgeRemove(e){
+  //   console.log(e)
+  // },
 
 
   async createResource(){
@@ -517,7 +534,7 @@ export default {
     },
     onSelectNode(e){
       console.log(e)
-      if(this.expandOnClick == true){
+      if(this.navigation_mode == true){
         this.getData({ url: e.nodes[0], group: ""})
       }else{
         this.$bvModal.show('contextual-menu')
@@ -529,6 +546,7 @@ export default {
 
       try{
         if(source.url.endsWith('/')){
+          this.navigation_mode = true
           this.path = source.url
           let folder = await fc.readFolder(source.url)
 
@@ -592,6 +610,7 @@ export default {
           });
           console.log(this.nodes)
         }else{
+          this.navigation_mode = false
           this.url = source.url
           var extension = source.url.split('.').pop();
           let app = this
@@ -733,6 +752,20 @@ export default {
     }
   },
   watch:{
+    navigation_mode(){
+      if (this.navigation_mode == true){
+        this.networks.edition.nodes = this.nodes
+        this.networks.edition.edges = this.edges
+        this.nodes = this.networks.navigation.nodes
+        this.edges = this.networks.navigation.edges
+      }else{
+        this.networks.navigation.nodes = this.nodes
+        this.networks.navigation.edges = this.edges
+        this.nodes = this.networks.edition.nodes
+        this.edges = this.networks.edition.edges
+
+      }
+    },
     async storage(){
       this.getStorage()
       this.path = this.storage

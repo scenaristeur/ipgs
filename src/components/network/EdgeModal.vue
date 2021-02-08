@@ -4,7 +4,7 @@
     title="Edge"
     hide-backdrop content-class="shadow"
     @ok="addEdge" >
-    <b-input-group size="lg" prepend="Label">
+    <b-input-group size="sm" prepend="Label">
       <b-form-input v-model="value.label" autofocus></b-form-input>
     </b-input-group>
   </b-modal>

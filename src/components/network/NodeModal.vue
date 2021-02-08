@@ -4,10 +4,10 @@
     hide-backdrop content-class="shadow"
     @ok="addNode">
 
-    <b-input-group size="lg" prepend="id">
+    <!-- <b-input-group size="sm" prepend="id">
       <b-form-input v-model="value.id"></b-form-input>
-    </b-input-group>
-    <b-input-group size="lg" prepend="Label">
+    </b-input-group> -->
+    <b-input-group size="sm" prepend="Label">
       <b-form-input v-model="value.label" autofocus></b-form-input>
     </b-input-group>
 
