@@ -18,7 +18,8 @@ IRI : The absolute form of an IRI containing a scheme along with a path and opti
 - https://www.w3.org/TR/rdf11-concepts/#section-fragID
 - https://sitebulb.com/resources/guides/node-identifiers-from-structured-data-to-linked-data/
 
-
+# font icons
+- https://visjs.github.io/vis-network/examples/network/nodeStyles/icons.html
 ------------------------------------
 # Porfolio WebApp
 - all data are stored on solid user's POD : https://github.com/solid/solid-spec/
