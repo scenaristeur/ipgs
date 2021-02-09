@@ -21,6 +21,7 @@
     "solid-auth-client": "^2.5.4",
     "solid-file-client": "^1.2.2",
     "vue": "^2.6.12",
+    "vue-float-action-button": "^0.7.8",
     "vue-router": "^3.2.0",
     "vue-vis-network": "^1.0.2",
     "vue-visjs": "^0.4.1",

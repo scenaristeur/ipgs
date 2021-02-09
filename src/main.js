@@ -16,6 +16,14 @@ import { Network } from "vue-vis-network";
 Vue.component('network', Network);
 import "vis-network/dist/vis-network.esm.min.js";
 
+import VueFab from 'vue-float-action-button'
+Vue.use(VueFab, /* {
+  ----------------------
+  // opitons 可选iconfont图标或MaterialIcons
+  iconType: 'MaterialDesign'
+  // iconType: 'iconfont'
+} */)
+
 Vue.config.productionTip = false
 
 new Vue({

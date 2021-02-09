@@ -1,5 +1,11 @@
 <template>
   <b-container>
+    <b-input-group class="mt-3" v-if="new_graph_name != null">
+      <b-form-input  v-model="new_graph_name" placeholder="New Graph Name"></b-form-input>
+      <b-input-group-append>
+        <b-button variant="info" @click="createNew">create</b-button>
+      </b-input-group-append>
+    </b-input-group>
     <b-list-group v-if="storage != null">
       <b-list-group-item v-if="folder.parent != 'https://'" variant="dark" @click="readParent(folder.parent)" button>{{ folder.parent }}</b-list-group-item>
       <b-list-group-item v-for="fo in folder.folders" :key="fo.url" @click="read(fo)" button>{{ fo.name }}</b-list-group-item>
@@ -19,15 +25,31 @@ export default {
   name:"Browser",
   data() {
     return {
-      folder: {folders:[], files: []}
+      folder: {folders:[], files: []},
+      url: "",
+      new_graph_name : null
     }
   },
   created(){
     this.read({url: this.storage, name: this.storage, type: 'folder'})
+    if (this.$route.query.url != undefined ){
+      this.url = this.$route.query.url
+      console.log(this.url)
+      if(this.url != 'new'){
+        this.read(this.url)
+      }else{
+        this.new_graph_name = "new_graph_name"
+      }
+    }
   },
   methods: {
+    createNew(){
+      let new_file_url = this.url+this.new_graph_name+'.json'
+      this.$router.push({ path: 'network', query: { url: new_file_url } })
+    },
     async read(item) {
       if( item.type == 'folder' ){
+        this.url = item.url
         this.folder = await fc.readFolder(item.url)
       } else{
 
@@ -48,8 +70,8 @@ export default {
         // console.log(JSON.stringify(compacted, null, 2));
         // console.log("compacted",compacted)
 
-this.$router.push({ path: 'network', query: { url: item.url } })
-      //  this.$router.push('etwork', {url: item.url})
+        this.$router.push({ path: 'network', query: { url: item.url } })
+        //  this.$router.push('etwork', {url: item.url})
       }
     },
     readParent(p){

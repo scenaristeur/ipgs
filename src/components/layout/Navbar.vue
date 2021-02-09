@@ -8,7 +8,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Share</b-nav-item>
+          <!-- <b-nav-item href="#">Share</b-nav-item> -->
           <SolidLoginButton />
           <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
 
