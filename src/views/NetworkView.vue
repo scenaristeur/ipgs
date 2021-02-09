@@ -4,6 +4,7 @@
     class="wrapper"
     :nodes="nodes"
     :edges="edges"
+    @click="onClick"
     :options="options">
   </network>
   <!--
@@ -16,10 +17,11 @@
   @edges-remove="edgeRemove"
 -->
 
+  <b-button class=" bottom-menu" variant="info" @click="inputVisible = !inputVisible"><b-icon icon="pen"></b-icon></b-button>
 <b-input-group class="mt-3 bottom-menu" style="align:center">
-  <template #prepend>
-    <b-button variant="info" @click="inputVisible = !inputVisible"><b-icon icon="pen"></b-icon></b-button>
-  </template>
+  <!-- <template #prepend>
+
+  </template> -->
   <b-form-input v-if="inputVisible"></b-form-input>
 </b-input-group>
 
@@ -65,10 +67,14 @@ export default {
       console.log(this.url)
     }
     this.initManipulationOptions()
-    let network = new Network()
-    console.log("network", network)
+    this.network = new Network()
+    this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
+    console.log("network", this.network)
   },
   methods: {
+    onClick(){
+      this.inputVisible = true
+    },
     initManipulationOptions() {
       let app = this
       this.options.manipulation = {
@@ -100,10 +106,14 @@ export default {
     saveNode(nodeData){
       var index = this.nodes.findIndex(x => x.id==this.nodeData.id);
       index === -1 ? this.nodes.push(nodeData) : Object.assign(this.nodes[index], nodeData)
+      this.network.nodes = this.nodes
+      this.network.save()
     },
     saveEdge(e){
       var index = this.edges.map(x => { return x.id; }).indexOf(e.id);
       if(index > -1){ this.edges[index].label = e.label }else{ this.edges.push(e) }
+      this.network.edges = this.edges
+      this.network.save()
     },
   }
 }
