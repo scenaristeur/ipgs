@@ -87,18 +87,27 @@ export default class NetWork extends Thing {
     //   this['@type'] = "Vcard"
     //   this['schema:name'] = "__NEW__VCARD__"
   }
+
   setId(id){
     this['@id'] = id
     this['@context']['@base'] = id
   }
 
+  init(data){
+    Object.assign(this, data)
+    let nodes = this['@graph'][0]['@graph']
+    let edges = this['@graph'][1]['@graph']
+    console.log(nodes)
+    console.log(edges)
+  }
+
   async save(){
     this.nodes.forEach((n) => {
-    //  let n_clone = n.clone()
-    let n_clone = {}
+      //  let n_clone = n.clone()
+      let n_clone = {}
       Object.assign(n_clone, n)
       //  Object.defineProperty(n, '@id', Object.getOwnPropertyDescriptor(n, 'id'));
-    //  Object.defineProperty(n, 'rdfs:label', Object.getOwnPropertyDescriptor(n, 'label'));
+      //  Object.defineProperty(n, 'rdfs:label', Object.getOwnPropertyDescriptor(n, 'label'));
       n_clone['@id'] = '#'+n.id
       n_clone['@type'] = 'ipgs:Node'
       n_clone['rdfs:label'] = n.label

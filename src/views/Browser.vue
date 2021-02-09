@@ -13,6 +13,7 @@ import { mapState } from 'vuex';
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
+//import * as jsonld from 'jsonld';
 
 export default {
   name:"Browser",
@@ -29,7 +30,26 @@ export default {
       if( item.type == 'folder' ){
         this.folder = await fc.readFolder(item.url)
       } else{
-        this.file = await fc.readFile(item.url)
+
+        // let context = {
+        //   // "owl":"http://www.w3.org/2002/07/owl#",
+        //   // "as":"https://www.w3.org/ns/activitystreams",
+        //   // "schema":"http://schema.org/",
+        //   // "life": "http://purl.org/vocab/lifecycle/schema#",
+        //   terms: "http://purl.org/dc/terms/",
+        //   rdfs: "http://www.w3.org/2000/01/rdf-schema#",
+        //   // dcm: "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+        //   // ldp: "http://www.w3.org/ns/ldp#",
+        //   // json: "http://www.w3.org/ns/iana/media-types/application/json#",
+        //   motifs: "http://purl.org/net/wf-motifs#",
+        //   ipgs: "https://scenaristeur.github.io/ipgs#"
+        // }
+        // const compacted = await jsonld.compact(item.url, context);
+        // console.log(JSON.stringify(compacted, null, 2));
+        // console.log("compacted",compacted)
+
+this.$router.push({ path: 'network', query: { url: item.url } })
+      //  this.$router.push('etwork', {url: item.url})
       }
     },
     readParent(p){

@@ -17,12 +17,12 @@
   @edges-remove="edgeRemove"
 -->
 
-  <b-button class=" bottom-menu" variant="info" @click="inputVisible = !inputVisible"><b-icon icon="pen"></b-icon></b-button>
+<b-button class=" bottom-menu" variant="info" @click="inputVisible = !inputVisible"><b-icon icon="pen"></b-icon></b-button>
 <b-input-group class="mt-3 bottom-menu" style="align:center">
   <!-- <template #prepend>
 
-  </template> -->
-  <b-form-input v-if="inputVisible"></b-form-input>
+</template> -->
+<b-form-input v-if="inputVisible"></b-form-input>
 </b-input-group>
 
 
@@ -34,6 +34,9 @@
 <script>
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import Network from '@/models/Network.js'
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 
 export default {
   name:"NetworkView",
@@ -62,18 +65,34 @@ export default {
   },
   created(){
     console.log(this.$route)
+          this.initManipulationOptions()
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       console.log(this.url)
+
+      this.read(this.url)
+    }else{
+
+      this.network = new Network()
+      this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
+      console.log("network", this.network)
     }
-    this.initManipulationOptions()
-    this.network = new Network()
-    this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
-    console.log("network", this.network)
+
   },
   methods: {
     onClick(){
       this.inputVisible = true
+    },
+    async read(url){
+      console.log('url',url)
+      let file = await fc.readFile(url)
+      let data = JSON.parse(file)
+      console.log("JSONLD",data)
+      this.network = new Network()
+      this.network.init( data )
+      console.log("network", this.network)
+      this.nodes = this.network.nodes
+      this.edges = this.network.edges
     },
     initManipulationOptions() {
       let app = this
