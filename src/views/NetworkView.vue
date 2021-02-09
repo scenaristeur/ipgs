@@ -6,6 +6,15 @@
     :edges="edges"
     :options="options">
   </network>
+  <!--
+  @click="onClick"
+  @nodes-add="nodeAdd"
+  @nodes-update="nodeUpdate"
+  @nodes-remove="nodeRemove"
+  @edges-add="edgeAdd"
+  @edges-update="edgeUpdate"
+  @edges-remove="edgeRemove"
+-->
 
 <b-input-group class="mt-3 bottom-menu" style="align:center">
   <template #prepend>
@@ -22,6 +31,7 @@
 
 <script>
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+import Network from '@/models/Network.js'
 
 export default {
   name:"NetworkView",
@@ -55,6 +65,8 @@ export default {
       console.log(this.url)
     }
     this.initManipulationOptions()
+    let network = new Network()
+    console.log("network", network)
   },
   methods: {
     initManipulationOptions() {
