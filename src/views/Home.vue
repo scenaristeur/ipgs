@@ -1,7 +1,7 @@
 <template>
-
+  <div>
     <NetworkView />
-
+  </div>
 </template>
 
 <script>

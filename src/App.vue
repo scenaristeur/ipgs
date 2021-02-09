@@ -1,29 +1,45 @@
 <template>
   <div id="app">
+      <Navbar />
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
 
     </div> -->
+    <p v-if="webId == null">
+To browse your POD or save graphs, please login with your WebId <SolidLoginButton />
+</p>
     <router-view/>
+
     <SolidTrackSession />
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    //  'Contacts': () => import('@/views/Contacts'),
+    'Navbar': () => import('@/components/layout/Navbar'),
     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
-
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     //  'Fab': () => import('@/components/basic/Fab.vue')
-  }
+  },
+  created(){
+    if (this.$route.query.url != undefined ){
+      this.url = this.$route.query.url
+      this.$router.push(({ name: 'Network', query: { url: this.url } }))
+    }
+  },
+  computed: mapState({
+    webId: s => s.solid.webId
+  }),
+
 }
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -42,5 +58,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>

@@ -10,6 +10,7 @@ Vue.use(IconsPlugin)
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import "bootswatch/dist/superhero/bootstrap.min.css";
 
 import { Network } from "vue-vis-network";
 Vue.component('network', Network);
