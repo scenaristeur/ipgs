@@ -1,5 +1,6 @@
 <template>
   <div>
+    <CommandInput @onCommand="onCommand"/>
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
@@ -43,12 +44,15 @@ import Network from '@/models/Network.js'
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   name:"NetworkView",
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
+    'CommandInput': () => import('@/components/layout/CommandInput'),
+
   },
   data() {
     return {
@@ -86,21 +90,45 @@ export default {
 
   },
   methods: {
+    onCommand(data){
+      console.log("onCommand",data)
+      switch (data.type) {
+        case 'triplet':
+          this.saveNode({id: data.value.subject, label: data.value.subject})
+          this.saveNode({id: data.value.object, label: data.value.object})
+          this.saveEdge({id: uuidv4(), from: data.value.subject, to: data.value.object, label: data.value.predicate})
+          break;
+        default:
+          console.log("TODO",data)
+      }
+    },
     onClick(){
-      this.inputVisible = true
+      //this.inputVisible = true
     },
     async read(url){
       console.log('url',url)
       this.network = new Network()
       if( await fc.itemExists( url )) {
+        let  load = true
+        let data = {}
         let file = await fc.readFile(url)
-        let data = JSON.parse(file)
-        console.log("JSONLD",data)
+        try{
+          data = JSON.parse(file)
+          console.log("JSONLD",data)
+          if(data['@'] != undefined){
+            load = window.confirm('Be careful this file does not seem to be a compatible JSONLD GRAPH file. Are you sure you want to replace it ???'+data);
+          }
+        }catch(e){
+          load = window.confirm('Be careful this file does not seem to be a compatible JSONLD GRAPH file. Are you sure you want to replace it ???'+file);
 
-        this.network.init( data )
-        console.log("network", this.network)
-        this.nodes = this.network.nodes
-        this.edges = this.network.edges
+        }
+        console.log(load)
+        if(load == true){
+          this.network.init( data )
+          console.log("network", this.network)
+          this.nodes = this.network.nodes
+          this.edges = this.network.edges
+        }
       }else{
         this.network.setId( url)
 
@@ -137,7 +165,7 @@ export default {
       callback()
     },
     saveNode(nodeData){
-      var index = this.nodes.findIndex(x => x.id==this.nodeData.id);
+      var index = this.nodes.findIndex(x => x.id==nodeData.id);
       index === -1 ? this.nodes.push(nodeData) : Object.assign(this.nodes[index], nodeData)
       this.network.nodes = this.nodes
       this.network.save()
