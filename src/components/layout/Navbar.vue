@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand to="/">IPGS</b-navbar-brand>
+      <b-navbar-brand to="/">IPGS 1</b-navbar-brand>
       <Menu v-if="webId != null"/>
       <SolidLoginButton v-else />
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
