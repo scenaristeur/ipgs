@@ -1,5 +1,9 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
+    "revision": "93742bd9170f3492db867626d12714be",
+    "url": "/ipgs/404.html"
+  },
+  {
     "revision": "fb4ace7b1ae29de1beaec2c87ede8ece",
     "url": "/ipgs/assets/document.png"
   },
@@ -12,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/logo.png"
   },
   {
-    "revision": "4f94faebfb322551b9274498d0453767",
+    "revision": "09dd56d36dbdd5f4b429995fda7d83f9",
     "url": "/ipgs/assets/organization.svg"
   },
   {
@@ -32,16 +36,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/solid.png"
   },
   {
-    "revision": "6dcb48d1baa4552bad8b",
-    "url": "/ipgs/css/app.e647e109.css"
+    "revision": "ad885422a7b88d665753",
+    "url": "/ipgs/css/app.9d4ea677.css"
   },
   {
-    "revision": "95b5f09ebbd39d0a2f49",
-    "url": "/ipgs/css/chunk-vendors.7e8b8d45.css"
+    "revision": "963b7a3e6014daf1e1ae",
+    "url": "/ipgs/css/chunk-vendors.6245eba3.css"
   },
   {
-    "revision": "a203224dfb57d7af21d1",
-    "url": "/ipgs/css/network.b68fb52e.css"
+    "revision": "4479f418be83377da74d",
+    "url": "/ipgs/css/network.c1c03350.css"
   },
   {
     "revision": "a1a2d01bcd034270a3bc92176edfb66c",
@@ -96,20 +100,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "14a330e2ed1565ed9f5616513971841e",
+    "revision": "64dd4dbfadc092e9d50817733b0e60ff",
     "url": "/ipgs/index.html"
   },
   {
-    "revision": "fbb7574c67eaa187cabf",
-    "url": "/ipgs/js/about.2beb5c4d.js"
+    "revision": "7fecf16eb2fd45218bc9",
+    "url": "/ipgs/js/about.0b0c7ed4.js"
   },
   {
-    "revision": "6dcb48d1baa4552bad8b",
-    "url": "/ipgs/js/app.e327ad3d.js"
+    "revision": "ad885422a7b88d665753",
+    "url": "/ipgs/js/app.2e85bb8c.js"
   },
   {
-    "revision": "2505f150853fa7f5eb21",
-    "url": "/ipgs/js/browser.e4791fe0.js"
+    "revision": "d640734510814697c244",
+    "url": "/ipgs/js/browser.8298f9fd.js"
   },
   {
     "revision": "6a68d4b3204a222dfb01",
@@ -120,43 +124,43 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-2d0a3369.89afb4b2.js"
   },
   {
-    "revision": "1ed43764d6328f8ce43c",
-    "url": "/ipgs/js/chunk-2d0cc5ba.fdc5f691.js"
+    "revision": "2a74d1cac658629ca5d8",
+    "url": "/ipgs/js/chunk-2d0cc5ba.77f44372.js"
   },
   {
-    "revision": "84b8ed1afcec435f8124",
-    "url": "/ipgs/js/chunk-2d207367.83ee9e0e.js"
+    "revision": "0838f55f0b8b442312ec",
+    "url": "/ipgs/js/chunk-2d207367.1075da02.js"
   },
   {
-    "revision": "01485ae58621643522d0",
-    "url": "/ipgs/js/chunk-2d207f75.e53f46ca.js"
+    "revision": "8288232c47faf50ac96e",
+    "url": "/ipgs/js/chunk-2d207f75.60a1bca9.js"
   },
   {
-    "revision": "5f536ff99b0451ac054c",
-    "url": "/ipgs/js/chunk-2d2107ec.4eb48cd5.js"
+    "revision": "2e2eb4c576d9b59079eb",
+    "url": "/ipgs/js/chunk-2d2107ec.5e5c6ae9.js"
   },
   {
-    "revision": "bd9963ae7abe780e37fe",
-    "url": "/ipgs/js/chunk-2d226c5a.2654805a.js"
+    "revision": "062b41259e227d7d3569",
+    "url": "/ipgs/js/chunk-2d226c5a.766eef6e.js"
   },
   {
-    "revision": "cef0651ebf89f1acefd9",
-    "url": "/ipgs/js/chunk-bdccffe8.3a61615f.js"
+    "revision": "ca7db5ce710976e173b1",
+    "url": "/ipgs/js/chunk-bdccffe8.bb31cc56.js"
   },
   {
-    "revision": "95b5f09ebbd39d0a2f49",
+    "revision": "963b7a3e6014daf1e1ae",
     "url": "/ipgs/js/chunk-vendors.d685eae5.js"
   },
   {
-    "revision": "a203224dfb57d7af21d1",
-    "url": "/ipgs/js/network.98e2b34d.js"
+    "revision": "4479f418be83377da74d",
+    "url": "/ipgs/js/network.4ec68a39.js"
   },
   {
     "revision": "fdd89eb6e6f3f1c1694f20f0cde840f2",
     "url": "/ipgs/manifest.json"
   },
   {
-    "revision": "735ab4f94fbcd57074377afca324c813",
+    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
     "url": "/ipgs/robots.txt"
   },
   {
@@ -164,7 +168,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/solid-auth-login/popup.html"
   },
   {
-    "revision": "c3c2ce2c896df9f04b37cb65c4309f5c",
+    "revision": "6515e8a860bb8eedba3299f5b73e3bb6",
     "url": "/ipgs/workers/worker.js"
   }
 ]);
