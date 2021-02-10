@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-input-group class="mt-3">
+    <b-input-group class="mt-3" v-if="new_graph_name != null">
       <b-form-input  v-model="new_graph_name" placeholder="New Graph Name"></b-form-input>
       <b-input-group-append>
         <b-button variant="info" @click="createNew">create</b-button>
@@ -27,7 +27,7 @@ export default {
     return {
       folder: {folders:[], files: []},
       url: "",
-      new_graph_name : ""
+      new_graph_name : null
     }
   },
   created(){
@@ -35,21 +35,17 @@ export default {
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       console.log(this.url)
-      //  if(this.url != 'new'){
-      this.read(this.url)
-      // }else{
-      //   this.new_graph_name = "new_graph_name"
-      // }
+      if(this.url != 'new'){
+        this.read(this.url)
+      }else{
+        this.new_graph_name = "new_graph_name"
+      }
     }
   },
   methods: {
     createNew(){
-      if(this.new_graph_name.length>0){
       let new_file_url = this.url+this.new_graph_name+'.json'
       this.$router.push({ path: 'network', query: { url: new_file_url } })
-    }else{
-      alert("If you want to create a Graph, you must provide a name !")
-    }
     },
     async read(item) {
       if( item.type == 'folder' ){

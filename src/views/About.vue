@@ -1,7 +1,25 @@
 <template>
-  <div class="about">
-    <h1>This is a portfolio app based on Solid Specification , made with vuejs</h1>
+  <b-container>
+    <h4>InterPlanetary Graph System</h4>
 
-    <a href="https://github.com/scenaristeur/portfolio/" target="_blank">Source Code</a>
-  </div>
+    <p>
+      Ipgs helps you store your ideas as mindmaps  on your <a href="https://forum.solidproject.org/" target="_blank">Solid Pod</a>.
+    </p>
+
+
+    <p>
+      <b-button to="/">Graph</b-button> <b-button to="/browser">Browser</b-button>
+    </p>
+
+    <p>
+      <a href="https://github.com/scenaristeur/ipgs/" target="_blank">Source Code</a>
+    </p>
+
+
+
+
+
+
+    <br>
+  </b-container>
 </template>

@@ -2,8 +2,8 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand to="/">IPGS 1</b-navbar-brand>
-      <Menu v-if="webId != null"/>
-      <SolidLoginButton v-else />
+      <!-- <Menu v-if="webId != null"/>
+      <SolidLoginButton v-else /> -->
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
@@ -48,7 +48,7 @@ export default {
   name: "Navbar",
   components: {
     // HelloWorld,
-    'Menu': () => import('@/components/layout/Menu'),
+  //  'Menu': () => import('@/components/layout/Menu'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
   },
   computed: mapState({

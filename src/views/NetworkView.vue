@@ -27,10 +27,10 @@
 
 <!-- https://github.com/a62527776a/vue-floating-action-button/blob/master/readme.en.md -->
 <vue-fab mainBtnColor="#3599DB">
-  <fab-item @clickItem="clickItem" :idx="0" title="add" icon="add" />
-  <fab-item @clickItem="clickItem" :idx="1" title="https" icon="https" />
-  <fab-item @clickItem="clickItem" :idx="2" title="edit" icon="edit" />
+  <fab-item @clickItem="clickItem" :idx="0" title="browser" icon="folder" />
+  <fab-item @clickItem="clickItem" :idx="1" title="about" icon="question" />
 </vue-fab>
+<!-- <fab-item @clickItem="clickItem" :idx="1" title="https" icon="https" />-->
 
 <NodeModal v-model="nodeData" @ok="saveNode"/>
 <EdgeModal v-model="edgeData" @ok="saveEdge"/>
@@ -150,6 +150,16 @@ export default {
     },
     clickItem(item){
       console.log('item',item)
+      switch (item.idx) {
+        case 0:
+        this.$router.push({ path: 'browser' })
+        break;
+        case 1:
+        this.$router.push({ path: 'about' })
+        break;
+        default:
+
+      }
     }
   }
 }
