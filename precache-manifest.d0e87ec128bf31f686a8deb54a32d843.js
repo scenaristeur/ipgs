@@ -36,15 +36,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/solid.png"
   },
   {
-    "revision": "d444f19592662adc1834",
-    "url": "/ipgs/css/app.483b1e96.css"
+    "revision": "d485e8098294b16063a4",
+    "url": "/ipgs/css/app.1c314d26.css"
   },
   {
     "revision": "95b5f09ebbd39d0a2f49",
     "url": "/ipgs/css/chunk-vendors.7e8b8d45.css"
   },
   {
-    "revision": "4663bb0bd07e18494192",
+    "revision": "87a0eab36e63a9c6b896",
     "url": "/ipgs/css/network.b68fb52e.css"
   },
   {
@@ -100,7 +100,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "2c6e9cf140a9105fb732d061f8b22fb8",
+    "revision": "d673c30b505d8adb2fa41f694cf28118",
     "url": "/ipgs/index.html"
   },
   {
@@ -108,8 +108,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/about.09c70fa7.js"
   },
   {
-    "revision": "d444f19592662adc1834",
-    "url": "/ipgs/js/app.ce13719a.js"
+    "revision": "d485e8098294b16063a4",
+    "url": "/ipgs/js/app.d52f22af.js"
   },
   {
     "revision": "68bd36deff0a1f13a2f9",
@@ -120,8 +120,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/browser~network.b97d14f2.js"
   },
   {
-    "revision": "427c7883c2482369b0f7",
-    "url": "/ipgs/js/chunk-028afe3a.79a8b1d8.js"
+    "revision": "febd17ba260f2699416b",
+    "url": "/ipgs/js/chunk-08004dc9.6aed2c59.js"
   },
   {
     "revision": "6eac4f74c7200cbf49bd",
@@ -132,8 +132,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-2d0cc5ba.77f44372.js"
   },
   {
-    "revision": "5e66d7fc5e57d8b94d89",
-    "url": "/ipgs/js/chunk-2d207f75.fbbfedd0.js"
+    "revision": "77129001f443ed3b19e0",
+    "url": "/ipgs/js/chunk-2d207f75.24f827eb.js"
   },
   {
     "revision": "2e2eb4c576d9b59079eb",
@@ -152,8 +152,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-vendors.d685eae5.js"
   },
   {
-    "revision": "4663bb0bd07e18494192",
-    "url": "/ipgs/js/network.264eae43.js"
+    "revision": "87a0eab36e63a9c6b896",
+    "url": "/ipgs/js/network.4bd01eb9.js"
   },
   {
     "revision": "fdd89eb6e6f3f1c1694f20f0cde840f2",
