@@ -36,7 +36,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/solid.png"
   },
   {
-    "revision": "5cbb8ea06009881bccf1",
+    "revision": "d444f19592662adc1834",
     "url": "/ipgs/css/app.483b1e96.css"
   },
   {
@@ -44,7 +44,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/css/chunk-vendors.7e8b8d45.css"
   },
   {
-    "revision": "dd1adc18e3efd778112c",
+    "revision": "4663bb0bd07e18494192",
     "url": "/ipgs/css/network.b68fb52e.css"
   },
   {
@@ -100,7 +100,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "0640a3a1690b1e45ae5f5efb9f47b1d4",
+    "revision": "2c6e9cf140a9105fb732d061f8b22fb8",
     "url": "/ipgs/index.html"
   },
   {
@@ -108,8 +108,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/about.09c70fa7.js"
   },
   {
-    "revision": "5cbb8ea06009881bccf1",
-    "url": "/ipgs/js/app.0a035df9.js"
+    "revision": "d444f19592662adc1834",
+    "url": "/ipgs/js/app.ce13719a.js"
   },
   {
     "revision": "68bd36deff0a1f13a2f9",
@@ -152,8 +152,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-vendors.d685eae5.js"
   },
   {
-    "revision": "dd1adc18e3efd778112c",
-    "url": "/ipgs/js/network.9ee179e0.js"
+    "revision": "4663bb0bd07e18494192",
+    "url": "/ipgs/js/network.264eae43.js"
   },
   {
     "revision": "fdd89eb6e6f3f1c1694f20f0cde840f2",

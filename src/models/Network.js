@@ -26,22 +26,22 @@ let default_options = {
       "@id": "#nodes",
       "@type": "rdfs:Set",
       '@graph':[
-        {'@id': "#NodeOne", '@type': 'ipgs:Node', 'rdfs:label': "One"},
-        {'@id': "#NodeTwo", '@type': 'ipgs:Node', 'rdfs:label': "Two"}
+        // {'@id': "#NodeOne", '@type': 'ipgs:Node', 'rdfs:label': "One"},
+        // {'@id': "#NodeTwo", '@type': 'ipgs:Node', 'rdfs:label': "Two"}
       ]
     },
     {
       "@id": "#edges",
       "@type": "rdfs:Set",
       '@graph':[
-        {
-          '@id': "#EdgeOne",
-          '@type': 'ipgs:Edge',
-          'ipgs:from': {'@id': '#nodeOne'},
-          'ipgs:to': {'@id': '#NodeTwo'},
-          'rdfs:label': "First Edge"
-        },
-        {'@id': "#EdgeTwo", '@type': 'ipgs:Edge', 'ipgs:from': {'@id': '#NodeTwo'}, 'ipgs:to': {'@id': '#NodeOne'}, 'rdfs:label': "Second Edge"}
+        // {
+        //   '@id': "#EdgeOne",
+        //   '@type': 'ipgs:Edge',
+        //   'ipgs:from': {'@id': '#nodeOne'},
+        //   'ipgs:to': {'@id': '#NodeTwo'},
+        //   'rdfs:label': "First Edge"
+        // },
+        // {'@id': "#EdgeTwo", '@type': 'ipgs:Edge', 'ipgs:from': {'@id': '#NodeTwo'}, 'ipgs:to': {'@id': '#NodeOne'}, 'rdfs:label': "Second Edge"}
       ]
     },
   ],
@@ -102,6 +102,8 @@ export default class NetWork extends Thing {
   }
 
   async save(){
+    this['@graph'][0]['@graph'] = []
+    this['@graph'][1]['@graph'] = []
     this.nodes.forEach((n) => {
       //  let n_clone = n.clone()
       let n_clone = {}

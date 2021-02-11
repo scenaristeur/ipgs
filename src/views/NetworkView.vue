@@ -30,6 +30,7 @@
 <vue-fab mainBtnColor="#3599DB">
   <fab-item @clickItem="clickItem" :idx="0" title="browser" icon="folder" />
   <fab-item @clickItem="clickItem" :idx="1" title="about" icon="question" />
+  <fab-item @clickItem="clickItem" :idx="2" title="share" icon="share" />
 </vue-fab>
 <!-- <fab-item @clickItem="clickItem" :idx="1" title="https" icon="https" />-->
 
@@ -94,12 +95,12 @@ export default {
       console.log("onCommand",data)
       switch (data.type) {
         case 'triplet':
-          this.saveNode({id: data.value.subject, label: data.value.subject})
-          this.saveNode({id: data.value.object, label: data.value.object})
-          this.saveEdge({id: uuidv4(), from: data.value.subject, to: data.value.object, label: data.value.predicate})
-          break;
+        this.saveNode({id: data.value.subject, label: data.value.subject})
+        this.saveNode({id: data.value.object, label: data.value.object})
+        this.saveEdge({id: uuidv4(), from: data.value.subject, to: data.value.object, label: data.value.predicate})
+        break;
         default:
-          console.log("TODO",data)
+        console.log("TODO",data)
       }
     },
     onClick(){
@@ -184,6 +185,19 @@ export default {
         break;
         case 1:
         this.$router.push({ path: 'about' })
+        break;
+        case 2:
+        if (navigator.share) {
+          navigator.share({
+            title: 'IPGS',
+            text: 'Check out this IPGS graph.',
+            url: 'https://scenaristeur.github.io/ipgs/?url='+this.url,
+          })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+        }else{
+          console.log("no share")
+        }
         break;
         default:
 
