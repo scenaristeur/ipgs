@@ -1,5 +1,27 @@
 <template>
-  <b-form-input v-model="main_input" v-on:keyup.enter="onEnter" placeholder="First predicate Second,"></b-form-input>
+  <div>
+    <b-form-input
+    id="input"
+    v-model="main_input"
+    v-on:keyup.enter="onEnter"
+    title="type three words followed by a comma"
+    placeholder="Subject link Object,"></b-form-input>
+
+    <b-tooltip target="input" size="lg" fallback-placement='flip' variant="info">
+      Type here three groups of words followed by a comma, like: <br>
+      <div variant="danger">Bob knows Alice,</div>
+        <p text-variant="light">"my car" is "light blue",</p>
+      <!-- or a command starting with / like
+      <p>
+      <ul variant="light">
+        <li>/new</li>
+        <li>/export</li>
+        <li>/browser or /b</li>
+      </ul>
+    </p> -->
+    </b-tooltip>
+  </div>
+
 </template>
 
 <script>
@@ -19,10 +41,11 @@ export default {
       if (inputValue.length > 0){
         var inputObject = this.getInputType(inputValue)
         console.log("inputObject",inputObject);
-      //  this.traiteInput(inputObject);
-      //  this.updateInput(inputObject.inputNew);
-       this.$emit('onCommand', inputObject)
-       this.main_input = inputObject.inputNew
+        //  this.traiteInput(inputObject);
+        //  this.updateInput(inputObject.inputNew);
+        // this.$emit('onCommand', inputObject)
+        this.$store.commit('ipgs/setInputObject', inputObject)
+        this.main_input = inputObject.inputNew
       }
 
     },
@@ -164,7 +187,7 @@ export default {
       return result;
     },
     catchTriplet(triplet){
-       console.log(triplet)
+      console.log(triplet)
       // var subject = triplet.value.subject;
       // var predicate = triplet.value.predicate;
       // var object = triplet.value.object;
@@ -230,7 +253,7 @@ export default {
       // console.log("EDGE",edge)
       //  console.log("OK",autofit,autofocus)
       //this.network.fit();
-    //  fitAndFocus(sujetNode[0].id);
+      //  fitAndFocus(sujetNode[0].id);
 
     },
     catchCommande(commande){
@@ -248,14 +271,14 @@ export default {
         case "/export":
         case "/exportJson":
         console.log("exportjson")
-      //  this.exportJson(this.network)
+        //  this.exportJson(this.network)
         //this.exportJson();
         //  this.agentInput.send('agentGraph', {type: 'exportJson'})
         //this.agentInput.send("agentVis", {type: 'exportJson'});
         break;
         case "/t":
         console.log("exportTtl")
-      //  this.exportTtl(this.network)
+        //  this.exportTtl(this.network)
         //  this.exportTtl(this.network,this);
         //  this.agentInput.send('agentGraph', {type:'exportTtl'}); // , what: 'network', to: 'agentDialogs', where: 'inputTextToSave'
         //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
@@ -280,8 +303,8 @@ export default {
         break;
         case "/r":
         console.log("reglages editor");
-      //  const reglagesDialog = new mdc.dialog.MDCDialog(document.getElementById('reglages_dialog'));
-      //  reglagesDialog.open();
+        //  const reglagesDialog = new mdc.dialog.MDCDialog(document.getElementById('reglages_dialog'));
+        //  reglagesDialog.open();
         //  document.getElementById('select-pod-popUp').style.display = 'block';
         break;
         case "/n":

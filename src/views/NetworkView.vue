@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CommandInput @onCommand="onCommand"/>
+
     <network ref="network"
     class="wrapper"
     :nodes="nodes"
@@ -46,13 +46,14 @@ import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 import { v4 as uuidv4 } from 'uuid';
+import { mapState } from 'vuex';
 
 export default {
   name:"NetworkView",
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
-    'CommandInput': () => import('@/components/layout/CommandInput'),
+
 
   },
   data() {
@@ -91,7 +92,7 @@ export default {
 
   },
   methods: {
-    onCommand(data){
+    onInputObjectChange(data){
       console.log("onCommand",data)
       switch (data.type) {
         case 'triplet':
@@ -203,7 +204,15 @@ export default {
 
       }
     }
-  }
+  },
+  watch:{
+    inputObject(){
+      this.onInputObjectChange(this.inputObject)
+    }
+  },
+  computed: mapState({
+    inputObject: s => s.ipgs.inputObject
+  }),
 }
 </script>
 

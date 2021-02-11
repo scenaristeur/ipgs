@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <Navbar />
+
+      <Navbar size="sm" />
+    <!-- <b-button variant="outline-success">Button</b-button>
+    <b-button variant="info">Button</b-button> -->
+
+
     <!-- <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
@@ -31,6 +36,11 @@ export default {
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       this.$router.push(({ name: 'Network', query: { url: this.url } }))
+    }
+  },
+  methods: {
+    onCommand(data) {
+      console.log(data)
     }
   },
   computed: mapState({
