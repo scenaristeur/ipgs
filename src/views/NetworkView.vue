@@ -130,6 +130,7 @@ export default {
         }
         console.log(load)
         if(load == true){
+          console.log("data",data)
           this.network.init( data )
           console.log("network", this.network)
           this.nodes = this.network.visRepresentation.nodes
@@ -171,12 +172,14 @@ export default {
       callback()
     },
     saveNode(nodeData){
+      console.log(nodeData)
       var index = this.nodes.findIndex(x => x.id==nodeData.id);
       index === -1 ? this.nodes.push(nodeData) : Object.assign(this.nodes[index], nodeData)
       this.network.visRepresentation.nodes = this.nodes
       this.network.save()
     },
     saveEdge(e){
+      console.log(e)
       var index = this.edges.map(x => { return x.id; }).indexOf(e.id);
       if(index > -1){ this.edges[index].label = e.label }else{ this.edges.push(e) }
       this.network.visRepresentation.edges = this.edges

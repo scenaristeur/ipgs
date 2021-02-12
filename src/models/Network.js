@@ -62,6 +62,7 @@ export default class NetWork extends Thing {
   }
 
   init(data){
+    console.log(data)
     Object.assign(this, data)
     let nodes = this.jsonldRepresentation['@graph'][0]['@graph']
     let edges = this.jsonldRepresentation['@graph'][1]['@graph']
