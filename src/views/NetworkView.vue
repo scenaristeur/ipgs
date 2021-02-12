@@ -6,6 +6,7 @@
     :nodes="nodes"
     :edges="edges"
     @click="onClick"
+    @select-node="onSelectNode"
     :options="options">
   </network>
   <!--
@@ -40,6 +41,7 @@
 </template>
 
 <script>
+// https://github.com/r3code/vue-vis-network
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import Network from '@/models/Network.js'
 import auth from 'solid-auth-client';
@@ -53,8 +55,6 @@ export default {
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
-
-
   },
   data() {
     return {
@@ -92,6 +92,10 @@ export default {
 
   },
   methods: {
+    onSelectNode(p){
+      console.log(p.nodes[0])
+      this.$store.commit('ipgs/setCommandInput', p.nodes[0]+' ')
+    },
     onInputObjectChange(data){
       console.log("onCommand",data)
       switch (data.type) {

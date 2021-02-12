@@ -10,27 +10,28 @@
     <b-tooltip target="input" size="lg" fallback-placement='flip' variant="info">
       Type here three groups of words followed by a comma, like: <br>
       <div variant="danger">Bob knows Alice,</div>
-        <p text-variant="light">"my car" is "light blue",</p>
+      <p text-variant="light">"my car" is "light blue",</p>
       <!-- or a command starting with / like
       <p>
       <ul variant="light">
-        <li>/new</li>
-        <li>/export</li>
-        <li>/browser or /b</li>
-      </ul>
-    </p> -->
-    </b-tooltip>
-  </div>
+      <li>/new</li>
+      <li>/export</li>
+      <li>/browser or /b</li>
+    </ul>
+  </p> -->
+</b-tooltip>
+</div>
 
 </template>
 
 <script>
+//import { mapState } from 'vuex';
 //https://github.com/scenaristeur/spoggy-simple/blob/cc3738baecea9ee6b3f87f81a70f69e0090cf658/js/spoggy.js#L38
 export default {
   name: 'CommandInput',
   data() {
     return {
-      main_input: "",
+        main_input: "",
       commandHistory: []
     }
   },
@@ -47,7 +48,6 @@ export default {
         this.$store.commit('ipgs/setInputObject', inputObject)
         this.main_input = inputObject.inputNew
       }
-
     },
     getInputType(iv){
       var inputObject = {};
@@ -338,7 +338,22 @@ export default {
         return false;
       }
     }
-  }
+  },
+  watch:{
+    commandInput(){
+      console.log(this.commandInput)
+      this.main_input = this.commandInput
+    }
+  },
+  // computed: mapState({
+  //   main_input: s => s.ipgs.main_input
+  // }),
+  computed: {
+    commandInput: {
+        get () { return this.$store.state.ipgs.commandInput},
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+    }
+}
 
 }
 </script>

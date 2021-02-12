@@ -2,7 +2,8 @@
 
 const state = () => ({
   inputObject: null,
-//  storage: null
+  commandInput: ""
+  //  storage: null
 })
 
 // getters
@@ -42,6 +43,11 @@ const mutations = {
     console.log(io)
     state.inputObject = io
   },
+  setCommandInput(state, text){
+    console.log(text)
+    text = text.trim()
+    state.commandInput = text.indexOf(' ') >= 0 ? '"'+text+'" ' : text+" "
+  }
 
 }
 
