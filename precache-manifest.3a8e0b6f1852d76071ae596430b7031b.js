@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4a2471c0ed2ab683bd9fe1f97d4237e4",
+    "revision": "93742bd9170f3492db867626d12714be",
     "url": "/ipgs/404.html"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/logo.png"
   },
   {
-    "revision": "4f94faebfb322551b9274498d0453767",
+    "revision": "09dd56d36dbdd5f4b429995fda7d83f9",
     "url": "/ipgs/assets/organization.svg"
   },
   {
@@ -36,16 +36,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/solid.png"
   },
   {
-    "revision": "e74671aaa8c80903838a",
-    "url": "/ipgs/css/app.1c314d26.css"
+    "revision": "17ab12b41183ce797e7b",
+    "url": "/ipgs/css/app.79a3cd3c.css"
   },
   {
-    "revision": "95b5f09ebbd39d0a2f49",
-    "url": "/ipgs/css/chunk-vendors.7e8b8d45.css"
+    "revision": "963b7a3e6014daf1e1ae",
+    "url": "/ipgs/css/chunk-vendors.6245eba3.css"
   },
   {
-    "revision": "87a0eab36e63a9c6b896",
-    "url": "/ipgs/css/network.b68fb52e.css"
+    "revision": "2f7cb7d9b8767ea578bb",
+    "url": "/ipgs/css/network.c1c03350.css"
   },
   {
     "revision": "a1a2d01bcd034270a3bc92176edfb66c",
@@ -100,7 +100,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "cf2b127ba56a7bd51d49e86017bce0b6",
+    "revision": "f345fec228b9abd88778ee729a37397f",
     "url": "/ipgs/index.html"
   },
   {
@@ -108,20 +108,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/about.4928429e.js"
   },
   {
-    "revision": "e74671aaa8c80903838a",
-    "url": "/ipgs/js/app.4a84ca8a.js"
+    "revision": "17ab12b41183ce797e7b",
+    "url": "/ipgs/js/app.f8de85de.js"
   },
   {
-    "revision": "68bd36deff0a1f13a2f9",
-    "url": "/ipgs/js/browser.f77a9bf7.js"
+    "revision": "df459b374a6cd17cc71d",
+    "url": "/ipgs/js/browser.ad864f74.js"
   },
   {
     "revision": "6a68d4b3204a222dfb01",
     "url": "/ipgs/js/browser~network.b97d14f2.js"
   },
   {
-    "revision": "febd17ba260f2699416b",
-    "url": "/ipgs/js/chunk-08004dc9.6aed2c59.js"
+    "revision": "bcd531a3e5e2f19fd4be",
+    "url": "/ipgs/js/chunk-08004dc9.786daf9a.js"
   },
   {
     "revision": "6eac4f74c7200cbf49bd",
@@ -140,27 +140,27 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-2d2107ec.5e5c6ae9.js"
   },
   {
-    "revision": "7a1a4903ea9554dc0d0d",
-    "url": "/ipgs/js/chunk-2d226c5a.49644029.js"
+    "revision": "062b41259e227d7d3569",
+    "url": "/ipgs/js/chunk-2d226c5a.766eef6e.js"
   },
   {
-    "revision": "00458d6c202bb8f70275",
-    "url": "/ipgs/js/chunk-bdccffe8.4de1ffda.js"
+    "revision": "ca7db5ce710976e173b1",
+    "url": "/ipgs/js/chunk-bdccffe8.bb31cc56.js"
   },
   {
-    "revision": "95b5f09ebbd39d0a2f49",
+    "revision": "963b7a3e6014daf1e1ae",
     "url": "/ipgs/js/chunk-vendors.d685eae5.js"
   },
   {
-    "revision": "87a0eab36e63a9c6b896",
-    "url": "/ipgs/js/network.4bd01eb9.js"
+    "revision": "2f7cb7d9b8767ea578bb",
+    "url": "/ipgs/js/network.9c181867.js"
   },
   {
     "revision": "fdd89eb6e6f3f1c1694f20f0cde840f2",
     "url": "/ipgs/manifest.json"
   },
   {
-    "revision": "735ab4f94fbcd57074377afca324c813",
+    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
     "url": "/ipgs/robots.txt"
   },
   {
@@ -168,7 +168,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/solid-auth-login/popup.html"
   },
   {
-    "revision": "c3c2ce2c896df9f04b37cb65c4309f5c",
+    "revision": "6515e8a860bb8eedba3299f5b73e3bb6",
     "url": "/ipgs/workers/worker.js"
   }
 ]);
