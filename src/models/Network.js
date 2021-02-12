@@ -1,110 +1,78 @@
 import Thing from './Thing.js'
-//import VCardContext from '@/models/Vcard.jsonld.js'
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 
-let default_options = {
-  "@context":{
-    // "owl":"http://www.w3.org/2002/07/owl#",
-    // "as":"https://www.w3.org/ns/activitystreams",
-    // "schema":"http://schema.org/",
-    // "life": "http://purl.org/vocab/lifecycle/schema#",
-    terms: "http://purl.org/dc/terms/",
-    rdfs: "http://www.w3.org/2000/01/rdf-schema#",
-    // dcm: "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
-    // ldp: "http://www.w3.org/ns/ldp#",
-    // json: "http://www.w3.org/ns/iana/media-types/application/json#",
-    motifs: "http://purl.org/net/wf-motifs#",
-    ipgs: "https://scenaristeur.github.io/ipgs#"
-  },
-  '@id': '',
-  'rdfs:label': "",
-  '@type': "motifs:DataVisualization",
-  '@graph' : [
-    {
-      "@id": "#nodes",
-      "@type": "rdfs:Set",
-      '@graph':[
-        // {'@id': "#NodeOne", '@type': 'ipgs:Node', 'rdfs:label': "One"},
-        // {'@id': "#NodeTwo", '@type': 'ipgs:Node', 'rdfs:label': "Two"}
-      ]
-    },
-    {
-      "@id": "#edges",
-      "@type": "rdfs:Set",
-      '@graph':[
-        // {
-        //   '@id': "#EdgeOne",
-        //   '@type': 'ipgs:Edge',
-        //   'ipgs:from': {'@id': '#nodeOne'},
-        //   'ipgs:to': {'@id': '#NodeTwo'},
-        //   'rdfs:label': "First Edge"
-        // },
-        // {'@id': "#EdgeTwo", '@type': 'ipgs:Edge', 'ipgs:from': {'@id': '#NodeTwo'}, 'ipgs:to': {'@id': '#NodeOne'}, 'rdfs:label': "Second Edge"}
-      ]
-    },
-  ],
-  nodes:[],
-  edges:[]
-  // 'vcard:given-name': "",
-  // 'vcard:family-name': "",
-  //  'vcard:hasPhoto': 'https://image.flaticon.com/icons/svg/149/149992.svg'
-
-}
-//https://raw.githubusercontent.com/lanthaler/vCardOntology/master/Vcard.jsonld
-
 export default class NetWork extends Thing {
-  constructor(options = default_options) {
+  constructor() {
     super()
-    // assign context
-    //  Object.assign(this.jsonld['@context'], VCardContext)
-    // default
+    this.visRepresentation = {nodes:[], edges: []}
+    this.jsonldRepresentation = {
+      '@context': {
+        // "owl":"http://www.w3.org/2002/07/owl#",
+        // "as":"https://www.w3.org/ns/activitystreams",
+        // "schema":"http://schema.org/",
+        // "life": "http://purl.org/vocab/lifecycle/schema#",
+        terms: "http://purl.org/dc/terms/",
+        rdfs: "http://www.w3.org/2000/01/rdf-schema#",
+        // dcm: "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+        // ldp: "http://www.w3.org/ns/ldp#",
+        // json: "http://www.w3.org/ns/iana/media-types/application/json#",
+        motifs: "http://purl.org/net/wf-motifs#",
+        ipgs: "https://scenaristeur.github.io/ipgs#"
+      },
+      '@id': 'fakeId',
+      'rdfs:label': "",
+      '@type': "motifs:DataVisualization",
+      '@graph': [
+        {'@id': "#NodeOne", '@type': 'ipgs:Node', 'rdfs:label': "One"},
+        {'@id': "#NodeTwo", '@type': 'ipgs:Node', 'rdfs:label': "Two"},
+        {
+          '@id': "#EdgeOne",
+          '@type': 'ipgs:Edge',
+          'ipgs:from': {'@id': '#nodeOne'},
+          'ipgs:to': {'@id': '#NodeTwo'},
+          'rdfs:label': "First Edge"
+        },
+        {'@id': "#EdgeTwo", '@type': 'ipgs:Edge', 'ipgs:from': {'@id': '#NodeTwo'}, 'ipgs:to': {'@id': '#NodeOne'}, 'rdfs:label': "Second Edge"}
 
 
-    // assign options
-    Object.assign(this, options)
-
-
-    //this.jsonld['@type'] = "vcard:VCard",
-    //this.jsonld['vcard:hasName'] = "__NEW__vcard:Name__"
-
-
-    // this.basic_fields = [
-    //   this.picture = 'https://image.flaticon.com/icons/svg/149/149992.svg',
-    //   this.name = '',
-    //   this.birth = '',
-    //   this.email = '',
-    //   this.phone = '',
-    //   this.nationality = '',
-    // ]
-
-    //   this['@context'] = {
-    //     as: "https://www.w3.org/ns/activitystreams",
-    //     schema: "http://schema.org/"
-    //   },
-    //   this['@id'] = null
-    //   this['@type'] = "Vcard"
-    //   this['schema:name'] = "__NEW__VCARD__"
+      ]
+    }
   }
 
   setId(id){
-    this['@id'] = id
-    this['@context']['@base'] = id
+    this.jsonldRepresentation['@id'] = id
+    this.jsonldRepresentation['@context']['@base'] = id
+    console.log(JSON.stringify(this.jsonldRepresentation))
+  }
+
+  getVisRepresentation(){
+    console.log("must convert this to vis", this.visRepresentation)
+    return this.visRepresentation
+  }
+
+  getJsonldRepresentation(){
+    console.log("return jsonld representation",this.jsonldRepresentation)
+    return this.jsonldRepresentation
+  }
+
+  log(){
+    console.log(this)
   }
 
   init(data){
     Object.assign(this, data)
-    let nodes = this['@graph'][0]['@graph']
-    let edges = this['@graph'][1]['@graph']
+    let nodes = this.jsonldRepresentation['@graph'][0]['@graph']
+    let edges = this.jsonldRepresentation['@graph'][1]['@graph']
     console.log(nodes)
     console.log(edges)
   }
 
   async save(){
-    this['@graph'][0]['@graph'] = []
-    this['@graph'][1]['@graph'] = []
-    this.nodes.forEach((n) => {
+    this.jsonldRepresentation['@graph'][0]['@graph'] = []
+    this.jsonldRepresentation['@graph'][1]['@graph'] = []
+    this.visRepresentation.nodes.forEach((n) => {
       //  let n_clone = n.clone()
       let n_clone = {}
       Object.assign(n_clone, n)
@@ -115,10 +83,10 @@ export default class NetWork extends Thing {
       n_clone['rdfs:label'] = n.label
       delete n_clone.id
       delete n_clone.label
-      this['@graph'][0]['@graph'].push(n_clone)
+      this.jsonldRepresentation['@graph'][0]['@graph'].push(n_clone)
     });
 
-    this.edges.forEach((e) => {
+    this.visRepresentation.edges.forEach((e) => {
       // Object.defineProperty(e, '@id', Object.getOwnPropertyDescriptor(e, 'id'));
       let e_clone = {}
       Object.assign(e_clone, e)
@@ -133,11 +101,11 @@ export default class NetWork extends Thing {
       delete e_clone.from
       delete e_clone.to
       delete e_clone.label
-      this['@graph'][1]['@graph'].push(e_clone)
+      this.jsonldRepresentation['@graph'][1]['@graph'].push(e_clone)
     });
 
-    console.log("SAVE",this['@id'], this)
-    await fc.createFile(this['@id'], JSON.stringify(this), 'application/json').then(
+    console.log("SAVE",this.jsonldRepresentation['@id'], this)
+    await fc.createFile(this.jsonldRepresentation['@id'], JSON.stringify(this), 'application/json').then(
       f => {
         console.log(f)
         //console.log(f.headers.get('location'))
@@ -147,8 +115,5 @@ export default class NetWork extends Thing {
       }
     )
   }
-
-
-
 
 }

@@ -128,8 +128,8 @@ export default {
         if(load == true){
           this.network.init( data )
           console.log("network", this.network)
-          this.nodes = this.network.nodes
-          this.edges = this.network.edges
+          this.nodes = this.network.visRepresentation.nodes
+          this.edges = this.network.visRepresentation.edges
         }
       }else{
         this.network.setId( url)
@@ -169,13 +169,13 @@ export default {
     saveNode(nodeData){
       var index = this.nodes.findIndex(x => x.id==nodeData.id);
       index === -1 ? this.nodes.push(nodeData) : Object.assign(this.nodes[index], nodeData)
-      this.network.nodes = this.nodes
+      this.network.visRepresentation.nodes = this.nodes
       this.network.save()
     },
     saveEdge(e){
       var index = this.edges.map(x => { return x.id; }).indexOf(e.id);
       if(index > -1){ this.edges[index].label = e.label }else{ this.edges.push(e) }
-      this.network.edges = this.edges
+      this.network.visRepresentation.edges = this.edges
       this.network.save()
     },
     clickItem(item){

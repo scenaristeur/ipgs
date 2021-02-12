@@ -11,6 +11,9 @@ InterPlanetary Graph System based on Solid & Ipfs
 # json-ld processor js
 - https://github.com/digitalbazaar/jsonld.js/
 
+# json class-transformer
+- https://github.com/typestack/class-transformer
+
 # jsonld fragments identifiers
 https://tools.ietf.org/html/rfc3987#section-2
 ```
