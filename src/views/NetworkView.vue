@@ -120,7 +120,7 @@ export default {
         if(node.id.startsWith('http')){
             this.load(node.id)
         }else{
-            this.$store.commit('ipgs/setCommandInput', p.nodes[0]+' ')
+            this.$store.commit('ipgs/setCommandInput', node.label+' ')
         }
       }catch(e){
         alert(e)
