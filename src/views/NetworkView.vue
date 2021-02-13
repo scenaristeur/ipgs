@@ -44,11 +44,12 @@
 // https://github.com/r3code/vue-vis-network
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import Network from '@/models/Network.js'
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc = new FC( auth )
-import { v4 as uuidv4 } from 'uuid';
-import { mapState } from 'vuex';
+import Loader from '@/util/Loader.js'
+// import auth from 'solid-auth-client';
+// import FC from 'solid-file-client'
+// const fc = new FC( auth )
+//import { v4 as uuidv4 } from 'uuid';
+//import { mapState } from 'vuex';
 
 export default {
   name:"NetworkView",
@@ -62,6 +63,7 @@ export default {
       edges: [],
       nodeData: {},
       edgeData: {},
+      loader: new Loader(),
       options: {
         edges: {
           arrows: 'to',
@@ -75,34 +77,63 @@ export default {
       inputVisible: false
     }
   },
-  created(){
+  async created(){
     console.log(this.$route)
     this.initManipulationOptions()
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       console.log(this.url)
-
-      this.read(this.url)
+      await this.load(this.url)
     }else{
+      this.storage = this.$store.state.solid.storage
+      console.log(this.storage)
+      if (this.storage != null){
+        await this.load(this.storage)
+      }
 
-      this.network = new Network()
-      this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
-      console.log("network", this.network)
+      //this.network = new Network()
+      //  this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
+      //console.log("network", this.network)
     }
-
   },
   methods: {
+    async load(url){
+      let d = new Date()
+      this.network = new Network()
+      let dat = await this.loader.load(url)
+    //  console.log("DAT",dat)
+      await this.network.hydrate(dat)
+      this.nodes = this.network.visRepresentation.nodes
+      this.edges = this.network.visRepresentation.edges
+      console.warn(d, this.nodes, this.edges)
+      //console.warn(this.network)
+    },
+
     onSelectNode(p){
+      console.log(p)
       console.log(p.nodes[0])
+      console.log(this.nodes)
+      let node = this.nodes.find(x => x.id==p.nodes[0]);
+      console.log(node)
+      //  if(node.type == 'folder' || node.type == 'file'){
+      try{
+        this.load(node.id)
+      }catch(e){
+        alert(e)
+      }
+
+      //}
       this.$store.commit('ipgs/setCommandInput', p.nodes[0]+' ')
     },
     onInputObjectChange(data){
       console.log("onCommand",data)
       switch (data.type) {
         case 'triplet':
-        this.saveNode({id: data.value.subject, label: data.value.subject})
-        this.saveNode({id: data.value.object, label: data.value.object})
-        this.saveEdge({id: uuidv4(), from: data.value.subject, to: data.value.object, label: data.value.predicate})
+        this.saveNode({id: "#"+data.value.subject.trim().split(' ').join('_'), label: data.value.subject})
+        this.saveNode({id: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.object})
+        this.saveEdge({from: "#"+data.value.subject.trim().split(' ').join('_'), to: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.predicate})
+      //  this.saveEdge({id: uuidv4(), from: "#"+data.value.subject.trim().split(' ').join('_'), to: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.predicate})
+
         break;
         default:
         console.log("TODO",data)
@@ -111,37 +142,39 @@ export default {
     onClick(){
       //this.inputVisible = true
     },
-    async read(url){
-      console.log('url',url)
-      this.network = new Network()
-      if( await fc.itemExists( url )) {
-        let  load = true
-        let data = {}
-        let file = await fc.readFile(url)
-        try{
-          data = JSON.parse(file)
-          console.log("JSONLD",data)
-          if(data['@'] != undefined){
-            load = window.confirm('Be careful this file does not seem to be a compatible JSONLD GRAPH file. Are you sure you want to replace it ???'+data);
-          }
-        }catch(e){
-          load = window.confirm('Be careful this file does not seem to be a compatible JSONLD GRAPH file. Are you sure you want to replace it ???'+file);
-
-        }
-        console.log(load)
-        if(load == true){
-          console.log("data",data)
-          this.network.init( data )
-          console.log("network", this.network)
-          this.nodes = this.network.visRepresentation.nodes
-          this.edges = this.network.visRepresentation.edges
-        }
-      }else{
-        this.network.setId( url)
-
-      }
-
-    },
+    // async read(url){
+    //   console.log('url',url)
+    //
+    //   this.network = new Network()
+    //   if( await fc.itemExists( url )) {
+    //     let  load = true
+    //     let data = {}
+    //     let file = await fc.readFile(url)
+    //     try{
+    //       data = JSON.parse(file)
+    //       console.log("JSONLD",data)
+    //       if(data['@'] != undefined){
+    //         load = window.confirm('Be careful this file does not seem to be a compatible JSONLD GRAPH file. Are you sure you want to replace it ???'+data);
+    //         // ne pas remplacer
+    //         load = false
+    //       }
+    //     }catch(e){
+    //       load = window.confirm('Be careful this file does not seem to be a compatible JSONLD GRAPH file. Are you sure you want to replace it ???'+file);
+    //       // ne pas remplacer
+    //       load = false
+    //     }
+    //     console.log(load)
+    //     if(load == true){
+    //       console.log("data",data)
+    //       this.network.init( data )
+    //       console.log("network", this.network)
+    //       this.nodes = this.network.visRepresentation.nodes
+    //       this.edges = this.network.visRepresentation.edges
+    //     }
+    //   }else{
+    //     this.network.setId( url)
+    //   }
+    // },
     initManipulationOptions() {
       let app = this
       this.options.manipulation = {
@@ -173,16 +206,19 @@ export default {
     },
     saveNode(nodeData){
       console.log(nodeData)
-      var index = this.nodes.findIndex(x => x.id==nodeData.id);
-      index === -1 ? this.nodes.push(nodeData) : Object.assign(this.nodes[index], nodeData)
-      this.network.visRepresentation.nodes = this.nodes
-      this.network.save()
+      this.network.addNodeToVis(nodeData)
+      console.log(this.network)
+      // var index = this.nodes.findIndex(x => x.id==nodeData.id);
+      // index === -1 ? this.nodes.push(nodeData) : Object.assign(this.nodes[index], nodeData)
+      // this.network.visRepresentation.nodes = this.nodes
+      // this.network.save()
     },
     saveEdge(e){
       console.log(e)
       var index = this.edges.map(x => { return x.id; }).indexOf(e.id);
       if(index > -1){ this.edges[index].label = e.label }else{ this.edges.push(e) }
       this.network.visRepresentation.edges = this.edges
+        console.log(this.network)
       this.network.save()
     },
     clickItem(item){
@@ -215,11 +251,30 @@ export default {
   watch:{
     inputObject(){
       this.onInputObjectChange(this.inputObject)
+    },
+    storage(){
+      console.log("WATCH",this.storage, this.url)
+
+      if(this.storage != null && this.url == undefined){
+        this.load(this.storage)
+
+      }
     }
+    // url(){
+    //   console.log("URL CHANGED")
+    //   this.read(this.url)
+    // }
   },
-  computed: mapState({
-    inputObject: s => s.ipgs.inputObject
-  }),
+  computed: {
+    inputObject: {
+      get () { return this.$store.state.ipgs.inputObject},
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    storage: {
+      get () { return this.$store.state.solid.storage},
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    }
+  }
 }
 </script>
 
