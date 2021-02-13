@@ -117,13 +117,17 @@ export default {
       console.log(node)
       //  if(node.type == 'folder' || node.type == 'file'){
       try{
-        this.load(node.id)
+        if(node.id.startsWith('http')){
+            this.load(node.id)
+        }else{
+            this.$store.commit('ipgs/setCommandInput', p.nodes[0]+' ')
+        }
       }catch(e){
         alert(e)
       }
 
       //}
-      this.$store.commit('ipgs/setCommandInput', p.nodes[0]+' ')
+
     },
     onInputObjectChange(data){
       console.log("onCommand",data)
