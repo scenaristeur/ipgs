@@ -147,3 +147,12 @@ https://zurb.com/playground/css3-polaroids
 - https://m-ld.org/
 - lists https://m-ld.org/news/#truth-and-just-lists
 - json-rql query jsonld https://json-rql.org/
+
+# touch
+https://codeburst.io/the-only-way-to-detect-touch-with-javascript-7791a3346685
+
+# contextmenu on visjs
+- https://github.com/almende/vis/issues/743
+
+# jsonld
+- https://medium.com/@kidehen/simple-linked-data-deployment-tutorial-using-json-ld-notation-3e753a5d44a3

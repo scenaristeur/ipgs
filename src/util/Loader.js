@@ -66,7 +66,7 @@ export default class Loader {
   async jsonParse(){
     this.file = await fc.readFile(this.url)
     this.json = JSON.parse(this.file)
-  //  console.log(this.json)
+    //  console.log(this.json)
 
     if (this.json['@id'].length == 0){
       this.json['@id'] = this.url
@@ -87,13 +87,13 @@ export default class Loader {
       await this.json['@graph'].forEach(async function(item) {
         item.id = item['@id']
         item.label = item['rdfs:label']
-      //  console.log(item['@type'], item)
+        //  console.log(item['@type'], item)
         switch (item['@type']) {
           case 'ipgs:Node':
           module.nodes.push(item)
           break;
           case 'ipgs:Edge':
-    //      console.log("edge",item)
+          //      console.log("edge",item)
           item.from = item['ipgs:from']['@id']
           item.to = item['ipgs:to']['@id']
 
@@ -103,6 +103,18 @@ export default class Loader {
           console.log('TODO', item['@type'], item)
         }
       });
+    }else{
+      console.log("no @graph in jsonld")
+      console.log(this.json)
+
+
+
+      for (const [key, value] of Object.entries(this.json)) {
+        console.log(`${key}: ${value}`);
+      }
+
+
+
     }
     console.log("LOADER NODES EDGES", this.nodes, this.edges)
 
@@ -215,6 +227,7 @@ export default class Loader {
     }
   }
   async rdfParse(){
+    let module = this
     this.dataset = await getSolidDataset(this.url, { fetch: fetch });
     console.log(this.dataset)
     await this.dataset.quads.forEach(async function (q)  {
