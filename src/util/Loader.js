@@ -93,7 +93,7 @@ export default class Loader {
           module.nodes.push(item)
           break;
           case 'ipgs:Edge':
-          console.log("edge",item)
+    //      console.log("edge",item)
           item.from = item['ipgs:from']['@id']
           item.to = item['ipgs:to']['@id']
 
