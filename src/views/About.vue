@@ -1,9 +1,9 @@
 <template>
   <b-container>
     <b-jumbotron>
- <template #header>Inter Planetary Graph System</template>
+      <template #header>Inter Planetary Graph System</template>
       <template #lead>
-      Store and share your ideas as mindmaps  on your <a href="https://forum.solidproject.org/" target="_blank">Solid Pod</a>.
+        Store and share your ideas as mindmaps  on your <a href="https://forum.solidproject.org/" target="_blank">Solid Pod</a>.
       </template>
 
       <hr class="my-4">
@@ -17,6 +17,18 @@
       <iframe width="100%" height="400px" src="https://www.youtube.com/embed/f4uKb6EnDKs?start=2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     </b-jumbotron>
+
+    <h3>Commands</h3>
+    <ul>
+      <li>
+        /n : new graph
+      </li>
+      <li>
+        /c : capture
+      </li>
+    </ul>
+
+
 
   </b-container>
 </template>

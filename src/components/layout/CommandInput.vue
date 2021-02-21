@@ -31,7 +31,7 @@ export default {
   name: 'CommandInput',
   data() {
     return {
-        main_input: "",
+      main_input: "",
       commandHistory: []
     }
   },
@@ -69,7 +69,7 @@ export default {
           inputObject.type = "commande";
           inputObject.value = iv;
           inputObject.inputNew = "";
-          this.catchCommande(inputObject)
+          //this.catchCommande(inputObject)
           break;
 
           case '.':
@@ -256,74 +256,10 @@ export default {
       //  fitAndFocus(sujetNode[0].id);
 
     },
-    catchCommande(commande){
-      console.log(commande)
-      switch(commande.value) {
-        case "/h":
-        case "/help":
-        case "/aide":
-        //console.log(this.$.dialogs)
-        console.log("help")
-        //  this.$.dialogs.$.helpPopUp.toggle();
-        //  this.agentInput.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
-        break;
-        case "/e":
-        case "/export":
-        case "/exportJson":
-        console.log("exportjson")
-        //  this.exportJson(this.network)
-        //this.exportJson();
-        //  this.agentInput.send('agentGraph', {type: 'exportJson'})
-        //this.agentInput.send("agentVis", {type: 'exportJson'});
-        break;
-        case "/t":
-        console.log("exportTtl")
-        //  this.exportTtl(this.network)
-        //  this.exportTtl(this.network,this);
-        //  this.agentInput.send('agentGraph', {type:'exportTtl'}); // , what: 'network', to: 'agentDialogs', where: 'inputTextToSave'
-        //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
-        //  this.agentInput.send("agentVis", {type: 'exportTtl'});
-        break;
-        case "/i":
-        case "/import":
-        case "/importJson":
-        console.log("import");
-        document.getElementById('import-popUp').style.display = 'block';
-        break;
-        case "/p":
-        console.log("save_to_pod");
-        document.getElementById('select-pod-popUp').style.display = 'block';
-        break;
-        case "/a":
-        console.log("open editor");
-        document.getElementById('editeur-popUp').style.display = 'block';
-        /*  const editorDialog = new mdc.dialog.MDCDialog(document.getElementById('editor_dialog'));
-        editorDialog.open();*/
-        //  document.getElementById('select-pod-popUp').style.display = 'block';
-        break;
-        case "/r":
-        console.log("reglages editor");
-        //  const reglagesDialog = new mdc.dialog.MDCDialog(document.getElementById('reglages_dialog'));
-        //  reglagesDialog.open();
-        //  document.getElementById('select-pod-popUp').style.display = 'block';
-        break;
-        case "/n":
-        console.log("new graph");
-        this.newGraph();
-        //level < 6? increaseLevel() : "";
-        break;
-        case "/l":
-        console.log("connection a la base levelgraph");
-        break;
-        case "/c":
-        //  console.log("capture_graphe");
-        this.downloadCanvas()
-        break;
-        default:
-        console.log("non traite"+ commande);
-        //  return afficheCommandes();
-      }
-    },
+    // catchCommande(commande){
+    //   console.log(commande)
+    //
+    // },
     updateInput(inputNew){
       document.getElementById('input').value = inputNew || "";
     },
@@ -350,10 +286,10 @@ export default {
   // }),
   computed: {
     commandInput: {
-        get () { return this.$store.state.ipgs.commandInput},
-        set (/*value*/) { /*this.updateTodo(value)*/ }
+      get () { return this.$store.state.ipgs.commandInput},
+      set (/*value*/) { /*this.updateTodo(value)*/ }
     }
-}
+  }
 
 }
 </script>

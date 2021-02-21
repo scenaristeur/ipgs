@@ -3,7 +3,8 @@
 const state = () => ({
   inputObject: null,
   commandInput: "",
-  history: []
+  history: [],
+//  command: ""
   //  storage: null
 })
 
@@ -51,7 +52,11 @@ const mutations = {
   },
   addToHistory(state, node){
     state.history.push(node)
-  }
+  },
+  // setCommand(state, command){
+  //   console.log(command)
+  //   state.command = command
+  // }
 
 }
 
