@@ -2,7 +2,8 @@
 
 const state = () => ({
   inputObject: null,
-  commandInput: ""
+  commandInput: "",
+  history: []
   //  storage: null
 })
 
@@ -47,6 +48,9 @@ const mutations = {
     console.log(text)
     text = text.trim()
     state.commandInput = text.indexOf(' ') >= 0 ? '"'+text+'" ' : text+" "
+  },
+  addToHistory(state, node){
+    state.history.push(node)
   }
 
 }

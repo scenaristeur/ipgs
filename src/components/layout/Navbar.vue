@@ -2,8 +2,8 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand to="/">ipgs</b-navbar-brand>
-    <CommandInput />
-<!-- <b-button @click="help">?</b-button> -->
+      <CommandInput />
+      <!-- <b-button @click="help">?</b-button> -->
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
@@ -19,13 +19,14 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/browser">Browser</b-nav-item>
+          <b-nav-item to="/history">History</b-nav-item>
           <b-nav-item to="/about">About</b-nav-item>
-            <!-- <b-nav-item href="/browser">Share</b-nav-item> -->
+          <!-- <b-nav-item href="/browser">Share</b-nav-item> -->
           <!-- <b-nav-form> -->
-            <!-- <Menu v-if="webId != null"/> -->
-            <SolidLoginButton />
-            <!-- <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button> -->
+          <!-- <Menu v-if="webId != null"/> -->
+          <SolidLoginButton />
+          <!-- <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+          <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button> -->
           <!-- </b-nav-form> -->
           <!--
           <b-nav-item-dropdown text="Lang" right>
@@ -55,7 +56,7 @@ export default {
   name: "Navbar",
   components: {
     // HelloWorld,
-  //  'Menu': () => import('@/components/layout/Menu'),
+    //  'Menu': () => import('@/components/layout/Menu'),
     'CommandInput': () => import('@/components/layout/CommandInput'),
 
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),

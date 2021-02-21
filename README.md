@@ -156,3 +156,4 @@ https://codeburst.io/the-only-way-to-detect-touch-with-javascript-7791a3346685
 
 # jsonld
 - https://medium.com/@kidehen/simple-linked-data-deployment-tutorial-using-json-ld-notation-3e753a5d44a3
+_ https://stackoverflow.com/questions/33925116/how-to-refer-to-rdf-statements-in-json-ld-how-to-statement-about-statements

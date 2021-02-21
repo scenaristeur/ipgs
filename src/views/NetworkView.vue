@@ -112,9 +112,10 @@ export default {
     onSelectNode(p){
       console.log(p)
       console.log(p.nodes[0])
-      console.log(this.nodes)
+      //console.log(this.nodes)
       let node = this.nodes.find(x => x.id==p.nodes[0]);
       console.log(node)
+      this.$store.commit('ipgs/addToHistory', node)
       //  if(node.type == 'folder' || node.type == 'file'){
       try{
         if(node.id.startsWith('http')){
