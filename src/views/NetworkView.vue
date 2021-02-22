@@ -39,15 +39,16 @@
 <NodeModal v-model="nodeData" @ok="saveNode"/>
 <EdgeModal v-model="edgeData" @ok="saveEdge"/>
 
-<editor
-height="300px"
-ref="editor"
-:content="content"
-:options="{
-  enableBasicAutocompletion: true,
-  enableSnippets: true,
-  enableLiveAutocompletion: true,
-  tabSize:2
+<b-modal id="editor-modal" size="lg">
+  <editor
+  height="300px"
+  ref="editor"
+  :content="content"
+  :options="{
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true,
+    tabSize:2
   }"
   :fontSize='14'
   :lang="'python'"
@@ -56,6 +57,7 @@ ref="editor"
   @init="editorInit">
   <div>toolbar or something</div>
 </editor>
+</b-modal>
 </div>
 </template>
 
@@ -71,6 +73,7 @@ import 'brace/ext/language_tools';
 import 'brace/mode/python.js'
 import 'brace/snippets/python.js';
 import 'brace/theme/eclipse.js';
+// ace/mode/turtle
 console.log(ace)
 
 // import auth from 'solid-auth-client';
@@ -128,7 +131,7 @@ export default {
   },
   methods: {
     editorChange(){
-
+      console.log(this.content)
     },
     editorInit(){
       console.log(this.content)
@@ -431,7 +434,7 @@ export default {
     },
 
     updateEditorFromNetwork(){
-
+      this.$bvModal.show('editor-modal')
       // var data = {
       //   nodes: network.body.data.nodes.get({
       //     filter: function (n) {
@@ -445,15 +448,18 @@ export default {
       //   }) };
       let data = {nodes: this.nodes, edges: this.edges}
       var text = JSON.stringify(data, null, 2)
-      this.$refs.editor.session.setValue(text)
-      this.$refs.editor.format  = "json";
+      //  this.$refs.editor.session.setValue(text)
+      //  this.$refs.editor.format  = "json";
+      this.content = text
       //  document.getElementById('editeur-popUp').style.display = 'block';
     },
     updateEditorFromNetworkTtl(text){
+      this.$bvModal.show('editor-modal')
       //  console.log(event, properties, senderId)
       //var text = JSON.stringify(network.body.data, null, 2)
-      this.$refs.editor.session.setValue(text)
-      this.$refs.editor.format = "ttl"
+      //  this.$refs.editor.session.setValue(text)
+      //  this.$refs.editor.format = "ttl"
+      this.content = text
       //  document.getElementById('editeur-popUp').style.display = 'block';
     },
     uniq_fast(a) {
@@ -474,7 +480,7 @@ export default {
     validRdf(string){
       // A REVOIR
       console.log(string)
-    //  console.log(network.body.data.nodes.get(string));
+      //  console.log(network.body.data.nodes.get(string));
       console.log("nettoyage "+ string);
       // transformer le noeud en noeud rdf (resource ou literal)
       // ajouter la construction du noeud, son uri, prefix, localname, type...

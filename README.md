@@ -157,3 +157,13 @@ https://codeburst.io/the-only-way-to-detect-touch-with-javascript-7791a3346685
 # jsonld
 - https://medium.com/@kidehen/simple-linked-data-deployment-tutorial-using-json-ld-notation-3e753a5d44a3
 _ https://stackoverflow.com/questions/33925116/how-to-refer-to-rdf-statements-in-json-ld-how-to-statement-about-statements
+
+# todo : visjs dataset in jsonld format
+- https://visjs.org/
+- https://visjs.github.io/vis-network/docs/network/
+- https://github.com/visjs/vis-network
+- https://visjs.github.io/vis-data/data/index.html
+- https://visjs.github.io/vis-data/data/dataset.html
+- https://visjs.github.io/vis-data/data/dataview.html
+- https://visjs.github.io/vis-data/data/datapipe.html
+- https://github.com/visjs/vis-data

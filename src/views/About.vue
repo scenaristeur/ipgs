@@ -24,6 +24,12 @@
         /n : new graph
       </li>
       <li>
+        /e : export json
+      </li>
+      <li>
+        /t : export ttl
+      </li>
+      <li>
         /c : capture
       </li>
     </ul>
