@@ -6,6 +6,8 @@
     <b-form-input v-model="value.label" autofocus v-on:keyup.enter="addNodeModal"></b-form-input>
   </b-input-group>
 
+      <b-form-select v-model="value.node_type" :options="node_types" size="sm" class="mt-3"></b-form-select>
+
   <!-- Using value -->
   <!-- <b-button v-b-toggle="'collapse-node-id'" class="m-1" variant="primary" size ="sm">Id</b-button>
   <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
@@ -45,9 +47,25 @@ export default {
   props: ['value'],
   mounted(){
     console.log(this.value)
+     this.value.node_type == undefined ? this.value.node_type = 'default' : ""
   },
+  data() {
+    return {
+      //node_type: ""
+      node_types: [
+        { value: null, text: 'Please select some item' },
+        {value: "default", text: "Default"},
+        {value: "folder", text: "Folder"},
+        {value: "file", text: "File"},
+        {value: "actor", text: "Actor"},
+        {value: "remote", text: "Remote"}
+      ]
+    }
+  },
+
   methods: {
     addNodeModal(){
+      console.log(this.value)
       this.$emit('ok', this.value)
       this.$bvModal.hide("node-popup")
     }
