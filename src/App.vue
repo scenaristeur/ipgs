@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-      <Navbar size="sm" />
+    <Navbar size="sm" />
     <!-- <b-button variant="outline-success">Button</b-button>
     <b-button variant="info">Button</b-button> -->
 
@@ -11,14 +11,13 @@
     <router-link to="/about">About</router-link> |
 
   </div> -->
-  <p v-if="webId == null">
-    To browse your POD or save graphs, please login with your WebId <SolidLoginButton />
-  </p>
+
   <transition name="slide">
     <router-view/>
   </transition>
 
   <SolidTrackSession />
+  <HelpView />
 </div>
 </template>
 <script>
@@ -29,7 +28,8 @@ export default {
   components: {
     'Navbar': () => import('@/components/layout/Navbar'),
     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
-    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+    'HelpView': () => import('@/views/HelpView'),
+    //  'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     //  'Fab': () => import('@/components/basic/Fab.vue')
   },
   created(){

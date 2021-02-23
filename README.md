@@ -174,3 +174,9 @@ _ https://stackoverflow.com/questions/33925116/how-to-refer-to-rdf-statements-in
 # share fallback
 - https://dev.to/daviddalbusco/how-to-implement-the-web-share-api-with-a-fallback-b3
 - https://www.npmjs.com/package/web-social-share
+
+# google api
+- https://github.com/tralves/vue-gdrive
+- https://github.com/lucascaires/vue-google-picker
+- https://github.com/googleworkspace/browser-samples/blob/master/drive/quickstart/index.html
+-

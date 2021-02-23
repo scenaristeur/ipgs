@@ -8,6 +8,9 @@
 
       <hr class="my-4">
 
+
+      <b-button @click="showHelp" variant="primary">Help / How to use</b-button>
+
       <ul>
         <li><a href="https://forum.solidproject.org/t/ipgs-interplanetary-graph-system/3950" target="_blank">Discussion, suggestions</a></li>
         <li>  <a href="https://github.com/scenaristeur/ipgs/" target="_blank">Source Code</a></li>
@@ -18,23 +21,17 @@
 
     </b-jumbotron>
 
-    <h3>Commands</h3>
-    <ul>
-      <li>
-        /n : new graph
-      </li>
-      <li>
-        /e : export json
-      </li>
-      <li>
-        /t : export ttl
-      </li>
-      <li>
-        /c : capture
-      </li>
-    </ul>
-
-
 
   </b-container>
 </template>
+
+<script>
+export default {
+  name: "HelpView",
+  methods: {
+    showHelp(){
+      this.$store.commit('ipgs/setInputObject', {type:'commande', value: '/h'})
+    }
+  }
+}
+</script>

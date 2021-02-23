@@ -6,12 +6,17 @@
     <b-form-input v-model="value.label" autofocus v-on:keyup.enter="addNodeModal"></b-form-input>
   </b-input-group>
 
-      <b-form-select v-model="value.node_type" :options="node_types" size="sm" class="mt-3"></b-form-select>
+  <!-- <b-form-select v-model="value.node_type" :options="node_types" size="sm" class="mt-3"></b-form-select> -->
 
   <!-- Using value -->
   <!-- <b-button v-b-toggle="'collapse-node-id'" class="m-1" variant="primary" size ="sm">Id</b-button>
   <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
   <b-button v-b-toggle="'collapse-node-expert'" class="m-1" variant="light" size="sm">Expert</b-button> -->
+
+  <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
+  <b-button v-b-toggle="'collapse-node-color'" class="m-1" variant="dark" size="sm">Color</b-button>
+
+
 
   <!-- Element to collapse -->
   <b-collapse id="collapse-node-id">
@@ -22,10 +27,18 @@
     </b-card>
   </b-collapse>
 
+  <b-collapse id="collapse-node-color">
+    <b-card>
+      <b-input-group size="sm" prepend="color">
+        <b-form-input v-model="value.color" type="color"></b-form-input>
+      </b-input-group>
+    </b-card>
+  </b-collapse>
+
   <b-collapse id="collapse-node-shape">
     <b-card>
       <b-input-group size="sm" prepend="shape">
-        <b-form-input v-model="value.id"></b-form-input>
+        <b-form-select v-model="value.shape" :options="shapes" size="sm" class="mt-3"></b-form-select>
       </b-input-group>
     </b-card>
   </b-collapse>
@@ -47,7 +60,7 @@ export default {
   props: ['value'],
   mounted(){
     console.log(this.value)
-     this.value.node_type == undefined ? this.value.node_type = 'default' : ""
+    this.value.node_type == undefined ? this.value.node_type = 'default' : ""
   },
   data() {
     return {
@@ -59,6 +72,20 @@ export default {
         {value: "file", text: "File"},
         {value: "actor", text: "Actor"},
         {value: "remote", text: "Remote"}
+      ],
+      shapes: [
+        {value: "circle", text: "circle" },
+        {value: "ellipse", text: "ellipse" },
+        {value: "database", text: "database" },
+        {value: "box", text: "box" },
+        {value: "diamond", text: "diamond" },
+        {value: "dot", text: "dot" },
+        {value: "square", text: "square" },
+        {value: "triangle", text: "triangle" },
+        {value: "triangleDown", text: "triangleDown" },
+        {value: "text", text: "text" },
+        {value: "star", text: "star" },
+        {value: "hexagon", text: "hexagon" },
       ]
     }
   },
