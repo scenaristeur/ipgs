@@ -4,7 +4,7 @@ const state = () => ({
   inputObject: null,
   commandInput: "",
   history: [],
-//  command: ""
+  //  command: ""
   //  storage: null
 })
 
@@ -51,7 +51,9 @@ const mutations = {
     state.commandInput = text.indexOf(' ') >= 0 ? '"'+text+'" ' : text+" "
   },
   addToHistory(state, node){
-    state.history.push(node)
+    const updatedHistory = state.history.filter(item => item.id !== node.id);
+    updatedHistory.push(node)    
+    state.history = updatedHistory
   },
   // setCommand(state, command){
   //   console.log(command)

@@ -5,7 +5,7 @@
     <!-- {{ history}} -->
 
     <b-list-group>
-      <b-list-group-item button v-for="h in history.reverse()" :key="h.id" @click="see(h)" >
+      <b-list-group-item button v-for="h in history" :key="h.id" @click="see(h)" >
         <img v-if="h.shape == 'image'" :src="h.image" width="20rem"/>
 
 

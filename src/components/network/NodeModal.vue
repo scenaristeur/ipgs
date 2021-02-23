@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      //node_type: ""
+      node_type: "default",
       node_types: [
         { value: null, text: 'Please select some item' },
         {value: "default", text: "Default"},

@@ -167,3 +167,10 @@ _ https://stackoverflow.com/questions/33925116/how-to-refer-to-rdf-statements-in
 - https://visjs.github.io/vis-data/data/dataview.html
 - https://visjs.github.io/vis-data/data/datapipe.html
 - https://github.com/visjs/vis-data
+
+
+# presentation
+- https://github.com/deckgo/starter-kit
+# share fallback
+- https://dev.to/daviddalbusco/how-to-implement-the-web-share-api-with-a-fallback-b3
+- https://www.npmjs.com/package/web-social-share

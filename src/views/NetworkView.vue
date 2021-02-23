@@ -49,15 +49,32 @@
     enableSnippets: true,
     enableLiveAutocompletion: true,
     tabSize:2
-  }"
-  :fontSize='14'
-  :lang="'python'"
-  :theme="'eclipse'"
-  @onChange="editorChange"
-  @init="editorInit">
-  <div>toolbar or something</div>
-</editor>
+    }"
+    :fontSize='14'
+    :lang="'python'"
+    :theme="'eclipse'"
+    @onChange="editorChange"
+    @init="editorInit">
+    <div>toolbar or something</div>
+  </editor>
 </b-modal>
+
+
+
+<web-social-share show="false">
+  <ion-icon name="logo-twitter" ariaLabel="Twitter" slot="twitter"
+            style="color: #00aced;">
+  </ion-icon>
+  <ion-icon name="mail" slot="email" ariaLabel="Email"
+            style="color: #ff8ea3;">
+  </ion-icon>
+  <ion-icon name="logo-whatsapp" ariaLabel="WhatsApp"
+            slot="whatsapp"
+            style="color: #25D366;">
+   </ion-icon>
+</web-social-share>
+
+
 </div>
 </template>
 
@@ -88,6 +105,7 @@ export default {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
     'Editor': () => import('vue2x-ace-editor'),
+    'web-social-share': () => import('web-social-share'),
   },
   data() {
     return {
@@ -111,15 +129,16 @@ export default {
     }
   },
   async created(){
-    console.log(this.$route)
+    this.options.locale = navigator.language
+  //  console.log(this.$route)
     this.initManipulationOptions()
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
-      console.log(this.url)
+    //  console.log(this.url)
       await this.load(this.url)
     }else{
       this.storage = this.$store.state.solid.storage
-      console.log(this.storage)
+      //console.log(this.storage)
       if (this.storage != null){
         await this.load(this.storage)
       }
@@ -130,6 +149,32 @@ export default {
     }
   },
   methods: {
+    newGraph(){
+      console.log("new graph");
+      // this.nodes = []
+      // this.edges = []
+      //  console.log(this.history)
+      var last = this.history.slice(-1)[0]
+      console.log(last)
+      let path = last.id
+      console.log(path)
+
+
+      var filename = prompt("What is the name of the resource ?", "Spoggy");
+      //  app.$.inputMessage.value = '';
+      if (filename == null || filename == "") {
+        //let txt = "User cancelled the prompt.";
+        return;
+      }else{
+        path = path+filename+'.json'
+        this.network = new Network()
+        this.network.setId(path)
+        this.nodes = this.network.visRepresentation.nodes
+        this.edges = this.network.visRepresentation.edges
+        console.warn(this.nodes, this.edges)
+      }
+      //  console.log(this.history)
+    },
     editorChange(){
       console.log(this.content)
     },
@@ -230,10 +275,8 @@ export default {
           //  document.getElementById('select-pod-popUp').style.display = 'block';
           break;
           case "/n":
-          console.log("new graph");
-          this.nodes = []
-          this.edges = []
-          //this.newGraph();
+
+          this.newGraph();
           //  this.$store.commit('ipgs/setCommand', "newGraph")
 
           //level < 6? increaseLevel() : "";
@@ -407,7 +450,7 @@ export default {
         data += objetWithPrefix + " " + "rdfs:label \"" + objetLabel + "\" . \n";
         listeInfos[i] = data;
         console.log(data);
-        console.log("||||||||||||||||||||||--");
+        //  console.log("||||||||||||||||||||||--");
       }
       //console.log(listeInfos);
       //console.log(listeComplementaire);
@@ -693,7 +736,7 @@ downloadCanvas(){
   tmpLink.click();
   document.body.removeChild( tmpLink );
 },
-clickItem(item){
+async clickItem(item){
   console.log('item',item)
   switch (item.idx) {
     case 0:
@@ -703,21 +746,83 @@ clickItem(item){
     this.$router.push({ path: 'about' })
     break;
     case 2:
-    if (navigator.share) {
-      navigator.share({
-        title: 'IPGS',
-        text: 'Check out this IPGS graph.',
-        url: 'https://scenaristeur.github.io/ipgs/?url='+this.url,
-      })
-      .then(() => console.log('Successful share'))
-      .catch((error) => console.log('Error sharing', error));
-    }else{
-      console.log("no share")
-    }
+    // if (navigator.share) {
+    //   navigator.share({
+    //     title: 'IPGS',
+    //     text: 'Check out this IPGS graph.',
+    //     url: 'https://scenaristeur.github.io/ipgs/?url='+this.url,
+    //   })
+    //   .then(() => console.log('Successful share'))
+    //   .catch((error) => console.log('Error sharing', error));
+    // }else{
+    //   console.log("no share")
+    // }
+    if (navigator && navigator.share) {
+    await this.shareNative();
+  } else {
+    await this.shareFallback();
+  }
     break;
     default:
 
   }
+},
+  async shareNative() {
+  //return new Promise(function(resolve)  {
+  //  const shareUrl =   `${window.location.protocol}//${window.location.host}`;
+            navigator.share({
+              title: 'IPGS',
+              text: 'Check out this IPGS graph.',
+              url: 'https://scenaristeur.github.io/ipgs/?url='+this.url,
+            })
+            .then(() => console.log('Successful share'))
+            .catch((error) => console.log('Error sharing', error));
+    // await navigator.share({
+    //   text: 'How to implement the Web Share API and a fallback',
+    //   url: shareUrl,
+    // });
+
+    //resolve();
+  //});
+
+},
+shareFallback() {
+  return new Promise( (resolve) => {
+    const webSocialShare =
+          document.querySelector('web-social-share');
+
+    if (!webSocialShare || !window) {
+      return;
+    }
+
+    const shareUrl = 'https://scenaristeur.github.io/ipgs/?url='+this.url
+        //  `${window.location.protocol}//${window.location.host}`;
+
+    const share = {
+      displayNames: true,
+      config: [{
+        twitter: {
+          socialShareUrl: shareUrl,
+          socialSharePopupWidth: 300,
+          socialSharePopupHeight: 400
+        }
+      },{
+        email: {
+          socialShareBody: shareUrl
+        }
+      }, {
+        whatsapp: {
+          socialShareUrl: shareUrl
+        }
+      }]
+    };
+    // The configuration, set the share options
+    webSocialShare.share = share;
+    // Show/open the share actions
+    webSocialShare.show = true;
+
+    resolve();
+  });
 }
 },
 watch:{
@@ -733,8 +838,7 @@ watch:{
   command(){
     switch (this.command) {
       case 'newGraph':
-      this.nodes = []
-      this.edges = []
+      this.newGraph()
       break;
       case 'downloadCanvas':
       console.log("downloadCanvas")
@@ -760,6 +864,10 @@ computed: {
   },
   command: {
     get () { return this.$store.state.ipgs.command},
+    set (/*value*/) { /*this.updateTodo(value)*/ }
+  },
+  history: {
+    get () { return this.$store.state.ipgs.history},
     set (/*value*/) { /*this.updateTodo(value)*/ }
   }
 }
