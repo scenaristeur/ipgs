@@ -180,3 +180,9 @@ _ https://stackoverflow.com/questions/33925116/how-to-refer-to-rdf-statements-in
 - https://github.com/lucascaires/vue-google-picker
 - https://github.com/googleworkspace/browser-samples/blob/master/drive/quickstart/index.html
 -
+
+# cartosemapps
+- https://pad.lescommuns.org/D6vKppj_SvqaYBjDOsgp-Q#
+- https://data.fabmob.io/middleware/resources sameas http://51.210.159.54:3000/resources/
+-> http://51.210.159.54:3000/resources/utilisateur_nicolas_roesch
+- https://grappe.io/data/api/5c98eeee4a490f002e459cbe-fabric-mob-Flodjson

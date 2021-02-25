@@ -22,10 +22,10 @@ export default class Loader {
     this.url = url
     try{
       if (this.url.endsWith('/')){
-        this.type = "folder"
-        //  await this.readFolder(this.url)
-        this.folder = await fc.readFolder(this.url)
-
+        // test jsonld container
+        //await  this.jsonParse()
+         this.type = "folder"
+         this.folder = await fc.readFolder(this.url)
       }else{
         this.type = "file"
         this.extension = this.url.split('.').pop();
@@ -64,7 +64,15 @@ export default class Loader {
   }
 
   async jsonParse(){
-    this.file = await fc.readFile(this.url)
+    this.file = await fc.readFile(this.url, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      // method: "POST",
+      // body: JSON.stringify({a: 1, b: 2})
+    })
+    console.log("FILE",this.file)
     this.json = JSON.parse(this.file)
     //  console.log(this.json)
 
@@ -110,7 +118,52 @@ export default class Loader {
 
 
       for (const [key, value] of Object.entries(this.json)) {
-        console.log(`${key}: ${value}`);
+        console.log(key, value);
+        if (key == 'ldp:contains'){
+          value.forEach((v) => {
+          //  console.log(v)
+            v.id = v['@id']
+            v.label = v['pair:label']
+
+
+          Object.entries(v).forEach( async function([prop, object]) {
+              if (prop != '@id' && prop != 'pair:label' && prop != 'id' && prop != 'label'){
+                console.log("----",prop)
+                if(Array.isArray(object)){
+                  object.forEach(async function(o) {
+                    console.log(o)
+                    o.id = o['@id']
+                    o.label = o['pair:label']
+                    var indexO = module.nodes.findIndex(x => x.id==o.id);
+                    indexO === -1 ? module.nodes.push({id: o.id, label: o.label}) : console.log("object already exists")
+                    let edge = {from: v.id, to: o.id, label: prop}
+                    var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+                    indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
+                  });
+                }else{
+                  console.log('object',object)
+                  // var indexO = module.nodes.findIndex(x => x.id==object);
+                  // indexO === -1 ? module.nodes.push({id: object, label: await module.lastPart(object)}) : console.log("object already exists")
+                  // let edge = {from: v.id, to: object, label: await module.lastPart(prop)}
+                  // var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+                  // indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
+                }
+              }
+            });
+            module.nodes.push(v)
+
+
+
+
+          });
+
+        }
+
+
+
+
+
+
       }
 
 
