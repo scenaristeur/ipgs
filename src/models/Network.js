@@ -120,14 +120,14 @@ export default class NetWork extends Thing {
     console.log(this)
   }
 
-  init(data){
-    console.log(data)
-    Object.assign(this, data)
-    let nodes = this.jsonldRepresentation['@graph'][0]['@graph']
-    let edges = this.jsonldRepresentation['@graph'][1]['@graph']
-    console.log(nodes)
-    console.log(edges)
-  }
+  // init(data){
+  //   console.log(data)
+  //   Object.assign(this, data)
+  //   let nodes = this.jsonldRepresentation['@graph'][0]['@graph']
+  //   let edges = this.jsonldRepresentation['@graph'][1]['@graph']
+  //   console.log(nodes)
+  //   console.log(edges)
+  // }
 
 
   async create(url){
@@ -152,6 +152,7 @@ export default class NetWork extends Thing {
 
   async save(){
     console.log(this)
+
     this.jsonldRepresentation['@graph'] = []
     this.visRepresentation.nodes.forEach((n) => {
       //  let n_clone = n.clone()

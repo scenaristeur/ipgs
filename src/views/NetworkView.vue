@@ -20,54 +20,54 @@
       enableSnippets: true,
       enableLiveAutocompletion: true,
       tabSize:2
-      }"
-      :fontSize='14'
-      :lang="'python'"
-      :theme="'eclipse'"
-      @onChange="editorChange"
-      @init="editorInit">
-      <!-- <div>toolbar or something</div> -->
-    </editor>
-  </b-modal>
+    }"
+    :fontSize='14'
+    :lang="'python'"
+    :theme="'eclipse'"
+    @onChange="editorChange"
+    @init="editorInit">
+    <!-- <div>toolbar or something</div> -->
+  </editor>
+</b-modal>
 
-  <b-modal id="import-popup" v-model="showimport">
-    <b-form-file
-    v-model="files"
-    multiple
-    placeholder="Choose a file or drop it here..."
-    drop-placeholder="Drop file here..."
-    ></b-form-file>
-    <template #modal-footer>
-      <div class="w-100">
-        <b-button
-        variant="primary"
-        size="sm"
-        class="float-right"
-        @click="importToGraph(true)"
-        >
-        New
-      </b-button>
+<b-modal id="import-popup" v-model="showimport">
+  <b-form-file
+  v-model="files"
+  multiple
+  placeholder="Choose a file or drop it here..."
+  drop-placeholder="Drop file here..."
+  ></b-form-file>
+  <template #modal-footer>
+    <div class="w-100">
       <b-button
       variant="primary"
       size="sm"
       class="float-right"
-      @click="importToGraph"
+      @click="importToGraph(true)"
       >
-      Add to current graph
+      New
     </b-button>
     <b-button
     variant="primary"
     size="sm"
     class="float-right"
-    @click="showimport=false"
+    @click="importToGraph"
     >
-    Close
+    Add to current graph
   </b-button>
+  <b-button
+  variant="primary"
+  size="sm"
+  class="float-right"
+  @click="showimport=false"
+  >
+  Close
+</b-button>
 </div>
 </template>
 
 </b-modal>
-
+<StorageModal :network="network" />
 </div>
 </template>
 
@@ -92,6 +92,7 @@ export default {
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
+    'StorageModal': () => import('@/components/solid/StorageModal'),
     'Editor': () => import('vue2x-ace-editor'),
   },
   async created(){
@@ -99,7 +100,7 @@ export default {
     this.initManipulationOptions()
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
-    //  console.log(this.url)
+      //  console.log(this.url)
       await this.load(this.url)
     }else{
       this.storage = this.$store.state.solid.storage

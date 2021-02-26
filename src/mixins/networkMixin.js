@@ -69,7 +69,7 @@ export default {
         case "/aide":
         //console.log(this.$.dialogs)
         console.log("help")
-      //  this.$bvModal.show("help-modal")
+        //  this.$bvModal.show("help-modal")
         //  this.$.dialogs.$.helpPopUp.toggle();
         //  this.agentInput.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
         break;
@@ -128,20 +128,41 @@ export default {
         console.log("capture_graphe");
         this.downloadCanvas()
         break;
+        case "/s":
+        console.log("save_graphe");
+        this.save()
+        break;
         default:
         console.log("non traite"+ data);
         //  return afficheCommandes();
       }
     },
+    save(){
+
+      // console.log(this.path)
+      // console.log(this.nodes, this.edges)
+      this.network.visRepresentation.nodes = this.nodes
+      this.network.visRepresentation.edges = this.edges
+      console.log(this.network)
+      // this.network.save()
+      this.$bvModal.show("storage-modal")
+
+    },
+
     newGraph(){
       console.log("new graph");
       // this.nodes = []
       // this.edges = []
       //  console.log(this.history)
-      var last = this.history.slice(-1)[0]
-      console.log(last)
-      let path = last.id
-      console.log(path)
+      let path = "todo"
+
+      if (this.history.length > 0){
+        var last = this.history.slice(-1)[0]
+        console.log(last)
+        let path = last.id
+        console.log(path)
+      }
+
 
 
       var filename = prompt("What is the name of the resource ?", "Spoggy");
@@ -598,8 +619,8 @@ watch:{
     console.log(this.files)
   },
   storage(){
-    console.log("WATCH",this.storage, this.url)
-    if(this.storage != null && this.url == undefined){
+    console.log("WATCH NE PAS CHARGER EN CAS DE SAVE",this.storage, this.url)
+    if(this.storage != null && this.url == undefined && this.network.visRepresentation.nodes.length == 0){
       this.load(this.storage)
     }
   }
