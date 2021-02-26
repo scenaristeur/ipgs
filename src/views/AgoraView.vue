@@ -18,8 +18,11 @@ export default {
   },
   async created(){
     console.log(this.log)
-    let agoraData = await ldflex[this.log]['https://www.dublincore.org/specifications/dublin-core/dcmi-terms/hasPart']
-    console.log(agoraData)
+    for await (const agoraEvent of ldflex[this.log]['https://www.dublincore.org/specifications/dublin-core/dcmi-terms/hasPart']){
+let ae = `${agoraEvent}`
+      console.log(ae)
+}
+
   }
 }
 </script>

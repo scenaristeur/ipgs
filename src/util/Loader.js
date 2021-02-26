@@ -4,6 +4,17 @@ import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 
+import * as jsonld from 'jsonld';
+
+// jsonld_request https://github.com/digitalbazaar/jsonld-request/blob/master/lib/request.js
+/*   opts.headers.Accept =
+'application/ld+json;q=1.0, ' +
+'application/json;q=0.8, ' +
+'text/html;q=0.6, ' +
+'application/xhtml+xml;q=0.6';
+}
+*/
+
 export default class Loader {
   constructor() {
     this.type = null
@@ -20,12 +31,18 @@ export default class Loader {
   async load(url){
     console.log(url)
     this.url = url
+
+    //this.semappsJSONLD()
+
+
+
+
     try{
       if (this.url.endsWith('/')){
         // test jsonld container
         //await  this.jsonParse()
-         this.type = "folder"
-         this.folder = await fc.readFolder(this.url)
+        this.type = "folder"
+        this.folder = await fc.readFolder(this.url)
       }else{
         this.type = "file"
         this.extension = this.url.split('.').pop();
@@ -63,6 +80,55 @@ export default class Loader {
     }
   }
 
+  async semappsJSONLD(){
+    let documentLoaderType = 'xhr'
+    jsonld.useDocumentLoader(documentLoaderType/*, options*/);
+
+    const iri = this.url;
+    let doc = await jsonld.documentLoader(iri, function(err,data) {
+      if(err) {
+        console.log(err)
+      }
+      console.log(data)
+      // const actualOptions = (requestMock.calls[0] || {})[0] || {};
+      // const actualHeaders = actualOptions.headers;
+      // const expectedHeaders = {
+      //   'Accept': 'application/ld+json, application/json'
+      // };
+      // assert.deepEqual(actualHeaders, expectedHeaders);
+      // done();
+    })
+    console.log(doc)
+    let docu = JSON.parse(doc.document)
+    console.log("THE DOC", docu)
+    // const context = {
+    //   "name": "http://schema.org/name",
+    //   "homepage": {"@id": "http://schema.org/url", "@type": "@id"},
+    //   "image": {"@id": "http://schema.org/image", "@type": "@id"}
+    // };
+    //  let context = "https://data.virtual-assembly.org/context.json"
+    let context = docu['@context']
+    console.log(context)
+    const compacted = await jsonld.compact(this.url, context);
+    console.log("compacted",JSON.stringify(compacted, null, 2));
+    const expanded = await jsonld.expand(this.url);
+    console.log("expanded",JSON.stringify(expanded, null, 2));
+    const flattened = await jsonld.flatten(this.url);
+    console.log("COOL",flattened)
+    //const framed = await jsonld.frame(doc, frame);
+
+    const canonized = await jsonld.canonize(this.url, {
+      algorithm: 'URDNA2015',
+      format: 'application/n-quads'
+    });
+    console.log(canonized)
+    const nquads = await jsonld.toRDF(this.url, {format: 'application/n-quads'});
+    console.log(nquads)
+
+    this.nodes = await docu['ldp:contains']
+  }
+
+
   async jsonParse(){
     this.file = await fc.readFile(this.url, {
       headers: {
@@ -72,7 +138,7 @@ export default class Loader {
       // method: "POST",
       // body: JSON.stringify({a: 1, b: 2})
     })
-    console.log("FILE",this.file)
+  //  console.log("FILE",this.file)
     this.json = JSON.parse(this.file)
     //  console.log(this.json)
 
@@ -121,12 +187,12 @@ export default class Loader {
         console.log(key, value);
         if (key == 'ldp:contains'){
           value.forEach((v) => {
-          //  console.log(v)
+            //  console.log(v)
             v.id = v['@id']
             v.label = v['pair:label']
 
 
-          Object.entries(v).forEach( async function([prop, object]) {
+            Object.entries(v).forEach( async function([prop, object]) {
               if (prop != '@id' && prop != 'pair:label' && prop != 'id' && prop != 'label'){
                 console.log("----",prop)
                 if(Array.isArray(object)){

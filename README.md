@@ -186,3 +186,21 @@ _ https://stackoverflow.com/questions/33925116/how-to-refer-to-rdf-statements-in
 - https://data.fabmob.io/middleware/resources sameas http://51.210.159.54:3000/resources/
 -> http://51.210.159.54:3000/resources/utilisateur_nicolas_roesch
 - https://grappe.io/data/api/5c98eeee4a490f002e459cbe-fabric-mob-Flodjson
+
+SParql Semapps : POST to https://data.virtual-assembly.org/sparql/
+```
+CONSTRUCT {
+   ?s0 ?p0 ?o0
+ }
+ WHERE
+ {
+   ?s0 ?p0 ?o0 .
+ }
+```
+
+- https://data.virtual-assembly.org/skills
+- https://data.virtual-assembly.org/organizations
+users, projects, themes,
+ - https://gitlab.com/fluidlog/cartosemapps/-/blob/master/assets/fluidgraph/app/convert.js
+ - https://pad.lescommuns.org/lUf72zpWQz2bP2TsFI2X7Q?view
+ - https://fluidlog.gitlab.io/cartosemapps/

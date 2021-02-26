@@ -47,7 +47,15 @@ export default class NetWork extends Thing {
 
   async addNodeToVis(n){
     if (!(n.id.startsWith('http') || n.id.startsWith('#'))){
-      n.id = "#"+n.label.trim().split(' ').join('_')
+      console.log(n)
+      if (n.label ==  undefined){ n.label == n['pair:label']}
+      if (n.label != undefined){
+        n.id = "#"+n.label.trim().split(' ').join('_')
+      }else{
+        console.log(n)
+        
+      }
+
     }
 
     //  console.log("check if node exist",n.id)
