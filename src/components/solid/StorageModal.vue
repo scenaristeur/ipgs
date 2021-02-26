@@ -61,7 +61,7 @@
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
-//import Network from '@/models/Network.js'
+import Activity from '@/models/Activity.js'
 
 export default {
   name: "StorageModal",
@@ -105,6 +105,14 @@ export default {
 
         this.network.setId(loc_url)
         await this.network.save()
+
+
+        let activity = new Activity()
+        activity.jsonld.creator = this.webId
+        activity.jsonld.object = this.network.jsonldRepresentation
+
+        console.log(activity)
+        activity.publish()
         //         console.log(loc_url)
         //         this.network.setId(loc_url)
         //         //console.log('url', res_url)
