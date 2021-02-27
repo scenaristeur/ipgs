@@ -96,8 +96,9 @@ export default {
     'Editor': () => import('vue2x-ace-editor'),
   },
   async created(){
+      this.initManipulationOptions()
     this.options.locale = navigator.language
-    this.initManipulationOptions()
+
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       //  console.log(this.url)
@@ -109,11 +110,13 @@ export default {
         await this.load(this.storage)
       }
 
+      //  this.initManipulationOptions()
       //this.network = new Network()
       //  this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
       //console.log("network", this.network)
     }
   },
+
   data() {
     return {
       nodes: [],
@@ -138,6 +141,20 @@ export default {
           color: 'lightgray'
         },
         manipulation: true,
+        // erreur sous chrome
+        // manipulation: {
+        //   enabled: false,
+        //   initiallyActive: false,
+        //   addNode: true,
+        //   addEdge: true,
+        //   editNode: this.editNode(nodeData, callback),
+        //   editEdge: true,
+        //   deleteNode: true,
+        //   deleteEdge: true,
+        //   controlNodeStyle:{
+        //     // all node options are valid.
+        //   }
+        // },
         interaction: {
           navigationButtons: true,
         },

@@ -3,6 +3,7 @@
     <b-navbar toggleable="lg" type="dark" variant="info">
       <!-- <b-navbar-brand to="/">ipgs</b-navbar-brand> -->
       <CommandInput />
+      <Notification />
       <!-- <b-button @click="help">?</b-button> -->
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -62,7 +63,7 @@ export default {
     // HelloWorld,
     //  'Menu': () => import('@/components/layout/Menu'),
     'CommandInput': () => import('@/components/layout/CommandInput'),
-
+    'Notification': () => import('@/components/layout/Notification'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
   },
   // methods: {

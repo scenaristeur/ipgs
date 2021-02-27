@@ -4,7 +4,7 @@ import FC from 'solid-file-client'
 const fc = new FC( auth )
 import ldflex from '@solid/query-ldflex/lib/exports/rdflib'
 import { namedNode } from "@rdfjs/data-model";
-let agora = "https://ipgs.solidweb.org/public/test/"
+let agora = "https://ipgs.solidcommunity.net/public/activity/"
 let log = agora+'log.ttl'
 
 

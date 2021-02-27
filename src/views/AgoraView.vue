@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-table striped hover :items="events">
+    <b-table striped hover small responsive :items="events">
 
       <template #cell(url)="data">
         <router-link :to="{ path: '/', query: { url: data.item.url }}">Link</router-link>
@@ -13,7 +13,7 @@
 
 <script>
 import ldflex from '@solid/query-ldflex/lib/exports/rdflib'
-let agoraPath= "https://ipgs.solidweb.org/public/test/"
+let agoraPath= "https://ipgs.solidcommunity.net/public/activity/"
 
 import * as jsonld from 'jsonld';
 
@@ -47,10 +47,10 @@ export default {
 
       this.events.push({
         name: docu.object['rdfs:label'],
-        actor: docu.creator,
-        type: docu.object['@type'],
-        length: docu.object['@graph'].length,
         url: docu.object['@id'],
+        length: docu.object['@graph'].length,
+        type: docu.object['@type'],
+        actor: docu.creator,
         published: new Date(docu.published).toLocaleString()
       })
     }
