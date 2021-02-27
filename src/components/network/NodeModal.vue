@@ -14,7 +14,7 @@
   <b-button v-b-toggle="'collapse-node-expert'" class="m-1" variant="light" size="sm">Expert</b-button> -->
 
   <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
-  <b-button v-b-toggle="'collapse-node-icon'" class="m-1" variant="dark" size="sm">Icon</b-button>
+  <!-- <b-button v-b-toggle="'collapse-node-icon'" class="m-1" variant="dark" size="sm">Icon</b-button> -->
   <b-button v-b-toggle="'collapse-node-color'" class="m-1" variant="dark" size="sm">Color</b-button>
 
 
@@ -38,6 +38,7 @@
     </b-input-group> -->
     <label for="backgroundcolorpicker">Background</label> <input type="color" v-model="value.color.background" value="#D2E5FF">
     <label for="bordercolorpicker">Border</label> <input type="color" v-model="value.color.border" value="#2B7CE9">
+    <b-button @click="defaultColor">default</b-button>
   </b-card>
 </b-collapse>
 
@@ -98,7 +99,7 @@ export default {
       shapes: [
         {value: "ellipse", text: "ellipse" },
         {value: "circle", text: "circle" },
-    //    {value: "icon", text: "icon -->" },
+        //    {value: "icon", text: "icon -->" },
         {value: "database", text: "database" },
         {value: "box", text: "box" },
         {value: "diamond", text: "diamond" },
@@ -132,11 +133,15 @@ export default {
 
         // !this.icon.code.startsWith("\u") ? this.icon.code = '\\u'+this.icon.code : ""
         //  this.icon.code = "\uf007"
-
+        
       }
       console.log(this.value)
       this.$emit('ok', this.value)
       this.$bvModal.hide("node-popup")
+    },
+    defaultColor(){
+      this.value.color.background="#D2E5FF"
+      this.value.color.border="#2B7CE9"
     }
   },
 }
