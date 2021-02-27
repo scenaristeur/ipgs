@@ -8,7 +8,7 @@
 
     <h3>Triples</h3>
     <p>Triples are groups of three words separated by a space.<br>
-      The first is the subject, the second is the predicate and the third is the object.<br>
+      The first group is the subject, the second is the predicate and the third is the object.<br>
       -> with double quotes when there is a space in the node or edge<br>
       -> that ends with an "End Character" that could be :
       <ul>

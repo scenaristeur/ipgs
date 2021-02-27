@@ -3,13 +3,15 @@
     <b-table
     striped
      hover
-      small
-        responsive="sm"
+
         :items="items"
         :fields="fields"
 
         >
-<!--     sort-by.sync="length" -->
+<!--
+small
+  responsive="sm"
+    sort-by.sync="length" -->
       <template #cell(url)="data">
         <router-link :to="{ path: '/', query: { url: data.item.url }}">Link</router-link>
       </template>
