@@ -24,6 +24,10 @@ Vue.use(VueFab, /* {
   // iconType: 'iconfont'
 } */)
 
+import VueFontAwesomePicker from "vfa-picker";
+
+Vue.use(VueFontAwesomePicker);
+
 Vue.config.productionTip = false
 
 new Vue({

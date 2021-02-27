@@ -73,6 +73,7 @@
 
 <script>
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+
 import networkMixin from '@/mixins/networkMixin'
 
 // https://github.com/zjfcool/vue2x-ace-editor
@@ -90,6 +91,7 @@ export default {
   name:"NetworkView",
   mixins: [networkMixin],
   components: {
+//    'Network': () => import ("vue-vis-network"),
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
     'StorageModal': () => import('@/components/solid/StorageModal'),
@@ -97,7 +99,7 @@ export default {
   },
   async created(){
     this.options.locale = navigator.language
-    this.initManipulationOptions()
+   this.initManipulationOptions()
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       //  console.log(this.url)
@@ -138,6 +140,13 @@ export default {
           color: 'lightgray'
         },
         manipulation: true,
+        // manipulation: {
+        //   initiallyActive: true,
+        //   addNode: async (nodeData, callback) => { nodeData.label = "" ; this.editNode(nodeData, callback) },
+        //   editNode: async (nodeData, callback) => { this.editNode(nodeData, callback) },
+        //   addEdge: async (edgeData, callback) => { this.addEdge(edgeData, callback) },
+        //   editEdge: { editWithoutDrag: async (edgeData, callback) => {this.editEdgeWithoutDrag(edgeData, callback)} }
+        // },
         interaction: {
           navigationButtons: true,
         },

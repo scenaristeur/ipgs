@@ -2,10 +2,11 @@
   <div>
     <b-form-input
     id="input"
+    autofocus
     v-model="main_input"
     v-on:keyup.enter="onEnter"
     title="type three words followed by a comma"
-    placeholder="/h for help"></b-form-input>
+    placeholder="/h + Enter for help"></b-form-input>
 
     <!-- <b-tooltip target="input" size="lg" fallback-placement='flip' variant="info">
     Type here three groups of words followed by a comma, like: <br>
