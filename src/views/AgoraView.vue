@@ -5,6 +5,9 @@
       <template #cell(url)="data">
         <router-link :to="{ path: '/', query: { url: data.item.url }}">Link</router-link>
       </template>
+      <template #cell(actor)="data">
+        <a :href="data.item.actor" target="_blank">{{data.item.actor.split('/')[2]}}</a>
+      </template>
 
     </b-table>
 
