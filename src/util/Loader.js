@@ -6,6 +6,8 @@ const fc = new FC( auth )
 
 import * as jsonld from 'jsonld';
 
+import Parser from '@/util/Parser.js'
+
 // jsonld_request https://github.com/digitalbazaar/jsonld-request/blob/master/lib/request.js
 /*   opts.headers.Accept =
 'application/ld+json;q=1.0, ' +
@@ -28,14 +30,16 @@ export default class Loader {
 
   }
 
+  async loadTODO(url){
+    console.log(url)
+    this.url = url
+    await this.readJsonld()
+    return this
+  }
+
   async load(url){
     console.log(url)
     this.url = url
-
-    //this.semappsJSONLD()
-
-
-
 
     try{
       if (this.url.endsWith('/')){
@@ -80,52 +84,28 @@ export default class Loader {
     }
   }
 
-  async semappsJSONLD(){
+  async readJsonld(){
     let documentLoaderType = 'xhr'
     jsonld.useDocumentLoader(documentLoaderType/*, options*/);
-
     const iri = this.url;
     let doc = await jsonld.documentLoader(iri, function(err) {
       if(err) {
         console.log(err)
       }
-    //  console.log(data)
-      // const actualOptions = (requestMock.calls[0] || {})[0] || {};
-      // const actualHeaders = actualOptions.headers;
-      // const expectedHeaders = {
-      //   'Accept': 'application/ld+json, application/json'
-      // };
-      // assert.deepEqual(actualHeaders, expectedHeaders);
-      // done();
     })
     console.log(doc)
-    let docu = JSON.parse(doc.document)
-    console.log("THE DOC", docu)
+
+    let parser = new Parser(doc)
+    let network = await parser.buildVisNetwork(doc)
+    console.log("NETWORK FROM PARSER",network)
     // const context = {
     //   "name": "http://schema.org/name",
     //   "homepage": {"@id": "http://schema.org/url", "@type": "@id"},
     //   "image": {"@id": "http://schema.org/image", "@type": "@id"}
     // };
     //  let context = "https://data.virtual-assembly.org/context.json"
-    let context = docu['@context']
-    console.log(context)
-    const compacted = await jsonld.compact(this.url, context);
-    console.log("compacted",JSON.stringify(compacted, null, 2));
-    const expanded = await jsonld.expand(this.url);
-    console.log("expanded",JSON.stringify(expanded, null, 2));
-    const flattened = await jsonld.flatten(this.url);
-    console.log("COOL",flattened)
-    //const framed = await jsonld.frame(doc, frame);
-
-    const canonized = await jsonld.canonize(this.url, {
-      algorithm: 'URDNA2015',
-      format: 'application/n-quads'
-    });
-    console.log(canonized)
-    const nquads = await jsonld.toRDF(this.url, {format: 'application/n-quads'});
-    console.log(nquads)
-
-    this.nodes = await docu['ldp:contains']
+    this.nodes = network.nodes
+    this.edges = network.edges
   }
 
 
@@ -138,7 +118,7 @@ export default class Loader {
       // method: "POST",
       // body: JSON.stringify({a: 1, b: 2})
     })
-  //  console.log("FILE",this.file)
+    //  console.log("FILE",this.file)
     this.json = JSON.parse(this.file)
     //  console.log(this.json)
 

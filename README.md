@@ -4,6 +4,33 @@ InterPlanetary Graph System based on Solid & Ipfs
 
 !!! there is a bug with chrome and vis network -> prefer Firefox !!!
 
+# new load test
+* solid
+- turtle file http://127.0.0.1:8080/network?url=https%3A%2F%2Fipgs.solidcommunity.net%2Fpublic%2Factivity%2Flog.ttl
+- solid profile http://127.0.0.1:8080/network?url=https://spoggy.solidcommunity.net/profile/card#me
+- pod storage http://127.0.0.1:8080/network?url=https://spoggy-test9.solidcommunity.net
+- public folder http://127.0.0.1:8080/network?url=https://angelo.veltens.org/public/
+- public folder without trailing slash http://127.0.0.1:8080/network?url=https://angelo.veltens.org/public
+- ttl without extension http://127.0.0.1:8080/network?url=https://angelo.veltens.org/public/tweets/2020/05/1260959812579405826
+- multiple ttl folder http://127.0.0.1:8080/network?url=https://spoggy.solidcommunity.net/public/Notes/
+- simple json
+- jsonld file with @id
+- jsonld file without @id
+- jsonld file with @id with @context
+- jsonld file without @id without @context
+- jsonld file with @id replaced by id in @context
+- visjs file with nodes & edges arrays
+- folder/container with many different files
+-
+
+- semaps containers
+- http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/skills
+- http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/organizations
+- http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/users
+- http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/projects
+- http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/themes
+
+# inspiration
 
 - https://github.com/scenaristeur/ipgs
 - https://ipfs.io
