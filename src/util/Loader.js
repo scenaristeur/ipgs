@@ -85,11 +85,11 @@ export default class Loader {
     jsonld.useDocumentLoader(documentLoaderType/*, options*/);
 
     const iri = this.url;
-    let doc = await jsonld.documentLoader(iri, function(err,data) {
+    let doc = await jsonld.documentLoader(iri, function(err) {
       if(err) {
         console.log(err)
       }
-      console.log(data)
+    //  console.log(data)
       // const actualOptions = (requestMock.calls[0] || {})[0] || {};
       // const actualHeaders = actualOptions.headers;
       // const expectedHeaders = {

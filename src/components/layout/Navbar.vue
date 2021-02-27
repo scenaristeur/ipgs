@@ -19,6 +19,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/">InterPlanetary Graph System</b-nav-item>
+          <b-nav-item to="/agora">Agora</b-nav-item>
           <b-nav-item to="/browser">Browser</b-nav-item>
           <b-nav-item to="/history">History</b-nav-item>
           <b-nav-item to="/about">About</b-nav-item>
