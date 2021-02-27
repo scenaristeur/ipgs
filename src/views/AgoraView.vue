@@ -2,26 +2,26 @@
   <b-container>
     <b-table
     striped
-     hover
+    hover
+    responsive
+    :items="items"
+    :fields="fields"
 
-        :items="items"
-        :fields="fields"
-
-        >
-<!--
-small
-  responsive="sm"
+    >
+    <!--
+    small
+    responsive="sm"
     sort-by.sync="length" -->
-      <template #cell(url)="data">
-        <router-link :to="{ path: '/', query: { url: data.item.url }}">Link</router-link>
-      </template>
-      <template #cell(actor)="data">
-        <a :href="data.item.actor" target="_blank">{{data.item.actor.split('/')[2]}}</a>
-      </template>
+    <template #cell(url)="data">
+      <router-link :to="{ path: '/', query: { url: data.item.url }}">Link</router-link>
+    </template>
+    <template #cell(actor)="data">
+      <a :href="data.item.actor" target="_blank">{{data.item.actor.split('/')[2]}}</a>
+    </template>
 
-    </b-table>
+  </b-table>
 
-  </b-container>
+</b-container>
 </template>
 
 <script>
