@@ -1,7 +1,15 @@
 <template>
   <b-container>
-    <b-table striped hover small responsive :items="items" :fields="fields">
+    <b-table
+    striped
+     hover
+      small
+        responsive="sm"
+        :items="items"
+        :fields="fields"
 
+        >
+<!--     sort-by.sync="length" -->
       <template #cell(url)="data">
         <router-link :to="{ path: '/', query: { url: data.item.url }}">Link</router-link>
       </template>
@@ -31,10 +39,8 @@ export default {
         { key: 'length', label: 'size', sortable: true },
         { key: 'published', sortable: true },
         { key: 'url', sortable: false },
-        { key: 'type', sortable: true },
         { key: 'actor', label:"creator", sortable: true },
-
-
+        { key: 'type', sortable: true },
       ],
 
     }
