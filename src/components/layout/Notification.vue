@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="{ path: '/agora'}">{{ nb }}</router-link>
+    <b-button :to="{ path: '/agora'}">{{ nb }}</b-button>
 
   </div>
 </template>

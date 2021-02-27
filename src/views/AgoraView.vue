@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-table striped hover small responsive :items="events">
+    <b-table striped hover small responsive :items="items" :fields="fields">
 
       <template #cell(url)="data">
         <router-link :to="{ path: '/', query: { url: data.item.url }}">Link</router-link>
@@ -22,7 +22,18 @@ export default {
   data() {
     return {
       log: agoraPath+'log.ttl',
-      events: []
+      items: [],
+      fields: [
+        { key: 'name', sortable: true },
+        { key: 'length', label: 'size', sortable: true },
+        { key: 'published', sortable: true },
+        { key: 'url', sortable: false },
+        { key: 'type', sortable: true },
+        { key: 'actor', label:"creator", sortable: true },
+
+
+      ],
+
     }
   },
   async created(){
@@ -45,7 +56,7 @@ export default {
 
 
 
-      this.events.push({
+      this.items.push({
         name: docu.object['rdfs:label'],
         url: docu.object['@id'],
         length: docu.object['@graph'].length,
