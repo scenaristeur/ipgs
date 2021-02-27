@@ -88,7 +88,7 @@ export default {
 
 <style>
 code {
-  background-color: "#ffffff";
-  padding: 3px;
+  background-color: white;
+  padding: 2px;
 }
 </style>
