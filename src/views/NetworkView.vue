@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NetworkToolBar />
+
     <NetworkPopups :network="network" />
     <network
     id="network"
@@ -121,7 +121,7 @@ Close
 </template>
 
 </b-modal>
-<StorageModal :network="network" />-->
+-->
 </div>
 </template>
 
@@ -140,10 +140,9 @@ export default {
     //    'Network': () => import ("vue-vis-network"),
     // 'NodeModal': () => import('@/components/network/NodeModal'),
     // 'EdgeModal': () => import('@/components/network/EdgeModal'),
-    // 'StorageModal': () => import('@/components/solid/StorageModal'),
 
     // 'NodeMenu': () => import('@/components/network/NodeMenu'),
-    'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
+
     'NetworkPopups': () => import('@/components/network/NetworkPopups')
 
   },

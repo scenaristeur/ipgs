@@ -88,8 +88,11 @@ export default {
       //  this.network.visRepresentation.edges = this.edges
       console.log(this.network)
       // this.network.save()
-      this.$bvModal.show("storage-modal")
-
+      //this.$bvModal.show("storage-modal")
+      var text = JSON.stringify(this.network, null, 2)
+      this.$store.commit('ipgs/setEditorContent', {content: text, format: "json"})
+      this.$router.push({ path: 'editor' })
+      this.$store.commit('ipgs/setInputObject', { type: "commande", value: '/s' })
     },
 
     newGraph(){

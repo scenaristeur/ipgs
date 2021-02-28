@@ -1,31 +1,31 @@
 <template  >
-  <b-button-toolbar  key-nav justify aria-label="Network Tool Bar" >
-    <!-- <b-button-group class="mx-1" size="sm" >
-    <b-button @click="addNode" variant="outline-info">Add a node</b-button>
-    <b-button @click="addEdge" variant="info">Add an Edge</b-button>
-  </b-button-group> -->
   <b-dropdown class="mx-1" right text="graph" variant="info">
-    <b-dropdown-item>export</b-dropdown-item>
-    <b-dropdown-item>save to pod</b-dropdown-item>
-    <b-dropdown-item>share</b-dropdown-item>
-  </b-dropdown>
-  <!-- <b-button-group class="mx-1">
-  <b-button>Edit</b-button>
-  <b-button>Undo</b-button>
-  <b-button>Redo</b-button>
-</b-button-group>
-<b-button-group class="mx-1">
-<b-button>&rsaquo;</b-button>
-<b-button>&raquo;</b-button>
-</b-button-group> -->
-</b-button-toolbar>
+    <b-dropdown-item variant="info" v-for="c in commands" :key="c.value" @click="sendCommand(c.value)">{{c.text}}</b-dropdown-item>
 
+  </b-dropdown>
 </template>
 
 <script>
 export default {
   name: 'NetworkToolBar',
+  data() {
+    return {
+      commands: [
+        {value: '/n', text: "New Graph"},
+        {value: '/s', text: "save to pod"},
+        {value: '/t', text: "export ttl"},
+        {value: '/e', text: "export json"},
+        {value: '/c', text: "capture a picture"},
+        //  {value: '/p', text: "share"},
+        {value: '/h', text: "help"},
+      ]
+    }
+  },
   methods: {
+    sendCommand(c){
+      let command = { type: "commande", value: c }
+      this.$store.commit('ipgs/setInputObject', command)
+    }
     // addNode() {
     //   this.$bvModal.show("node-popup")
     // },

@@ -62,6 +62,7 @@ import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 import Activity from '@/models/Activity.js'
+import Network from '@/models/Network.js'
 
 export default {
   name: "StorageModal",
@@ -97,7 +98,7 @@ export default {
       if(this.new_graph_name.length>0){
         let new_file_url = this.url+this.new_graph_name+'.json'
 
-        //this.network = new Network()
+        this.network = new Network()
 
         let loc = await this.network.create(new_file_url)
         //  console.log(loc)
@@ -163,7 +164,13 @@ export default {
       if (this.storage != null){
         this.read({url: this.storage, name: this.storage, type: 'folder'})
       }
-    }
+    },
+      inputObject(){
+        //this.onInputObjectChange(this.inputObject)
+        if (this.inputObject.value=='/s'){
+            this.$bvModal.show("storage-modal")
+        }
+      },
   },
   computed: {
     webId: {
@@ -174,6 +181,10 @@ export default {
       get () { return this.$store.state.solid.storage},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+      inputObject: {
+        get () { return this.$store.state.ipgs.inputObject},
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
   },
 }
 </script>

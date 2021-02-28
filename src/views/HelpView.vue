@@ -69,7 +69,7 @@ export default {
   },
   watch:{
     inputObject(){
-      console.log(this.inputObject)
+    //  console.log(this.inputObject)
       this.onInputObjectChange(this.inputObject)
     },
   }
