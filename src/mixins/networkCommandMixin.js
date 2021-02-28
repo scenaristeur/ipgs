@@ -96,9 +96,10 @@ export default {
     },
 
     newGraph(){
+      this.$router.push({ path: 'network' })
       console.log("new graph");
-      // this.nodes = []
-      // this.edges = []
+      this.network.nodes = []
+      this.network.edges = []
       //  console.log(this.history)
       let path = "todo"
 
