@@ -5,6 +5,42 @@ const state = () => ({
   commandInput: "",
   history: [],
   action: null,
+  editorContent: {},
+  network: {
+    nodes: [],
+    edges: [],
+    options: {
+      locale: navigator.language,
+      nodes: {
+        color: {
+          //  border: 'grey',
+          background: '#D2E5FF',
+          border: '#2B7CE9',
+
+          highlight: {
+            border: 'black',
+            background: 'white'
+          },
+          hover: {
+            border: 'orange',
+            background: 'grey'
+          }
+        },
+        font:{color:'black'},
+        shapeProperties: {
+          useBorderWithImage:true
+        }
+      },
+      edges: {
+        arrows: 'to',
+        //  color: 'lightgray'
+      },
+      interaction: {
+        navigationButtons: true,
+      }
+    },
+  },
+
   //  command: ""
   //  storage: null
 })
@@ -60,10 +96,14 @@ const mutations = {
     updatedHistory.push(node)
     state.history = updatedHistory
   },
-  // setCommand(state, command){
-  //   console.log(command)
-  //   state.command = command
-  // }
+  setEditorContent(state, c){
+    console.log(c)
+    state.editorContent = c
+  },
+  setNetwork(state, n){
+    console.log(n)
+    state.network = n
+  }
 
 }
 

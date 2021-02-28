@@ -3,6 +3,7 @@
     <!-- NetworkPopups : {{ JSON.stringify(action)}} -->
     <NodeModal v-model="node" @ok="saveNode"/>
     <EdgeModal v-model="edge" @ok="saveEdge"/>
+    <ImportModal />
   </div>
 </template>
 
@@ -14,6 +15,7 @@ export default {
     //    'Network': () => import ("vue-vis-network"),
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
+    'ImportModal': () => import('@/components/network/ImportModal'),
   },
   data() {
     return {

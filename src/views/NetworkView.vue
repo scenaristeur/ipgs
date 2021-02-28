@@ -3,6 +3,7 @@
     <NetworkToolBar />
     <NetworkPopups :network="network" />
     <network
+    id="network"
     class="wrapper"
     ref="network"
     :nodes="network.nodes"
@@ -128,33 +129,27 @@ Close
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
 import networkEventsMixin from '@/mixins/networkEventsMixin'
-
-// https://github.com/zjfcool/vue2x-ace-editor
-import ace from 'brace'
-import 'brace/ext/language_tools';
-import 'brace/mode/python.js'
-import 'brace/snippets/python.js';
-import 'brace/theme/eclipse.js';
+import networkCommandMixin from '@/mixins/networkCommandMixin'
 
 
-// ace/mode/turtle
-console.log(ace)
 
 export default {
   name:"NetworkView",
-  mixins: [networkEventsMixin],
+  mixins: [networkEventsMixin, networkCommandMixin],
   components: {
     //    'Network': () => import ("vue-vis-network"),
     // 'NodeModal': () => import('@/components/network/NodeModal'),
     // 'EdgeModal': () => import('@/components/network/EdgeModal'),
     // 'StorageModal': () => import('@/components/solid/StorageModal'),
-    // 'Editor': () => import('vue2x-ace-editor'),
+
     // 'NodeMenu': () => import('@/components/network/NodeMenu'),
     'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
     'NetworkPopups': () => import('@/components/network/NetworkPopups')
 
   },
   async created(){
+    this.network = this.$store.state.ipgs.network
+    Object.keys(this.network).length == 0 ? this.network = this.networkDef : ""
     // this.options.locale = navigator.language
     // this.initManipulationOptions()
     // if (this.$route.query.url != undefined ){
@@ -175,7 +170,7 @@ export default {
   },
   data() {
     return {
-      network: {
+      networkDef: {
         nodes: [],
         edges: [],
         options: {
@@ -211,6 +206,12 @@ export default {
       },
     }
   },
+  computed: {
+    network:{
+      get () { return this.$store.state.ipgs.network},
+      set (value) { this.$store.commit('ipgs/setNetwork', value) }
+    }
+  }
 }
 </script>
 
