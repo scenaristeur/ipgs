@@ -9,7 +9,7 @@
     :nodes="network.nodes"
     :edges="network.edges"
     :options="network.options"
-      @select-node="onNodeSelect"
+    @select-node="onNodeSelect"
 
     ></network>
     <!--
@@ -151,21 +151,21 @@ export default {
     Object.keys(this.network).length == 0 ? this.network = this.networkDef : ""
     // this.options.locale = navigator.language
     // this.initManipulationOptions()
-    // if (this.$route.query.url != undefined ){
-    //   this.url = this.$route.query.url
-    //   //  console.log(this.url)
-    //   await this.load(this.url)
-    // }else{
-    //   this.storage = this.$store.state.solid.storage
-    //   //console.log(this.storage)
-    //   if (this.storage != null){
-    //     await this.load(this.storage)
-    //   }
-    //
-    //   //this.network = new Network()
-    //   //  this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
-    //   //console.log("network", this.network)
-    // }
+    if (this.$route.query.url != undefined ){
+      this.url = this.$route.query.url
+      console.log(this.url)
+      //  await this.load(this.url)
+    }else{
+      this.storage = this.$store.state.solid.storage
+      console.log(this.storage)
+      // if (this.storage != null){
+      //   await this.load(this.storage)
+      // }
+
+      // this.graph = new Graph()
+      //  this.graph.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
+      // console.log("graph", this.graph)
+    }
   },
   data() {
     return {

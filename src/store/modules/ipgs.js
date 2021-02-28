@@ -6,6 +6,8 @@ const state = () => ({
   history: [],
   action: null,
   editorContent: {},
+  graphs: [],
+  currentGraphId: null,
   network: {
     nodes: [],
     edges: [],

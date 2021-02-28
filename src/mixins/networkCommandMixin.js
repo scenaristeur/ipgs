@@ -96,7 +96,7 @@ export default {
     },
 
     newGraph(){
-      this.$router.push({ path: 'network' })
+      //this.$router.push({ path: 'network' })
       console.log("new graph");
       this.network.nodes = []
       this.network.edges = []

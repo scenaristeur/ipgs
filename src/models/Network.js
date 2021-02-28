@@ -53,7 +53,7 @@ export default class NetWork extends Thing {
         n.id = "#"+n.label.trim().split(' ').join('_')
       }else{
         console.log(n)
-        
+
       }
 
     }
