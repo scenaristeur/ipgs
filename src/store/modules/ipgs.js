@@ -4,6 +4,7 @@ const state = () => ({
   inputObject: null,
   commandInput: "",
   history: [],
+  action: null,
   //  command: ""
   //  storage: null
 })
@@ -41,6 +42,10 @@ const actions = {
 
 // mutations
 const mutations = {
+  setAction(state, a){
+    console.log(a)
+    state.action = a
+  },
   setInputObject(state, io){
     console.log(io)
     state.inputObject = io
@@ -52,7 +57,7 @@ const mutations = {
   },
   addToHistory(state, node){
     const updatedHistory = state.history.filter(item => item.id !== node.id);
-    updatedHistory.push(node)    
+    updatedHistory.push(node)
     state.history = updatedHistory
   },
   // setCommand(state, command){

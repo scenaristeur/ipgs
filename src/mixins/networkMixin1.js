@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       loader: new Loader(),
+          networkEvents: "",
     }
   },
   async created(){
@@ -29,6 +30,11 @@ export default {
     }
   },
   methods: {
+    networkEvent(eventName) {
+      if (this.networkEvents.length > 500) this.networkEvents = "";
+      this.networkEvents += `${eventName}, `;
+      console.log(this.networkEvents)
+    },
     async load(url){
       let d = new Date()
       this.network = new Network()
