@@ -1,5 +1,9 @@
+
+
 export default {
+
   methods: {
+
     nodeFromLabel(label) {
       return {id: "#"+label.trim().split(' ').join('_'),
       label: label,
@@ -92,5 +96,6 @@ export default {
 }
 downloadLink.click();*/
 },
-  }
+},
+
 }

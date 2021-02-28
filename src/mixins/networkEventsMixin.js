@@ -1,5 +1,7 @@
 // import Network from '@/models/Network.js'
 // import Loader from '@/util/Loader.js'
+import Graph from '@/models/Graph.js'
+import GraphCollection from '@/models/GraphCollection.js'
 import networkUtilMixin from '@/mixins/networkUtilMixin'
 
 export default {
@@ -8,7 +10,8 @@ export default {
     return {
       // loader: new Loader(),
       networkEvents: "",
-      somethingSelected: false
+      somethingSelected: false,
+      graphcollection: new GraphCollection()
     }
   },
   async created(){
@@ -28,13 +31,28 @@ export default {
       get () { return this.$store.state.ipgs.inputObject},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+    storage:{
+      get () { return this.$store.state.solid.storage},
+      set (/*value*/) {  }
+    }
   },
   watch:{
     inputObject(){
       this.onInputObjectChange(this.inputObject)
     },
+    storage(){
+      console.log("storage",this.storage)
+      if(this.storage != null){
+        this.createGraph({url: this.storage, name: 'storageGraph'})
+      }
+    }
   },
   methods: {
+    async createGraph(options){
+      let g = await new Graph(options)
+      this.graphcollection.push(g)
+      console.log("COLLECTION", this.graphcollection)
+    },
     editNode(node, callback){
       //    this.node = node
       node.color == undefined ? node.color =  {  background: '#D2E5FF', border: '#2B7CE9'} : ""

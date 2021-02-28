@@ -1,11 +1,14 @@
 import Network from '@/models/Network.js'
 import Loader from '@/util/Loader.js'
 
+
+
 export default {
   data() {
     return {
       loader: new Loader(),
-          networkEvents: "",
+      networkEvents: "",
+    
     }
   },
   async created(){
@@ -57,6 +60,10 @@ export default {
 
       //}
 
+    },
+    async loadStorage(){
+      let graphStorage = await new Graph({name: 'storage', url: this.storage})
+      this.graphcollection.push(graphStorage)
     },
 
     follow(node){

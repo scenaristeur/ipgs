@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <NetworkPopups :network="network" />
     <network
     id="network"
@@ -10,162 +9,38 @@
     :edges="network.edges"
     :options="network.options"
     @select-node="onNodeSelect"
-
     ></network>
-    <!--
-    @click="onNetworkClick()"
-    @select-node="onNodeSelect"
-    @select-edge="onEdgeSelect"
-    @drag-start="onDragStart"
-    @drag-end="onDragEnd"
-    @select="onNetworkSelect"
-    @start-stabilizing="networkEvent('startStabilizing')"
-    @stabilization-progress="networkEvent('stabilizationProgress')"
-    @stabilization-iterations-done="networkEvent('stabilizationIterationsDone')"
-    @stabilized="networkEvent('stabilized')"
-    @resize="networkEvent('resize')"
-    @init-redraw="networkEvent('initRedraw')"
-    @before-drawing="networkEvent('before-drawing')"
-    @after-drawing="networkEvent('afterDrawing')"
-    @animation-finished="networkEvent('animationFinished')"
-    @nodes-mounted="networkEvent('nodes-mounted')"
-    @edges-mounted="networkEvent('edges-mounted')"
-    @dragging="networkEvent('dragging')"
-    @zoom="networkEvent('zoom')"
-
-    @double-click="networkEvent('doubleClick')"
-    @oncontext="networkEvent('oncontext')"
-    @hold="networkEvent('hold')"
-    @release="networkEvent('release')"
-    @deselect-node="networkEvent('deselectNode')"
-    @deselect-edge="networkEvent('deselectEdge')"
-    @hover-node="networkEvent('hoverNode')"
-    @blur-node="networkEvent('blurNode')"
-    @hover-edge="networkEvent('hoverEdge')"
-    @blur-edge="networkEvent('blurEdge')"
-
-    @show-popup="networkEvent('showPopup')"
-    @hide-popup="networkEvent('hidePopup')"
-
-    @config-change="networkEvent('configChange')"
-
-    @nodes-add="networkEvent('nodes-add')"
-    @nodes-update="networkEvent('nodes-update')"
-    @nodes-remove="networkEvent('nodes-remove')"
-
-    @edges-add="networkEvent('edges-add')"
-    @edges-update="networkEvent('edges-update')"
-    @edges-remove="networkEvent('edges-remove')"
-  -->
-
-
-
-  <!--
-  <NodeModal v-model="nodeData" @ok="saveNode"/>
-  <EdgeModal v-model="edgeData" @ok="saveEdge"/>
-  <NodeMenu v-model="nodeData" @follow="follow" />
-  <b-modal id="editor-modal" size="lg" @ok="downloadFile">
-  <editor
-  height="300px"
-  ref="editor"
-  :content="content"
-  :options="{
-  enableBasicAutocompletion: true,
-  enableSnippets: true,
-  enableLiveAutocompletion: true,
-  tabSize:2
-}"
-:fontSize='14'
-:lang="'python'"
-:theme="'eclipse'"
-@onChange="editorChange"
-@init="editorInit">-->
-<!-- <div>toolbar or something</div> -->
-<!--  </editor>
-</b-modal>
-
-<b-modal id="import-popup" v-model="showimport">
-<b-form-file
-v-model="files"
-multiple
-placeholder="Choose a file or drop it here..."
-drop-placeholder="Drop file here..."
-></b-form-file>
-<template #modal-footer>
-<div class="w-100">
-<b-button
-variant="primary"
-size="sm"
-class="float-right"
-@click="importToGraph(true)"
->
-New
-</b-button>
-<b-button
-variant="primary"
-size="sm"
-class="float-right"
-@click="importToGraph"
->
-Add to current graph
-</b-button>
-<b-button
-variant="primary"
-size="sm"
-class="float-right"
-@click="showimport=false"
->
-Close
-</b-button>
-</div>
-</template>
-
-</b-modal>
--->
-</div>
+  </div>
 </template>
 
 <script>
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
-
 import networkEventsMixin from '@/mixins/networkEventsMixin'
 import networkCommandMixin from '@/mixins/networkCommandMixin'
-
 
 
 export default {
   name:"NetworkView",
   mixins: [networkEventsMixin, networkCommandMixin],
   components: {
-    //    'Network': () => import ("vue-vis-network"),
-    // 'NodeModal': () => import('@/components/network/NodeModal'),
-    // 'EdgeModal': () => import('@/components/network/EdgeModal'),
-
-    // 'NodeMenu': () => import('@/components/network/NodeMenu'),
-
     'NetworkPopups': () => import('@/components/network/NetworkPopups')
-
   },
   async created(){
+
     this.network = this.$store.state.ipgs.network
     Object.keys(this.network).length == 0 ? this.network = this.networkDef : ""
-    // this.options.locale = navigator.language
-    // this.initManipulationOptions()
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       console.log(this.url)
-      //  await this.load(this.url)
-    }else{
-      this.storage = this.$store.state.solid.storage
-      console.log(this.storage)
-      // if (this.storage != null){
-      //   await this.load(this.storage)
-      // }
-
-      // this.graph = new Graph()
-      //  this.graph.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
-      // console.log("graph", this.graph)
+      this.createGraph({url: this.url, name: 'urlGraph'})
     }
+    this.storage = this.$store.state.solid.storage
+    console.log("storage",this.storage)
+    if(this.storage != null){
+      this.createGraph({url: this.storage, name: 'storageGraph'})
+    }
+
+    console.log("collection",this.graphcollection)
   },
   data() {
     return {
