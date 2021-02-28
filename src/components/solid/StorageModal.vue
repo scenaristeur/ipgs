@@ -10,46 +10,53 @@
             <b-button variant="info" @click="createNew">create</b-button>
           </b-input-group-append>
         </b-input-group>
-        <b-list-group v-if="storage != null"   class="item list-group-item d-flex justify-content-between p-1">
-          <b-list-group-item v-if="folder.parent != 'https://'" variant="dark" @click="readParent(folder.parent)" button>{{ folder.parent }}</b-list-group-item>
-          <b-list-group-item v-for="fo in folder.folders" :key="fo.url" @click="read(fo)" button >
-            <!-- class="p-0 m-0 flex-grow-1" -->
-            <!-- <b-button   variant="outline-warning"><b-icon-folder-fill></b-icon-folder-fill></b-button>
-            {{ fo.name }}
 
-            <b-button size="sm" variant="outline-info" class="unstyled-button">
+        <b-form-checkbox
+        v-model="publish">
+        publish To Agora
+      </b-form-checkbox>
+
+
+      <b-list-group v-if="storage != null"   class="item list-group-item d-flex justify-content-between p-1">
+        <b-list-group-item v-if="folder.parent != 'https://'" variant="dark" @click="readParent(folder.parent)" button>{{ folder.parent }}</b-list-group-item>
+        <b-list-group-item v-for="fo in folder.folders" :key="fo.url" @click="read(fo)" button >
+          <!-- class="p-0 m-0 flex-grow-1" -->
+          <!-- <b-button   variant="outline-warning"><b-icon-folder-fill></b-icon-folder-fill></b-button>
+          {{ fo.name }}
+
+          <b-button size="sm" variant="outline-info" class="unstyled-button">
+          <b-icon-eye @click.stop="see(fo)" variant="info" ></b-icon-eye>
+        </b-button> -->
+
+        <div class="input-group" style="display:table; width:100%;">
+
+          <b-button class="unstyled-button" variant="outline-warning"><b-icon-folder-fill></b-icon-folder-fill></b-button>
+          {{ fo.name }}
+          <!-- <span style="display: table-cell; border:1px solid #ccc; padding: 0 8px; vertical-align: middle;">Cras justo odio</span> -->
+
+          <!-- <span style="display: table-cell; width: 40px;">
+          <button class="btn btn-default" type="button"><span>ᐅ</span> Go!</button>
+        </span> -->
+
+        <span style="display: table-cell; width: 40px;">
+          <!-- <button class="btn btn-default" type="button"><span>ᐅ</span>  Go!</button> -->
+          <!-- class="unstyled-button" -->
+          <b-button size="sm" variant="outline-info"  @click.stop="see(fo)">
             <b-icon-eye @click.stop="see(fo)" variant="info" ></b-icon-eye>
-          </b-button> -->
+          </b-button>
+        </span>
 
-          <div class="input-group" style="display:table; width:100%;">
+      </div>
 
-            <b-button class="unstyled-button" variant="outline-warning"><b-icon-folder-fill></b-icon-folder-fill></b-button>
-            {{ fo.name }}
-            <!-- <span style="display: table-cell; border:1px solid #ccc; padding: 0 8px; vertical-align: middle;">Cras justo odio</span> -->
-
-            <!-- <span style="display: table-cell; width: 40px;">
-            <button class="btn btn-default" type="button"><span>ᐅ</span> Go!</button>
-          </span> -->
-
-          <span style="display: table-cell; width: 40px;">
-            <!-- <button class="btn btn-default" type="button"><span>ᐅ</span>  Go!</button> -->
-            <!-- class="unstyled-button" -->
-            <b-button size="sm" variant="outline-info"  @click.stop="see(fo)">
-              <b-icon-eye @click.stop="see(fo)" variant="info" ></b-icon-eye>
-            </b-button>
-          </span>
-
-        </div>
-
-      </b-list-group-item>
-
-
-      <b-list-group-item variant="light"
-      class="item list-group-item d-flex justify-content-between"
-      v-for="fi in folder.files" :key="fi.url" @click="read(fi)" button>
-      <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
     </b-list-group-item>
-  </b-list-group>
+
+
+    <b-list-group-item variant="light"
+    class="item list-group-item d-flex justify-content-between"
+    v-for="fi in folder.files" :key="fi.url" @click="read(fi)" button>
+    <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
+  </b-list-group-item>
+</b-list-group>
 </b-container>
 
 </div>
@@ -74,7 +81,8 @@ export default {
     return {
       folder: {folders:[], files: []},
       url: "",
-      new_graph_name : ""
+      new_graph_name : "",
+      publish: true
     }
   },
   created(){
@@ -98,22 +106,23 @@ export default {
       if(this.new_graph_name.length>0){
         let new_file_url = this.url+this.new_graph_name+'.json'
 
-        this.network = new Network()
+        this.net = new Network()
 
-        let loc = await this.network.create(new_file_url)
+        let loc = await this.net.create(new_file_url)
         //  console.log(loc)
         let loc_url = loc.startsWith('/') ? this.storage + loc.substring(1) : loc
 
-        this.network.setId(loc_url)
-        await this.network.save()
+        this.net.setId(loc_url)
+        await this.net.save()
 
+        if (this.publish == true){
+          let activity = new Activity()
+          activity.jsonld.creator = this.webId
+          activity.jsonld.object = this.network.jsonldRepresentation
 
-        let activity = new Activity()
-        activity.jsonld.creator = this.webId
-        activity.jsonld.object = this.network.jsonldRepresentation
-
-        console.log(activity)
-        activity.publish()
+          console.log(activity)
+          activity.publish()
+        }
         //         console.log(loc_url)
         //         this.network.setId(loc_url)
         //         //console.log('url', res_url)
@@ -165,12 +174,12 @@ export default {
         this.read({url: this.storage, name: this.storage, type: 'folder'})
       }
     },
-      inputObject(){
-        //this.onInputObjectChange(this.inputObject)
-        if (this.inputObject.value=='/s'){
-            this.$bvModal.show("storage-modal")
-        }
-      },
+    inputObject(){
+      //this.onInputObjectChange(this.inputObject)
+      if (this.inputObject.value=='/s'){
+        this.$bvModal.show("storage-modal")
+      }
+    },
   },
   computed: {
     webId: {
@@ -181,10 +190,10 @@ export default {
       get () { return this.$store.state.solid.storage},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
-      inputObject: {
-        get () { return this.$store.state.ipgs.inputObject},
-        set (/*value*/) { /*this.updateTodo(value)*/ }
-      },
+    inputObject: {
+      get () { return this.$store.state.ipgs.inputObject},
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
   },
 }
 </script>

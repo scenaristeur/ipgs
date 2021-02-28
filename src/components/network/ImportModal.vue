@@ -121,7 +121,7 @@ methods: {
 computed: {
   network:{
     get () { return this.$store.state.ipgs.network},
-    set (value) { this.$store.commit('ipgs/setNetwork', value) }
+    set (/*value*/) {  }
   }
 }
 }
