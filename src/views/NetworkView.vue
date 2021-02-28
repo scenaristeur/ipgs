@@ -17,24 +17,18 @@
   :nodes="network.nodes"
   :edges="network.edges"
   :options="network.options"
-  @click="onNetworkClick()"
-  @select="onNetworkSelect"
-  @select-node="onNodeSelect"
-  @select-edge="onEdgeSelect"
+
   @double-click="networkEvent('doubleClick')"
   @oncontext="networkEvent('oncontext')"
   @hold="networkEvent('hold')"
   @release="networkEvent('release')"
   @deselect-node="networkEvent('deselectNode')"
   @deselect-edge="networkEvent('deselectEdge')"
-  @drag-start="networkEvent('dragStart')"
-  @dragging="networkEvent('dragging')"
-  @drag-end="networkEvent('dragEnd')"
   @hover-node="networkEvent('hoverNode')"
   @blur-node="networkEvent('blurNode')"
   @hover-edge="networkEvent('hoverEdge')"
   @blur-edge="networkEvent('blurEdge')"
-  @zoom="networkEvent('zoom')"
+
   @show-popup="networkEvent('showPopup')"
   @hide-popup="networkEvent('hidePopup')"
 
@@ -49,6 +43,12 @@
   @edges-remove="networkEvent('edges-remove')"
   ></network>
   <!--
+  @click="onNetworkClick()"
+  @select-node="onNodeSelect"
+  @select-edge="onEdgeSelect"
+  @drag-start="onDragStart"
+  @drag-end="onDragEnd"
+  @select="onNetworkSelect"
   @start-stabilizing="networkEvent('startStabilizing')"
   @stabilization-progress="networkEvent('stabilizationProgress')"
   @stabilization-iterations-done="networkEvent('stabilizationIterationsDone')"
@@ -60,7 +60,8 @@
   @animation-finished="networkEvent('animationFinished')"
   @nodes-mounted="networkEvent('nodes-mounted')"
   @edges-mounted="networkEvent('edges-mounted')"
-
+  @dragging="networkEvent('dragging')"
+  @zoom="networkEvent('zoom')"
 -->
 
 
@@ -185,11 +186,14 @@ export default {
         nodes: [],
         edges: [],
         options: {
+          locale: navigator.language,
           nodes: {
-            shape: "circle",
-            size:24,
+            //  shape: "circle",
+            //  size:24,
             color: {
-              border: 'grey',
+              //  border: 'grey',
+              background: '#D2E5FF',
+              border: '#2B7CE9',
 
               highlight: {
                 border: 'black',
@@ -204,10 +208,14 @@ export default {
             shapeProperties: {
               useBorderWithImage:true
             }
+          },
+          edges: {
+            arrows: 'to',
+            //  color: 'lightgray'
+          },
+          interaction: {
+            navigationButtons: true,
           }
-        },
-        interaction: {
-          navigationButtons: true,
         },
       },
       //   nodes: [],
