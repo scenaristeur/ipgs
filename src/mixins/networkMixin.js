@@ -44,8 +44,17 @@ export default {
       console.log(p)
       console.log(p.nodes[0])
       //console.log(this.nodes)
-      let node = this.nodes.find(x => x.id==p.nodes[0]);
-      console.log(node)
+      this.nodeData = this.nodes.find(x => x.id==p.nodes[0]);
+      console.log(this.nodeData)
+
+      this.$bvModal.show("node-menu")
+
+      //}
+
+    },
+
+    follow(node){
+      console.log('follow', node)
       this.$store.commit('ipgs/addToHistory', node)
       //  if(node.type == 'folder' || node.type == 'file'){
       try{
@@ -57,10 +66,10 @@ export default {
       }catch(e){
         alert(e)
       }
-
-      //}
-
     },
+
+
+
     catchCommand(data){
       console.log(data)
       switch(data.value) {

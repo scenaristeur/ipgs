@@ -10,6 +10,7 @@
   </network>
   <NodeModal v-model="nodeData" @ok="saveNode"/>
   <EdgeModal v-model="edgeData" @ok="saveEdge"/>
+  <NodeMenu v-model="nodeData" @follow="follow" />
   <b-modal id="editor-modal" size="lg" @ok="downloadFile">
     <editor
     height="300px"
@@ -91,15 +92,16 @@ export default {
   name:"NetworkView",
   mixins: [networkMixin],
   components: {
-//    'Network': () => import ("vue-vis-network"),
+    //    'Network': () => import ("vue-vis-network"),
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
     'StorageModal': () => import('@/components/solid/StorageModal'),
     'Editor': () => import('vue2x-ace-editor'),
+    'NodeMenu': () => import('@/components/network/NodeMenu'),
   },
   async created(){
     this.options.locale = navigator.language
-   this.initManipulationOptions()
+    this.initManipulationOptions()
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
       //  console.log(this.url)
@@ -125,16 +127,18 @@ export default {
       nodeData: {},
       edgeData: {},
       options: {
-        // nodes:{
-        //   color: {
-        //     border: '#00FF00',
-        //     background: '#FF0000',
-        //     highlight: {
-        //       border: '#2B7CE9',
-        //       background: '#D2E5FF'
-        //     }
-        //   }
-        // },
+        nodes:{
+          color: {
+            border: "#2B7CE9",
+            background: "#D2E5FF",
+
+            //     highlight: {
+            //       border: '#2B7CE9',
+            //       background: '#D2E5FF'
+            //     }
+          },
+          shape: 'ellipse'
+        },
         edges: {
           arrows: 'to',
           color: 'lightgray'
