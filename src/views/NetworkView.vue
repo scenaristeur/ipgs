@@ -1,85 +1,78 @@
 <template>
   <div>
     <NetworkToolBar />
-    <!-- <network ref="network"
-    id="network"
+    <NetworkPopups :network="network" />
+    <network
     class="wrapper"
-    :nodes="nodes"
-    :edges="edges"
-    @select-node="onSelectNode"
-    :options="options">
+    ref="network"
+    :nodes="network.nodes"
+    :edges="network.edges"
+    :options="network.options"
+      @select-node="onNodeSelect"
 
-  </network> -->
-  <NetworkPopups :network="network" />
-  <network
-  class="wrapper"
-  ref="network"
-  :nodes="network.nodes"
-  :edges="network.edges"
-  :options="network.options"
+    ></network>
+    <!--
+    @click="onNetworkClick()"
+    @select-node="onNodeSelect"
+    @select-edge="onEdgeSelect"
+    @drag-start="onDragStart"
+    @drag-end="onDragEnd"
+    @select="onNetworkSelect"
+    @start-stabilizing="networkEvent('startStabilizing')"
+    @stabilization-progress="networkEvent('stabilizationProgress')"
+    @stabilization-iterations-done="networkEvent('stabilizationIterationsDone')"
+    @stabilized="networkEvent('stabilized')"
+    @resize="networkEvent('resize')"
+    @init-redraw="networkEvent('initRedraw')"
+    @before-drawing="networkEvent('before-drawing')"
+    @after-drawing="networkEvent('afterDrawing')"
+    @animation-finished="networkEvent('animationFinished')"
+    @nodes-mounted="networkEvent('nodes-mounted')"
+    @edges-mounted="networkEvent('edges-mounted')"
+    @dragging="networkEvent('dragging')"
+    @zoom="networkEvent('zoom')"
 
-  @double-click="networkEvent('doubleClick')"
-  @oncontext="networkEvent('oncontext')"
-  @hold="networkEvent('hold')"
-  @release="networkEvent('release')"
-  @deselect-node="networkEvent('deselectNode')"
-  @deselect-edge="networkEvent('deselectEdge')"
-  @hover-node="networkEvent('hoverNode')"
-  @blur-node="networkEvent('blurNode')"
-  @hover-edge="networkEvent('hoverEdge')"
-  @blur-edge="networkEvent('blurEdge')"
+    @double-click="networkEvent('doubleClick')"
+    @oncontext="networkEvent('oncontext')"
+    @hold="networkEvent('hold')"
+    @release="networkEvent('release')"
+    @deselect-node="networkEvent('deselectNode')"
+    @deselect-edge="networkEvent('deselectEdge')"
+    @hover-node="networkEvent('hoverNode')"
+    @blur-node="networkEvent('blurNode')"
+    @hover-edge="networkEvent('hoverEdge')"
+    @blur-edge="networkEvent('blurEdge')"
 
-  @show-popup="networkEvent('showPopup')"
-  @hide-popup="networkEvent('hidePopup')"
+    @show-popup="networkEvent('showPopup')"
+    @hide-popup="networkEvent('hidePopup')"
 
-  @config-change="networkEvent('configChange')"
+    @config-change="networkEvent('configChange')"
 
-  @nodes-add="networkEvent('nodes-add')"
-  @nodes-update="networkEvent('nodes-update')"
-  @nodes-remove="networkEvent('nodes-remove')"
+    @nodes-add="networkEvent('nodes-add')"
+    @nodes-update="networkEvent('nodes-update')"
+    @nodes-remove="networkEvent('nodes-remove')"
 
-  @edges-add="networkEvent('edges-add')"
-  @edges-update="networkEvent('edges-update')"
-  @edges-remove="networkEvent('edges-remove')"
-  ></network>
+    @edges-add="networkEvent('edges-add')"
+    @edges-update="networkEvent('edges-update')"
+    @edges-remove="networkEvent('edges-remove')"
+  -->
+
+
+
   <!--
-  @click="onNetworkClick()"
-  @select-node="onNodeSelect"
-  @select-edge="onEdgeSelect"
-  @drag-start="onDragStart"
-  @drag-end="onDragEnd"
-  @select="onNetworkSelect"
-  @start-stabilizing="networkEvent('startStabilizing')"
-  @stabilization-progress="networkEvent('stabilizationProgress')"
-  @stabilization-iterations-done="networkEvent('stabilizationIterationsDone')"
-  @stabilized="networkEvent('stabilized')"
-  @resize="networkEvent('resize')"
-  @init-redraw="networkEvent('initRedraw')"
-  @before-drawing="networkEvent('before-drawing')"
-  @after-drawing="networkEvent('afterDrawing')"
-  @animation-finished="networkEvent('animationFinished')"
-  @nodes-mounted="networkEvent('nodes-mounted')"
-  @edges-mounted="networkEvent('edges-mounted')"
-  @dragging="networkEvent('dragging')"
-  @zoom="networkEvent('zoom')"
--->
-
-
-
-<!--
-<NodeModal v-model="nodeData" @ok="saveNode"/>
-<EdgeModal v-model="edgeData" @ok="saveEdge"/>
-<NodeMenu v-model="nodeData" @follow="follow" />
-<b-modal id="editor-modal" size="lg" @ok="downloadFile">
-<editor
-height="300px"
-ref="editor"
-:content="content"
-:options="{
-enableBasicAutocompletion: true,
-enableSnippets: true,
-enableLiveAutocompletion: true,
-tabSize:2
+  <NodeModal v-model="nodeData" @ok="saveNode"/>
+  <EdgeModal v-model="edgeData" @ok="saveEdge"/>
+  <NodeMenu v-model="nodeData" @follow="follow" />
+  <b-modal id="editor-modal" size="lg" @ok="downloadFile">
+  <editor
+  height="300px"
+  ref="editor"
+  :content="content"
+  :options="{
+  enableBasicAutocompletion: true,
+  enableSnippets: true,
+  enableLiveAutocompletion: true,
+  tabSize:2
 }"
 :fontSize='14'
 :lang="'python'"
@@ -188,8 +181,6 @@ export default {
         options: {
           locale: navigator.language,
           nodes: {
-            //  shape: "circle",
-            //  size:24,
             color: {
               //  border: 'grey',
               background: '#D2E5FF',
@@ -218,116 +209,8 @@ export default {
           }
         },
       },
-      //   nodes: [],
-      //   edges: [],
-      //   files: [],
-      //   showimport: false,
-      //   nodeData: {},
-      //   edgeData: {},
-      //   options: {
-      //     nodes:{
-      //       color: {
-      //         border: "#2B7CE9",
-      //         background: "#D2E5FF",
-      //
-      //         //     highlight: {
-      //         //       border: '#2B7CE9',
-      //         //       background: '#D2E5FF'
-      //         //     }
-      //       },
-      //       shape: 'ellipse'
-      //     },
-      //     edges: {
-      //       arrows: 'to',
-      //       color: 'lightgray'
-      //     },
-      //     manipulation: true,
-      //     // manipulation: {
-      //     //   initiallyActive: true,
-      //     //   addNode: async (nodeData, callback) => { nodeData.label = "" ; this.editNode(nodeData, callback) },
-      //     //   editNode: async (nodeData, callback) => { this.editNode(nodeData, callback) },
-      //     //   addEdge: async (edgeData, callback) => { this.addEdge(edgeData, callback) },
-      //     //   editEdge: { editWithoutDrag: async (edgeData, callback) => {this.editEdgeWithoutDrag(edgeData, callback)} }
-      //     // },
-      //     interaction: {
-      //       navigationButtons: true,
-      //     },
-      //   },
-      //   content: ""
     }
   },
-  methods: {
-
-    // onInputObjectChange(data){
-    //   console.log("onCommand",data)
-    //   switch (data.type) {
-    //     case 'triplet':
-    //     this.saveNode({id: "#"+data.value.subject.trim().split(' ').join('_'), label: data.value.subject})
-    //     this.saveNode({id: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.object})
-    //     this.saveEdge({from: "#"+data.value.subject.trim().split(' ').join('_'), to: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.predicate})
-    //     //  this.saveEdge({id: uuidv4(), from: "#"+data.value.subject.trim().split(' ').join('_'), to: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.predicate})
-    //     break;
-    //     case 'commande':
-    //     this.catchCommand(data)
-    //     break;
-    //     default:
-    //     console.log("TODO",data)
-    //   }
-    // },
-    // initManipulationOptions() {
-    //   let app = this
-    //   this.options.manipulation = {
-    //     initiallyActive: true,
-    //     addNode: async (nodeData, callback) => { nodeData.label = "" ; app.editNode(nodeData, callback) },
-    //     editNode: async (nodeData, callback) => { app.editNode(nodeData, callback) },
-    //     addEdge: async (edgeData, callback) => { app.addEdge(edgeData, callback) },
-    //     editEdge: { editWithoutDrag: async (edgeData, callback) => {app.editEdgeWithoutDrag(edgeData, callback)} }
-    //   }
-    // },
-    // editNode(nodeData, callback){
-    //   this.nodeData = nodeData
-    //   this.$bvModal.show("node-popup")
-    //   callback()
-    // },
-    // addEdge(edgeData, callback){
-    //   this.edgeData = edgeData
-    //   if (edgeData.from == edgeData.to) {
-    //     var r = confirm("Do you want to connect the node to itself?");
-    //     if (r != true) { callback(null); return; }
-    //   }
-    //   this.editEdgeWithoutDrag(edgeData, callback);
-    // },
-    // editEdge(edgeData, callback){ this.editEdgeWithoutDrag(edgeData, callback); },
-    // editEdgeWithoutDrag(edgeData, callback){
-    //   this.edgeData = edgeData
-    //   this.$bvModal.show("edge-popup")
-    //   callback()
-    // },
-    // saveNode(n){
-    //   var index = this.nodes.findIndex(x => x.id==n.id);
-    //   index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
-    // },
-    // saveEdge(e){
-    //   console.log(e)
-    //   var index = this.edges.findIndex(x => x.id==e.id);
-    //   index === -1 ? this.edges.push(e) : Object.assign(this.edges[index], e)
-    // },
-    // onSelectNode(p){
-    //   let node = this.nodes.find(x => x.id==p.nodes[0]);
-    //   console.log(JSON.stringify(node))
-    // }
-  },
-  computed: {
-    // inputObject: {
-    //   get () { return this.$store.state.ipgs.inputObject},
-    //   set (/*value*/) { /*this.updateTodo(value)*/ }
-    // },
-  },
-  watch:{
-    // inputObject(){
-    //   this.onInputObjectChange(this.inputObject)
-    // },
-  }
 }
 </script>
 

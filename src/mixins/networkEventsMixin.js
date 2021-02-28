@@ -1,7 +1,9 @@
 // import Network from '@/models/Network.js'
 // import Loader from '@/util/Loader.js'
+import networkUtilMixin from '@/mixins/networkUtilMixin'
 
 export default {
+  mixins: [networkUtilMixin],
   data() {
     return {
       // loader: new Loader(),
@@ -22,7 +24,15 @@ export default {
 
   },
   computed: {
-
+    inputObject: {
+      get () { return this.$store.state.ipgs.inputObject},
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+  },
+  watch:{
+    inputObject(){
+      this.onInputObjectChange(this.inputObject)
+    },
   },
   methods: {
     editNode(node, callback){
@@ -49,14 +59,62 @@ export default {
       //  this.$bvModal.show("edge-popup")
       callback()
     },
-    // saveNode(n){
-    //   var index = this.nodes.findIndex(x => x.id==n.id);
-    //   index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
-    // },
-    // saveEdge(e){
+    onInputObjectChange(data){
+      console.log("onCommand",data)
+      let nodeSubject, nodeObject, edge
+      switch (data.type) {
+        case 'triplet':
+        nodeSubject = this.nodeFromLabel(data.value.subject)
+        this.saveNode(nodeSubject)
+        nodeObject = this.nodeFromLabel(data.value.object)
+        this.saveNode(nodeObject)
+        console.log(nodeSubject.id, nodeObject.id)
+        edge = this.edgeFromLabel({from: nodeSubject.id, to: nodeObject.id, label: data.value.predicate})
+        console.log(edge)
+        this.saveEdge(edge)
+        break;
+        case 'commande':
+        this.catchCommand(data)
+        break;
+        default:
+        console.log("TODO",data)
+      }
+    },
+    saveNode(n){
+      var index = this.network.nodes.findIndex(x => x.id==n.id);
+      index === -1 ? this.network.nodes.push(n) : Object.assign(this.network.nodes[index], n)
+    },
+    saveEdge(e){
+      console.log(e)
+      var index = this.network.edges.findIndex(x => x.id==e.id);
+      index === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[index], e)
+    },
+    onNodeSelect(p){
+      console.log(p)
+      console.log(p.nodes[0])
+      //console.log(this.nodes)
+      let node = this.network.nodes.find(x => x.id==p.nodes[0]);
+      console.log(node)
+      this.$store.commit('ipgs/addToHistory', node)
+      //  if(node.type == 'folder' || node.type == 'file'){
+      try{
+        if(node.id.startsWith('http')){
+          //  this.load(node.id)
+        }else{
+          this.$store.commit('ipgs/setCommandInput', node.label+' ')
+        }
+      }catch(e){
+        alert(e)
+      }
+
+      //}
+
+    },
+    // onNodeSelect(e){
+    // //  this.somethingSelected = true
     //   console.log(e)
-    //   var index = this.edges.findIndex(x => x.id==e.id);
-    //   index === -1 ? this.edges.push(e) : Object.assign(this.edges[index], e)
+    //   this.$store.commit('ipgs/setAction', {action: 'editNode', node: { id: e.nodes[0],modified: new Date()}})
+    //
     // },
     // onDragStart(e){
     //   console.log(e)
@@ -81,12 +139,7 @@ export default {
     //   this.somethingSelected = true
     //   console.log(e)
     // },
-    // onNodeSelect(e){
-    //   this.somethingSelected = true
-    //   console.log(e)
-    //   this.$store.commit('ipgs/setAction', {action: 'editNode', node: { id: e.nodes[0],modified: new Date()}})
-    //
-    // },
+
     // onEdgeSelect(e){
     //   this.somethingSelected = true
     //   console.log(e)
@@ -99,9 +152,4 @@ export default {
     },
 
   },
-  watch:{
-
-  }
-
-
 }

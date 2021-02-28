@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      node: {label: "boo", color: {  background: '#D2E5FF', border: '#2B7CE9'}, shape: 'ellipse'},
+      node: {label: "there is an error this must not be shown", color: {  background: '#D2E5FF', border: '#2B7CE9'}, shape: 'ellipse'},
       edge: {}
     }
   },
