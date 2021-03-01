@@ -10,6 +10,22 @@ export default {
       addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
       editEdge: { editWithoutDrag: async (edge, callback) => {app.editEdgeWithoutDrag(edge, callback)} }
     }
+
+
+    if (this.$route.query.url != undefined ){
+      this.url = this.$route.query.url
+      console.log('url',this.url)
+
+    }
+    this.storage = this.$store.state.solid.storage
+
+    if(this.storage != null){
+      console.log("storage",this.storage)
+    }
+
+
+
+
   },
   methods: {
     onSelectNode(p){

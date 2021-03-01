@@ -11,7 +11,7 @@ console.log(jsonldcontext)
 const context ={
   // ALIAS IN JSLONLD https://github.com/schemaorg/schemaorg/issues/854
   // "owl":"http://www.w3.org/2002/07/owl#",
-  // "as":"https://www.w3.org/ns/activitystreams",
+  "as":"https://www.w3.org/ns/activitystreams",
   // "schema":"http://schema.org/",
   // "life": "http://purl.org/vocab/lifecycle/schema#",
   terms: "http://purl.org/dc/terms/",

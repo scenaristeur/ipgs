@@ -5,9 +5,9 @@
 
       <b-container>
         <b-input-group class="mt-3">
-          <b-form-input  v-model="new_graph_name" placeholder="New Graph Name" v-on:keyup.enter="createNew"></b-form-input>
+          <b-form-input  v-model="new_graph_name" placeholder="New Graph Name" v-on:keyup.enter="save"></b-form-input>
           <b-input-group-append>
-            <b-button variant="info" @click="createNew">create</b-button>
+            <b-button variant="info" @click="save">create</b-button>
           </b-input-group-append>
         </b-input-group>
 
@@ -53,7 +53,7 @@
 
     <b-list-group-item variant="light"
     class="item list-group-item d-flex justify-content-between"
-    v-for="fi in folder.files" :key="fi.url" @click="read(fi)" button>
+    v-for="fi in folder.files" :key="fi.url"  button> <!-- @click="save(fi)" -->
     <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
   </b-list-group-item>
 </b-list-group>
@@ -71,6 +71,8 @@ const fc = new FC( auth )
 import Activity from '@/models/Activity.js'
 import Network from '@/models/Network.js'
 
+let mimetypes = { json: 'application/json', jsonld: "application/ld+json", ttl: "text/turtle"}
+
 export default {
   name: "StorageModal",
   components: {
@@ -86,7 +88,7 @@ export default {
     }
   },
   created(){
-    console.log('network',this.network)
+    this.dataToSave = this.$store.state.ipgs.dataToSave
     if (this.storage != null){
       this.read({url: this.storage, name: this.storage, type: 'folder'})
     }
@@ -101,7 +103,79 @@ export default {
     // }
   },
   methods: {
-    async createNew(){
+    async save(){
+      if(this.new_graph_name.length>0){
+        console.log('dataToSave', this.dataToSave)
+        let new_file_url = this.url+this.new_graph_name+'.'+this.dataToSave.format
+        let content = this.dataToSave.content
+        if (this.dataToSave.format ==  'jsonld'){
+          let jsonld_data = JSON.parse(this.dataToSave.content)
+          console.log(jsonld_data)
+          jsonld_data['@context']['@base'] = new_file_url
+          jsonld_data['@id'] = new_file_url
+          jsonld_data.label = this.new_graph_name
+          jsonld_data['as:actor'] = {'@id': this.webId}
+
+          content = JSON.stringify(jsonld_data, undefined, 2)
+          console.log('new content',content)
+        }
+
+
+        let contentType = mimetypes[this.dataToSave.format]
+        console.log(contentType, content)
+
+        if( await fc.itemExists( new_file_url )) {
+          var r = confirm(new_file_url +' already exists, do you want to replace it ?')
+          if (r == true) {
+
+         await fc.createFile( new_file_url, content, contentType ).then(
+              f => {
+                console.log(f)
+                //    console.log(f.headers.get('location'))
+
+                let loc =  f.headers.get('location')
+                console.log(loc)
+                this.$bvModal.hide("storage-modal")
+                this.$router.push({ path: 'network', query: { url: new_file_url } })
+                //  this.getData({url: res_url, group: ""})
+              }
+            ) .catch(err => alert(`Error: ${err}`))
+          }
+        }else{
+         await fc.createFile( new_file_url, content, contentType ).then(
+            f => {
+              console.log(f)
+              //    console.log(f.headers.get('location'))
+
+              let loc =  f.headers.get('location')
+              console.log(loc)
+              this.$bvModal.hide("storage-modal")
+              this.$router.push({ path: 'network', query: { url: new_file_url } })
+              //  this.getData({url: res_url, group: ""})
+            }
+          ) .catch(err => alert(`Error: ${err}`))
+        }
+
+  // let loc_url = loc.startsWith('/') ? this.storage + loc.substring(1) : loc
+  //
+  // if (this.publish == true){
+  //   let activity = new Activity()
+  //   activity.jsonld.creator = this.webId
+  //   activity.jsonld.object = this.content
+  //
+  //   console.log(activity)
+  //   activity.publish()
+  // }
+
+  // this.$bvModal.hide("storage-modal")
+  // this.$router.push({ path: 'network', query: { url: loc_url } })
+
+
+      }else{
+        alert("If you want to create a Graph, you must provide a name !")
+      }
+    },
+    async createNew1(){
 
       if(this.new_graph_name.length>0){
         let new_file_url = this.url+this.new_graph_name+'.json'
@@ -174,12 +248,6 @@ export default {
         this.read({url: this.storage, name: this.storage, type: 'folder'})
       }
     },
-    inputObject(){
-      //this.onInputObjectChange(this.inputObject)
-      if (this.inputObject.value=='/s'){
-        this.$bvModal.show("storage-modal")
-      }
-    },
   },
   computed: {
     webId: {
@@ -190,10 +258,11 @@ export default {
       get () { return this.$store.state.solid.storage},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
-    inputObject: {
-      get () { return this.$store.state.ipgs.inputObject},
+    dataToSave: {
+      get () { return this.$store.state.ipgs.dataToSave},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+
   },
 }
 </script>

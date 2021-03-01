@@ -7,6 +7,7 @@ const state = () => ({
   history: [],
   action: null,
   editorContent: {},
+  dataToSave: {}
   // graphs: [],
   // currentGraphId: null,
   // network: {
@@ -122,6 +123,10 @@ const mutations = {
   setNetwork(state, n){
     console.log(n)
     state.network = n
+  },
+  setDataToSave(state, d){
+    console.log(d)
+    state.dataToSave = d
   }
 
 }
