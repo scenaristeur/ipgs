@@ -60,6 +60,9 @@ export default {
         this.edge = this.network.nodes.find(x => x.id==this.action.edge.id) || this.action.edge
         this.$bvModal.show("edge-popup")
         break;
+        case 'import':
+        this.$bvModal.show("import-popup")
+        break;
         default:
 
       }

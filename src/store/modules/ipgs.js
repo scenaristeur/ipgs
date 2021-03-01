@@ -2,6 +2,7 @@
 
 const state = () => ({
   inputObject: null,
+  commands : {'/i': 'import', '/h': 'help', '/n': 'new', '/e': 'export', '/c': 'capture' },
   commandInput: "",
   history: [],
   action: null,
@@ -86,7 +87,20 @@ const mutations = {
   },
   setInputObject(state, io){
     console.log(io)
-    state.inputObject = io
+    if (io.type == 'commande'){
+      // switch (io.value) {
+      //   case '/i':
+      //     state.command = {action: 'import'}
+      //     break;
+      //   default:
+      //
+      // }
+      state.action = {action: state.commands[io.value]}
+      console.log(state.action)
+    }else{
+      state.inputObject = io
+    }
+
   },
   setCommandInput(state, text){
     console.log(text)
