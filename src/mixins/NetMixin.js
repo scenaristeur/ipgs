@@ -1,5 +1,6 @@
+import networkUtilMixin from '@/mixins/networkUtilMixin'
 export default {
-
+  mixins: [networkUtilMixin],
   async created(){
     let app = this
     this.network.options.manipulation = {
@@ -11,6 +12,18 @@ export default {
     }
   },
   methods: {
+    onSelectNode(p){
+      console.log(p)
+      console.log(p.nodes[0])
+      //console.log(this.nodes)
+      this.nodeData = this.network.nodes.find(x => x.id==p.nodes[0]);
+      console.log(this.nodeData)
+
+      this.$bvModal.show("node-menu")
+
+      //}
+
+    },
     editNode(node, callback){
       //    this.node = node
       node.color == undefined ? node.color =  {  background: '#D2E5FF', border: '#2B7CE9'} : ""
@@ -66,10 +79,44 @@ export default {
       tmpLink.click();
       document.body.removeChild( tmpLink );
     },
+    onInputObjectChange(data){
+      console.log("onCommand",data)
+      let nodeSubject, nodeObject, edge
+      switch (data.type) {
+        case 'triplet':
+        nodeSubject = this.nodeFromLabel(data.value.subject)
+        this.saveNode(nodeSubject)
+        nodeObject = this.nodeFromLabel(data.value.object)
+        this.saveNode(nodeObject)
+        console.log(nodeSubject.id, nodeObject.id)
+        edge = this.edgeFromLabel({from: nodeSubject.id, to: nodeObject.id, label: data.value.predicate})
+        console.log(edge)
+        this.saveEdge(edge)
+        break;
+        case 'url':
+        console.log(data)
+        break;
+        default:
+        console.log("TODO",data)
+      }
+    },
+    saveNode(n){
+      var index = this.network.nodes.findIndex(x => x.id==n.id);
+      index === -1 ? this.network.nodes.push(n) : Object.assign(this.network.nodes[index], n)
+    },
+    saveEdge(e){
+      console.log(e)
+      var index = this.network.edges.findIndex(x => x.id==e.id);
+      index === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[index], e)
+    },
   },
   computed: {
     action: {
       get () { return this.$store.state.ipgs.action},
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    inputObject: {
+      get () { return this.$store.state.ipgs.inputObject},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   },
@@ -89,6 +136,9 @@ export default {
 
       }
 
+    },
+    inputObject(){
+      this.onInputObjectChange(this.inputObject)
     },
   }
 

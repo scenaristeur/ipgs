@@ -8,6 +8,8 @@
     :edges="network.edges"
     :options="network.options"
     @click="networkEvent('click')"
+    @select-node="onSelectNode"
+    @select-edge="networkEvent('selectEdge')"
 
     ></network>
     <!--       @before-drawing="drawBg"
@@ -62,13 +64,13 @@
   <button @click="removeNode">Remove Node</button>
   <button @click="removeEdge">Remove Edge</button> -->
   <!-- <div class="events">
-    <p>
-      Network events:
-      <br />
-      {{networkEvents}}
-    </p>
-  </div> -->
-  <NetworkPopups :network="network" />
+  <p>
+  Network events:
+  <br />
+  {{networkEvents}}
+</p>
+</div> -->
+<NetworkPopups :network="network" />
 </div>
 </template>
 
@@ -151,10 +153,11 @@ export default {
     //     -mapBgHeight / 2
     //   );
     // },
-    // networkEvent(eventName) {
-    //   if (this.networkEvents.length > 500) this.networkEvents = "";
-    //   this.networkEvents += `${eventName}, `;
-    // },
+    networkEvent(eventName) {
+      console.log(eventName)
+      // if (this.networkEvents.length > 500) this.networkEvents = "";
+      // this.networkEvents += `${eventName}, `;
+    },
     // addNode() {
     //   const id = new Date().getTime();
     //   this.network.nodes.push({ id, label: "New node" });
