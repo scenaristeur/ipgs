@@ -7,6 +7,9 @@
     :edges="network.edges"
     :options="network.options"
     @click="networkEvent('click')"
+
+    ></network>
+    <!--       @before-drawing="drawBg"
     @double-click="networkEvent('doubleClick')"
     @oncontext="networkEvent('oncontext')"
     @hold="networkEvent('hold')"
@@ -44,29 +47,28 @@
     @edges-add="networkEvent('edges-add')"
     @edges-update="networkEvent('edges-update')"
     @edges-remove="networkEvent('edges-remove')"
-    ></network>
-    <!--       @before-drawing="drawBg"  -->
-    <!-- <img
-    id="scream"
-    src="north_pole.png"
-    style="display: none;"
-    alt="Noth Pole"
-    />
+  -->
+  <!-- <img
+  id="scream"
+  src="north_pole.png"
+  style="display: none;"
+  alt="Noth Pole"
+  />
 
-    <button @click="addNode">Add node</button>
-    <button @click="addEdge">Add edge</button>
-    <button @click="resetNetwork">Reset Network</button>
-    <button @click="removeNode">Remove Node</button>
-    <button @click="removeEdge">Remove Edge</button> -->
-    <div class="events">
-      <p>
-        Network events:
-        <br />
-        {{networkEvents}}
-      </p>
-    </div>
-    <NetworkPopups :network="network" />
+  <button @click="addNode">Add node</button>
+  <button @click="addEdge">Add edge</button>
+  <button @click="resetNetwork">Reset Network</button>
+  <button @click="removeNode">Remove Node</button>
+  <button @click="removeEdge">Remove Edge</button> -->
+  <div class="events">
+    <p>
+      Network events:
+      <br />
+      {{networkEvents}}
+    </p>
   </div>
+  <NetworkPopups :network="network" />
+</div>
 </template>
 
 <script>
