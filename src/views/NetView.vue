@@ -78,19 +78,21 @@ import NetMixin from '@/mixins/NetMixin'
 
 
 let defNodes = [
-  { id: 1, label: "Node 1" },
-  { id: 2, label: "Node 2" },
-  { id: 3, label: "Node 3. Picture clipped" },
-  { id: 4, label: "Node 4 with PNG picture" },
-  { id: 5, label: "Node 5 with SVG picture" }
+  { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
+  { id: 'n2', label: "WebApp", color: {background: 'green'}, shape: 'star' },
+  { id: 'n3', label: "InterPlanetary Graph System" },
+  { id: 'n4', label: "Mindmap App" },
+  { id: 'n5', label: "To know how to use Ipgs, type /h in the top input box and hit Enter", shape: 'box'},
+  { id: 'n6', label: "Pour savoir comment utiliser Ipgs, tapez /h dans le champ de saisie tout en haut", shape: 'box' }
 ]
 
 let defEdges = [
-  { id: 1, from: 1, to: 3 },
-  { id: 2, from: 1, to: 2 },
-  { id: 3, from: 2, to: 4 },
-  { id: 4, from: 2, to: 5 },
-  { id: 5, from: 3, to: 3 }
+  { id: 'e1', from: 'n1', to: 'n2', label: 'type' },
+  { id: 'e2', from: 'n1', to: 'n3', label: 'long name' },
+  { id: 'e3', from: 'n1', to: 'n4', label: 'category' },
+  { id: 'e4', from: 'n1', to: 'n5', label: 'help EN' },
+  { id: 'e5', from: 'n1', to: 'n6', label: 'help FR' },
+
 ]
 
 export default {

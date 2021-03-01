@@ -2,47 +2,47 @@
 
 const state = () => ({
   inputObject: null,
-  commands : {'/i': 'import', '/h': 'help', '/n': 'new', '/e': 'export', '/c': 'capture' },
+  commands : {'/i': 'import', '/h': 'help', '/n': 'newGraph', '/e': 'export', '/c': 'capture' },
   commandInput: "",
   history: [],
   action: null,
   editorContent: {},
-  graphs: [],
-  currentGraphId: null,
-  network: {
-    nodes: [],
-    edges: [],
-    options: {
-      locale: navigator.language,
-      nodes: {
-        color: {
-          //  border: 'grey',
-          background: '#D2E5FF',
-          border: '#2B7CE9',
-
-          highlight: {
-            border: 'black',
-            background: 'white'
-          },
-          hover: {
-            border: 'orange',
-            background: 'grey'
-          }
-        },
-        font:{color:'black'},
-        shapeProperties: {
-          useBorderWithImage:true
-        }
-      },
-      edges: {
-        arrows: 'to',
-        //  color: 'lightgray'
-      },
-      interaction: {
-        navigationButtons: true,
-      }
-    },
-  },
+  // graphs: [],
+  // currentGraphId: null,
+  // network: {
+  //   nodes: [],
+  //   edges: [],
+  //   options: {
+  //     locale: navigator.language,
+  //     nodes: {
+  //       color: {
+  //         //  border: 'grey',
+  //         background: '#D2E5FF',
+  //         border: '#2B7CE9',
+  //
+  //         highlight: {
+  //           border: 'black',
+  //           background: 'white'
+  //         },
+  //         hover: {
+  //           border: 'orange',
+  //           background: 'grey'
+  //         }
+  //       },
+  //       font:{color:'black'},
+  //       shapeProperties: {
+  //         useBorderWithImage:true
+  //       }
+  //     },
+  //     edges: {
+  //       arrows: 'to',
+  //       //  color: 'lightgray'
+  //     },
+  //     interaction: {
+  //       navigationButtons: true,
+  //     }
+  //   },
+  // },
 
   //  command: ""
   //  storage: null
@@ -97,6 +97,9 @@ const mutations = {
       // }
       state.action = {action: state.commands[io.value]}
       console.log(state.action)
+      if(state.action.action == undefined){
+        alert("Warning : Unknown action "+ io.value + " , type /h for help" )
+      }
     }else{
       state.inputObject = io
     }

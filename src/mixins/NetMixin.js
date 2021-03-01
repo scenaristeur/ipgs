@@ -13,7 +13,7 @@ export default {
   methods: {
     editNode(node, callback){
       //    this.node = node
-       node.color == undefined ? node.color =  {  background: '#D2E5FF', border: '#2B7CE9'} : ""
+      node.color == undefined ? node.color =  {  background: '#D2E5FF', border: '#2B7CE9'} : ""
       node.shape == undefined ? node.shape = 'ellipse': ""
       //  this.$bvModal.show("node-popup")
       this.$store.commit('ipgs/setAction', {action: 'editNode', node: node})
@@ -34,6 +34,27 @@ export default {
       this.$store.commit('ipgs/setAction', {action: 'editEdge', edge: edge})
       //  this.$bvModal.show("edge-popup")
       callback()
+    },
+  },
+  computed: {
+    action: {
+      get () { return this.$store.state.ipgs.action},
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+  },
+  watch:{
+    action(){
+      console.log(this.action)
+      switch (this.action.action) {
+        case 'newGraph':
+        this.network.nodes = []
+        this.network.edges = []
+        break;
+
+        default:
+
+      }
+
     },
   }
 

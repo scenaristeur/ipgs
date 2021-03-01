@@ -18,10 +18,10 @@
   <!-- <b-button v-b-toggle="'collapse-node-id'" class="m-1" variant="primary" size ="sm">Id</b-button>
   <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
   <b-button v-b-toggle="'collapse-node-expert'" class="m-1" variant="light" size="sm">Expert</b-button> -->
-
+  <b-button v-b-toggle="'collapse-node-color'" class="m-1" variant="dark" size="sm">Color</b-button>
   <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
   <!-- <b-button v-b-toggle="'collapse-node-icon'" class="m-1" variant="dark" size="sm">Icon</b-button> -->
-  <b-button v-b-toggle="'collapse-node-color'" class="m-1" variant="dark" size="sm">Color</b-button>
+
 
 
 

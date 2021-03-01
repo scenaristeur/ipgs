@@ -4,6 +4,7 @@
     <NodeModal v-model="node" @ok="saveNode"/>
     <EdgeModal v-model="edge" @ok="saveEdge"/>
     <ImportModal />
+    <ExportModal />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ export default {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
     'ImportModal': () => import('@/components/network/ImportModal'),
+    'ExportModal': () => import('@/components/network/ExportModal'),
   },
   data() {
     return {
@@ -45,12 +47,7 @@ export default {
   watch:{
     action(){
       console.log(this.action)
-      console.log(this.action)
       switch (this.action.action) {
-        // case 'newNode':
-        // this.node = this.action.node
-        // this.$bvModal.show("node-popup")
-        // break;
         case 'editNode':
         this.node = this.network.nodes.find(x => x.id==this.action.node.id) || this.action.node
         console.log(this.node)
@@ -63,10 +60,12 @@ export default {
         case 'import':
         this.$bvModal.show("import-popup")
         break;
+        case 'export':
+        this.$store.commit('ipgs/setEditorContent', {content: {nodes: this.network.nodes, edges: this.network.edges}, format: 'json'})
+        this.$bvModal.show("export-popup")
+        break;
         default:
-
       }
-
     },
   }
 }

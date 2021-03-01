@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     async createNew(){
-      console.log("net",this.network)
+
       if(this.new_graph_name.length>0){
         let new_file_url = this.url+this.new_graph_name+'.json'
 
