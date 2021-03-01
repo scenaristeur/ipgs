@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <network
+    id="network"
     class="network"
     ref="network"
     :nodes="network.nodes"
@@ -60,13 +61,13 @@
   <button @click="resetNetwork">Reset Network</button>
   <button @click="removeNode">Remove Node</button>
   <button @click="removeEdge">Remove Edge</button> -->
-  <div class="events">
+  <!-- <div class="events">
     <p>
       Network events:
       <br />
       {{networkEvents}}
     </p>
-  </div>
+  </div> -->
   <NetworkPopups :network="network" />
 </div>
 </template>
@@ -150,10 +151,10 @@ export default {
     //     -mapBgHeight / 2
     //   );
     // },
-    networkEvent(eventName) {
-      if (this.networkEvents.length > 500) this.networkEvents = "";
-      this.networkEvents += `${eventName}, `;
-    },
+    // networkEvent(eventName) {
+    //   if (this.networkEvents.length > 500) this.networkEvents = "";
+    //   this.networkEvents += `${eventName}, `;
+    // },
     // addNode() {
     //   const id = new Date().getTime();
     //   this.network.nodes.push({ id, label: "New node" });
