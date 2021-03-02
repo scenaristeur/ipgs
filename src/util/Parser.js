@@ -51,10 +51,12 @@ export default class Parser {
     //  return
   }else{
     console.log("OBJECT",data)
+    let node = {id: data['@id'], label: data['@id']}
+    await this.network.nodes.push(node)
+      console.log('net',this.network)
     const compacted = await jsonld.compact(data, jsonldcontext);
-    let node = {id: compacted['@id'], label: compacted['@id']}
-    this.network.nodes.push(node)
-    console.log('net',this.network)
+
+
     //console.log("compacted",JSON.stringify(compacted, null, 2));
     console.log("compacted",compacted)
   }

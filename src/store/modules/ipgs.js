@@ -2,8 +2,49 @@
 
 const state = () => ({
   inputObject: null,
+  commands : {'/i': 'import', '/h': 'help', '/n': 'newGraph', '/e': 'export', '/c': 'capture' },
   commandInput: "",
   history: [],
+  action: null,
+  editorContent: {},
+  dataToSave: {}
+  // graphs: [],
+  // currentGraphId: null,
+  // network: {
+  //   nodes: [],
+  //   edges: [],
+  //   options: {
+  //     locale: navigator.language,
+  //     nodes: {
+  //       color: {
+  //         //  border: 'grey',
+  //         background: '#D2E5FF',
+  //         border: '#2B7CE9',
+  //
+  //         highlight: {
+  //           border: 'black',
+  //           background: 'white'
+  //         },
+  //         hover: {
+  //           border: 'orange',
+  //           background: 'grey'
+  //         }
+  //       },
+  //       font:{color:'black'},
+  //       shapeProperties: {
+  //         useBorderWithImage:true
+  //       }
+  //     },
+  //     edges: {
+  //       arrows: 'to',
+  //       //  color: 'lightgray'
+  //     },
+  //     interaction: {
+  //       navigationButtons: true,
+  //     }
+  //   },
+  // },
+
   //  command: ""
   //  storage: null
 })
@@ -41,9 +82,29 @@ const actions = {
 
 // mutations
 const mutations = {
+  setAction(state, a){
+    console.log(a)
+    state.action = a
+  },
   setInputObject(state, io){
     console.log(io)
-    state.inputObject = io
+    if (io.type == 'commande'){
+      // switch (io.value) {
+      //   case '/i':
+      //     state.command = {action: 'import'}
+      //     break;
+      //   default:
+      //
+      // }
+      state.action = {action: state.commands[io.value]}
+      console.log(state.action)
+      if(state.action.action == undefined){
+        alert("Warning : Unknown action "+ io.value + " , type /h for help" )
+      }
+    }else{
+      state.inputObject = io
+    }
+
   },
   setCommandInput(state, text){
     console.log(text)
@@ -52,13 +113,21 @@ const mutations = {
   },
   addToHistory(state, node){
     const updatedHistory = state.history.filter(item => item.id !== node.id);
-    updatedHistory.push(node)    
+    updatedHistory.push(node)
     state.history = updatedHistory
   },
-  // setCommand(state, command){
-  //   console.log(command)
-  //   state.command = command
-  // }
+  setEditorContent(state, c){
+    console.log(c)
+    state.editorContent = c
+  },
+  setNetwork(state, n){
+    console.log(n)
+    state.network = n
+  },
+  setDataToSave(state, d){
+    console.log(d)
+    state.dataToSave = d
+  }
 
 }
 

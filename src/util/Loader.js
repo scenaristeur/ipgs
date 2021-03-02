@@ -30,7 +30,7 @@ export default class Loader {
 
   }
 
-  async loadTODO(url){
+  async load2(url){
     console.log(url)
     this.url = url
     await this.readJsonld()
@@ -86,13 +86,18 @@ export default class Loader {
 
   async readJsonld(){
     let documentLoaderType = 'xhr'
-    jsonld.useDocumentLoader(documentLoaderType/*, options*/);
+    await jsonld.useDocumentLoader(documentLoaderType/*, options*/);
     const iri = this.url;
-    let doc = await jsonld.documentLoader(iri, function(err) {
-      if(err) {
-        console.log(err)
-      }
-    })
+    let doc = {}
+    try{
+      doc = await jsonld.documentLoader(iri, function(err) {
+        if(err) {
+          console.log(err)
+        }
+      })
+    }catch(e){
+      alert(e)
+    }
     console.log(doc)
 
     let parser = new Parser(doc)

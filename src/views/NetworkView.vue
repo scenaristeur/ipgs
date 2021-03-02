@@ -1,235 +1,212 @@
 <template>
-  <div>
-    <network ref="network"
+  <div class="wrapper">
+    <network
     id="network"
-    class="wrapper"
-    :nodes="nodes"
-    :edges="edges"
+    class="network"
+    ref="network"
+    :nodes="network.nodes"
+    :edges="network.edges"
+    :options="network.options"
+    @click="networkEvent('click')"
     @select-node="onSelectNode"
-    :options="options">
-  </network>
-  <NodeModal v-model="nodeData" @ok="saveNode"/>
-  <EdgeModal v-model="edgeData" @ok="saveEdge"/>
-  <b-modal id="editor-modal" size="lg" @ok="downloadFile">
-    <editor
-    height="300px"
-    ref="editor"
-    :content="content"
-    :options="{
-      enableBasicAutocompletion: true,
-      enableSnippets: true,
-      enableLiveAutocompletion: true,
-      tabSize:2
-    }"
-    :fontSize='14'
-    :lang="'python'"
-    :theme="'eclipse'"
-    @onChange="editorChange"
-    @init="editorInit">
-    <!-- <div>toolbar or something</div> -->
-  </editor>
-</b-modal>
+    @select-edge="networkEvent('selectEdge')"
 
-<b-modal id="import-popup" v-model="showimport">
-  <b-form-file
-  v-model="files"
-  multiple
-  placeholder="Choose a file or drop it here..."
-  drop-placeholder="Drop file here..."
-  ></b-form-file>
-  <template #modal-footer>
-    <div class="w-100">
-      <b-button
-      variant="primary"
-      size="sm"
-      class="float-right"
-      @click="importToGraph(true)"
-      >
-      New
-    </b-button>
-    <b-button
-    variant="primary"
-    size="sm"
-    class="float-right"
-    @click="importToGraph"
-    >
-    Add to current graph
-  </b-button>
-  <b-button
-  variant="primary"
-  size="sm"
-  class="float-right"
-  @click="showimport=false"
-  >
-  Close
-</b-button>
-</div>
-</template>
+    ></network>
+    <!--       @before-drawing="drawBg"
+    @double-click="networkEvent('doubleClick')"
+    @oncontext="networkEvent('oncontext')"
+    @hold="networkEvent('hold')"
+    @release="networkEvent('release')"
+    @select="networkEvent('select')"
+    @select-node="networkEvent('selectNode')"
+    @select-edge="networkEvent('selectEdge')"
+    @deselect-node="networkEvent('deselectNode')"
+    @deselect-edge="networkEvent('deselectEdge')"
+    @drag-start="networkEvent('dragStart')"
+    @dragging="networkEvent('dragging')"
+    @drag-end="networkEvent('dragEnd')"
+    @hover-node="networkEvent('hoverNode')"
+    @blur-node="networkEvent('blurNode')"
+    @hover-edge="networkEvent('hoverEdge')"
+    @blur-edge="networkEvent('blurEdge')"
+    @zoom="networkEvent('zoom')"
+    @show-popup="networkEvent('showPopup')"
+    @hide-popup="networkEvent('hidePopup')"
+    @start-stabilizing="networkEvent('startStabilizing')"
+    @stabilization-progress="networkEvent('stabilizationProgress')"
+    @stabilization-iterations-done="networkEvent('stabilizationIterationsDone')"
+    @stabilized="networkEvent('stabilized')"
+    @resize="networkEvent('resize')"
+    @init-redraw="networkEvent('initRedraw')"
 
-</b-modal>
-<StorageModal :network="network" />
+    @after-drawing="networkEvent('afterDrawing')"
+    @animation-finished="networkEvent('animationFinished')"
+    @config-change="networkEvent('configChange')"
+    @nodes-mounted="networkEvent('nodes-mounted')"
+    @nodes-add="networkEvent('nodes-add')"
+    @nodes-update="networkEvent('nodes-update')"
+    @nodes-remove="networkEvent('nodes-remove')"
+    @edges-mounted="networkEvent('edges-mounted')"
+    @edges-add="networkEvent('edges-add')"
+    @edges-update="networkEvent('edges-update')"
+    @edges-remove="networkEvent('edges-remove')"
+  -->
+  <!-- <img
+  id="scream"
+  src="north_pole.png"
+  style="display: none;"
+  alt="Noth Pole"
+  />
+
+  <button @click="addNode">Add node</button>
+  <button @click="addEdge">Add edge</button>
+  <button @click="resetNetwork">Reset Network</button>
+  <button @click="removeNode">Remove Node</button>
+  <button @click="removeEdge">Remove Edge</button> -->
+  <!-- <div class="events">
+  <p>
+  Network events:
+  <br />
+  {{networkEvents}}
+</p>
+</div> -->
+<NetworkPopups :network="network" />
 </div>
 </template>
 
 <script>
+//import { Network } from "vue-vis-network";
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
-import networkMixin from '@/mixins/networkMixin'
 
-// https://github.com/zjfcool/vue2x-ace-editor
-import ace from 'brace'
-import 'brace/ext/language_tools';
-import 'brace/mode/python.js'
-import 'brace/snippets/python.js';
-import 'brace/theme/eclipse.js';
+import NetMixin from '@/mixins/NetMixin'
 
 
-// ace/mode/turtle
-console.log(ace)
+let defNodes = [
+  { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
+  { id: 'n2', label: "WebApp", color: {background: 'green'}, shape: 'star' },
+  { id: 'n3', label: "InterPlanetary Graph System" },
+  { id: 'n4', label: "Mindmap App" },
+  { id: 'n5', label: "To know how to use Ipgs, type /h in the top input box and hit Enter", shape: 'box'},
+  { id: 'n6', label: "Pour savoir comment utiliser Ipgs, tapez /h dans le champ de saisie tout en haut", shape: 'box' }
+]
+
+let defEdges = [
+  { id: 'e1', from: 'n1', to: 'n2', label: 'type' },
+  { id: 'e2', from: 'n1', to: 'n3', label: 'long name' },
+  { id: 'e3', from: 'n1', to: 'n4', label: 'category' },
+  { id: 'e4', from: 'n1', to: 'n5', label: 'help EN' },
+  { id: 'e5', from: 'n1', to: 'n6', label: 'help FR' },
+
+]
 
 export default {
-  name:"NetworkView",
-  mixins: [networkMixin],
+  name: 'NetworkView',
+  mixins: [NetMixin],
   components: {
-//    'Network': () => import ("vue-vis-network"),
-    'NodeModal': () => import('@/components/network/NodeModal'),
-    'EdgeModal': () => import('@/components/network/EdgeModal'),
-    'StorageModal': () => import('@/components/solid/StorageModal'),
-    'Editor': () => import('vue2x-ace-editor'),
+    //Network,
+    'NetworkPopups': () => import('@/components/network/NetworkPopups'),
+    //  'network': () => import('vue-vis-network')
   },
-  async created(){
-    this.options.locale = navigator.language
-   this.initManipulationOptions()
-    if (this.$route.query.url != undefined ){
-      this.url = this.$route.query.url
-      //  console.log(this.url)
-      await this.load(this.url)
-    }else{
-      this.storage = this.$store.state.solid.storage
-      //console.log(this.storage)
-      if (this.storage != null){
-        await this.load(this.storage)
-      }
-
-      //this.network = new Network()
-      //  this.network.setId( 'https://spoggy-test9.solidcommunity.net/public/network/test.json')
-      //console.log("network", this.network)
-    }
-  },
-  data() {
-    return {
-      nodes: [],
-      edges: [],
-      files: [],
-      showimport: false,
-      nodeData: {},
-      edgeData: {},
+  data: () => ({
+    networkEvents: "",
+    network: {
+      nodes: defNodes.slice(0),
+      edges: defEdges.slice(0),
       options: {
-        // nodes:{
-        //   color: {
-        //     border: '#00FF00',
-        //     background: '#FF0000',
-        //     highlight: {
-        //       border: '#2B7CE9',
-        //       background: '#D2E5FF'
-        //     }
-        //   }
-        // },
-        edges: {
-          arrows: 'to',
-          color: 'lightgray'
-        },
-        manipulation: true,
-        // manipulation: {
-        //   initiallyActive: true,
-        //   addNode: async (nodeData, callback) => { nodeData.label = "" ; this.editNode(nodeData, callback) },
-        //   editNode: async (nodeData, callback) => { this.editNode(nodeData, callback) },
-        //   addEdge: async (edgeData, callback) => { this.addEdge(edgeData, callback) },
-        //   editEdge: { editWithoutDrag: async (edgeData, callback) => {this.editEdgeWithoutDrag(edgeData, callback)} }
-        // },
         interaction: {
           navigationButtons: true,
         },
-      },
-      content: ""
+        manipulation: true,
+        nodes: {
+          // shape: "circle",
+          // size:24,
+          color: {
+            background: '#D2E5FF',
+            border: '#2B7CE9',
+            highlight: {
+              border: 'black',
+              background: 'white'
+            },
+            // hover: {
+            //   border: 'orange',
+            //   background: 'grey'
+            // }
+          },
+          font:{color:'black'},
+          // shapeProperties: {
+          //   useBorderWithImage:true
+          // }
+        },
+        edges: {
+          arrows: 'to',
+          //  color: 'lightgray'
+        },
+      }
     }
-  },
+  }),
   methods: {
-    onInputObjectChange(data){
-      console.log("onCommand",data)
-      switch (data.type) {
-        case 'triplet':
-        this.saveNode({id: "#"+data.value.subject.trim().split(' ').join('_'), label: data.value.subject})
-        this.saveNode({id: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.object})
-        this.saveEdge({from: "#"+data.value.subject.trim().split(' ').join('_'), to: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.predicate})
-        //  this.saveEdge({id: uuidv4(), from: "#"+data.value.subject.trim().split(' ').join('_'), to: "#"+data.value.object.trim().split(' ').join('_'), label: data.value.predicate})
-        break;
-        case 'commande':
-        this.catchCommand(data)
-        break;
-        default:
-        console.log("TODO",data)
-      }
+
+    // drawBg(ctx) {
+    //   let mapBgWidth = document.getElementById("scream").width;
+    //   let mapBgHeight = document.getElementById("scream").height;
+    //
+    //   ctx.drawImage(
+    //     document.getElementById("scream"),
+    //     -mapBgWidth / 2,
+    //     -mapBgHeight / 2
+    //   );
+    // },
+    networkEvent(eventName) {
+      console.log(eventName)
+      // if (this.networkEvents.length > 500) this.networkEvents = "";
+      // this.networkEvents += `${eventName}, `;
     },
-    initManipulationOptions() {
-      let app = this
-      this.options.manipulation = {
-        initiallyActive: true,
-        addNode: async (nodeData, callback) => { nodeData.label = "" ; app.editNode(nodeData, callback) },
-        editNode: async (nodeData, callback) => { app.editNode(nodeData, callback) },
-        addEdge: async (edgeData, callback) => { app.addEdge(edgeData, callback) },
-        editEdge: { editWithoutDrag: async (edgeData, callback) => {app.editEdgeWithoutDrag(edgeData, callback)} }
-      }
-    },
-    editNode(nodeData, callback){
-      this.nodeData = nodeData
-      this.$bvModal.show("node-popup")
-      callback()
-    },
-    addEdge(edgeData, callback){
-      this.edgeData = edgeData
-      if (edgeData.from == edgeData.to) {
-        var r = confirm("Do you want to connect the node to itself?");
-        if (r != true) { callback(null); return; }
-      }
-      this.editEdgeWithoutDrag(edgeData, callback);
-    },
-    editEdge(edgeData, callback){ this.editEdgeWithoutDrag(edgeData, callback); },
-    editEdgeWithoutDrag(edgeData, callback){
-      this.edgeData = edgeData
-      this.$bvModal.show("edge-popup")
-      callback()
-    },
-    saveNode(n){
-      var index = this.nodes.findIndex(x => x.id==n.id);
-      index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
-    },
-    saveEdge(e){
-      console.log(e)
-      var index = this.edges.findIndex(x => x.id==e.id);
-      index === -1 ? this.edges.push(e) : Object.assign(this.edges[index], e)
-    },
-    // onSelectNode(p){
-    //   let node = this.nodes.find(x => x.id==p.nodes[0]);
-    //   console.log(JSON.stringify(node))
+    // addNode() {
+    //   const id = new Date().getTime();
+    //   this.network.nodes.push({ id, label: "New node" });
+    // },
+    // addEdge() {
+    //   const n1 = Math.floor(Math.random() * this.network.nodes.length);
+    //   const n2 = Math.floor(Math.random() * this.network.nodes.length);
+    //   this.network.edges.push({
+    //     id: `${this.network.nodes[n1].id}-${this.network.nodes[n2].id}`,
+    //     from: this.network.nodes[n1].id,
+    //     to: this.network.nodes[n2].id
+    //   });
+    // },
+    // resetNetwork() {
+    //   this.network = {
+    //     nodes: defNodes.slice(0),
+    //     edges: defEdges.slice(0),
+    //     options: {}
+    //   };
+    // },
+    // removeNode() {
+    //   this.network.nodes.splice(0, 1);
+    // },
+    // removeEdge() {
+    //   this.network.edges.splice(0, 1);
     // }
-  },
-  computed: {
-    inputObject: {
-      get () { return this.$store.state.ipgs.inputObject},
-      set (/*value*/) { /*this.updateTodo(value)*/ }
-    },
-  },
-  watch:{
-    inputObject(){
-      this.onInputObjectChange(this.inputObject)
-    },
   }
-}
+};
 </script>
 
 <style>
-.wrapper{
+* {
+  font-family: sans-serif;
+}
+
+/* .wrapper {
+padding: 20px 50px;
+text-align: center;
+} */
+.events {
+  text-align: left;
+  height: 70px;
+}
+
+.network{
   min-height: 95vh;
   border: 1px solid black;
   background: linear-gradient(to bottom, rgba(215, 215, 255), rgba(250, 250, 170));
@@ -237,6 +214,17 @@ export default {
   height: 95vh;
 }
 .vis-label{
-  color: black
+  color: black;
+
 }
+
+/* @media only screen and (max-width: 600px) {
+  .vis-label {
+    display: none;
+  }
+  .vis-button:after {
+    content:"°°"
+  }
+} */
+
 </style>

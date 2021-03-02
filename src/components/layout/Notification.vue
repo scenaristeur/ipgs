@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button :to="{ path: '/agora'}">{{ nb }}</b-button>
+    <b-button :to="{ path: '/agora'}" size="sm">{{ nb }}</b-button>
 
   </div>
 </template>
@@ -31,9 +31,9 @@ export default {
       console.log("socket sub to "+app.log)
     };
     socket.onmessage = function(msg) {
-      console.log("message",msg)
+    //  console.log("message",msg)
       if (msg.data && msg.data.slice(0, 3) === 'pub') {
-        console.log(msg)
+      //  console.log(msg)
         console.log(msg.data)
         app.updateNb()
         // resource updated, refetch resource

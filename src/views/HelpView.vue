@@ -12,9 +12,9 @@
     <ul>
       <li><code>  /h </code>: show this help</li>
       <li><code>  /n </code>: create a new graph</li>
-      <li><code>  /s </code>: save the graph as jsonld on your Solid Pod</li>
-      <li><code>  /e </code>: export the graph as json</li>
-      <li><code>  /t </code>: export the graph as ttl</li>
+      <!-- <li><code>  /s </code>: save the graph as jsonld on your Solid Pod</li> -->
+      <li><code>  /e </code>: export or save the current graph</li>
+      <li><code>  /i </code>: import an existing graph or load an url</li>
       <li><code>  /c </code>: capture a picture of the graph</li>
     </ul>
 
@@ -62,15 +62,20 @@ export default {
     }
   },
   computed: {
-    inputObject: {
-      get () { return this.$store.state.ipgs.inputObject},
+    action: {
+      get () { return this.$store.state.ipgs.action},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   },
   watch:{
-    inputObject(){
-      console.log(this.inputObject)
-      this.onInputObjectChange(this.inputObject)
+    action(){
+      console.log(this.action)
+      switch (this.action.action) {
+        case 'help':
+        this.$bvModal.show("help-modal")
+        break;
+
+      }
     },
   }
 }

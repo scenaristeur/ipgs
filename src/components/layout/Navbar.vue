@@ -4,6 +4,7 @@
       <!-- <b-navbar-brand to="/">ipgs</b-navbar-brand> -->
       <CommandInput />
       <Notification />
+      <NetworkToolBar />
       <!-- <b-button @click="help">?</b-button> -->
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -23,6 +24,7 @@
           <b-nav-item to="/agora">Agora</b-nav-item>
           <b-nav-item to="/browser">Browser</b-nav-item>
           <b-nav-item to="/history">History</b-nav-item>
+          <b-nav-item to="/suggested">Suggested</b-nav-item>
           <b-nav-item to="/about">About</b-nav-item>
           <!-- <b-nav-item to="/simple">S</b-nav-item> -->
 
@@ -65,6 +67,7 @@ export default {
     'CommandInput': () => import('@/components/layout/CommandInput'),
     'Notification': () => import('@/components/layout/Notification'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+    'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
   },
   // methods: {
   //   help() {
