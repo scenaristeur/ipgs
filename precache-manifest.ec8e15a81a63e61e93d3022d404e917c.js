@@ -36,7 +36,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/assets/solid.png"
   },
   {
-    "revision": "cccd00e87b08780fc5e4",
+    "revision": "8d8c9a2ccb66e570e994",
     "url": "/ipgs/css/app.1c314d26.css"
   },
   {
@@ -56,11 +56,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/css/chunk-4060d866.4add8c6f.css"
   },
   {
-    "revision": "3a3a9359500cfa0bbb32",
+    "revision": "0f5a5ae6641e643a8dfd",
     "url": "/ipgs/css/chunk-61ade157.16bdde28.css"
   },
   {
-    "revision": "1c329ecc5df6ae379c89",
+    "revision": "b0f7dc29598921a726b5",
     "url": "/ipgs/css/chunk-7dc0e62f.16bdde28.css"
   },
   {
@@ -128,7 +128,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "ea26b1d46e21ee8149b871cd62b9abe2",
+    "revision": "dc5cf056fc87a6da20560698c05217dd",
     "url": "/ipgs/index.html"
   },
   {
@@ -136,12 +136,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/about.6fdc3e22.js"
   },
   {
-    "revision": "bd0d401c1171f3641321",
-    "url": "/ipgs/js/agora.916e6381.js"
+    "revision": "e4f4c21a1ce8f152b501",
+    "url": "/ipgs/js/agora.72c5b84e.js"
   },
   {
-    "revision": "cccd00e87b08780fc5e4",
-    "url": "/ipgs/js/app.c2197392.js"
+    "revision": "8d8c9a2ccb66e570e994",
+    "url": "/ipgs/js/app.386cf3f3.js"
   },
   {
     "revision": "b4af3866c51988924381",
@@ -216,12 +216,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-4060d866.76302e43.js"
   },
   {
-    "revision": "3a3a9359500cfa0bbb32",
-    "url": "/ipgs/js/chunk-61ade157.33b07d5f.js"
+    "revision": "0f5a5ae6641e643a8dfd",
+    "url": "/ipgs/js/chunk-61ade157.1860e62f.js"
   },
   {
-    "revision": "1c329ecc5df6ae379c89",
-    "url": "/ipgs/js/chunk-7dc0e62f.166fd0f9.js"
+    "revision": "b0f7dc29598921a726b5",
+    "url": "/ipgs/js/chunk-7dc0e62f.fbec52e3.js"
   },
   {
     "revision": "0c9a638e07f79c71206f",
