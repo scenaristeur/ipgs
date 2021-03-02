@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    op
     <network
     id="network"
     class="network"
@@ -78,9 +79,7 @@
 //import { Network } from "vue-vis-network";
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
-
 import NetMixin from '@/mixins/NetMixin'
-
 
 let defNodes = [
   { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
@@ -96,8 +95,7 @@ let defEdges = [
   { id: 'e2', from: 'n1', to: 'n3', label: 'long name' },
   { id: 'e3', from: 'n1', to: 'n4', label: 'category' },
   { id: 'e4', from: 'n1', to: 'n5', label: 'help EN' },
-  { id: 'e5', from: 'n1', to: 'n6', label: 'help FR' },
-
+  { id: 'e5', from: 'n1', to: 'n6', label: 'help FR' }
 ]
 
 export default {
