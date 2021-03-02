@@ -4,6 +4,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+import { Network } from "vue-vis-network";
+Vue.component('network', Network);
 
 // import { Network } from "vue-vis-network";
 // Vue.component('network', Network);
