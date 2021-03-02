@@ -12,10 +12,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import "bootswatch/dist/superhero/bootstrap.min.css";
 
-import { Network } from "vue-vis-network";
-Vue.component('network', Network);
-import "vis-network/dist/vis-network.esm.min.js";
- import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+// import { Network } from "vue-vis-network";
+// Vue.component('network', Network);
+// import "vis-network/dist/vis-network.esm.min.js";
 
 import VueFab from 'vue-float-action-button'
 Vue.use(VueFab, /* {

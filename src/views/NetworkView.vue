@@ -75,7 +75,9 @@
 </template>
 
 <script>
-// import { Network } from "vue-vis-network";
+import { Network } from "vue-vis-network";
+import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+
 
 import NetMixin from '@/mixins/NetMixin'
 
@@ -102,9 +104,9 @@ export default {
   name: 'NetworkView',
   mixins: [NetMixin],
   components: {
-  //  Network,
+    Network,
     'NetworkPopups': () => import('@/components/network/NetworkPopups'),
-  //  'network': () => import('vue-vis-network')
+    //  'network': () => import('vue-vis-network')
   },
   data: () => ({
     networkEvents: "",
