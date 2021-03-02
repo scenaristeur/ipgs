@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button :to="{ path: '/agora'}">{{ nb }}</b-button>
+    <b-button :to="{ path: '/agora'}" size="sm">{{ nb }}</b-button>
 
   </div>
 </template>

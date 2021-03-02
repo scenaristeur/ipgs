@@ -36,15 +36,16 @@
 
   <b-collapse id="collapse-node-color">
     <b-card>
-      <b-row>
-        <b-col>
-          <label for="backgroundcolorpicker">Background : </label> <input type="color" v-model="value.color.background" value="#D2E5FF"><br>
-          <label for="bordercolorpicker">Border : </label> <input type="color" v-model="value.color.border" value="#2B7CE9">
-        </b-col>
-        <b-col>
+
+          <label for="backgroundcolorpicker">Background : </label>
+          <!-- <input type="color" v-model="value.color.background" value="#D2E5FF"><br> -->
+            <v-swatches v-model="value.color.background" value="#D2E5FF"></v-swatches>
+          <label for="bordercolorpicker">Border : </label>
+           <!-- <input type="color" v-model="value.color.border" value="#2B7CE9"> -->
+           <v-swatches  v-model="value.color.border" value="#2B7CE9"></v-swatches>
+
           <b-button @click="defaultColor" size="sm" variant="light">reset colors</b-button>
-        </b-col>
-      </b-row>
+
     </b-card>
   </b-collapse>
 
@@ -78,10 +79,16 @@
 </b-modal>
 </template>
 <script>
+import 'vue-swatches/dist/vue-swatches.css'
 
 export default {
   name: 'NodeModal',
   props: ['value'],
+  components: {
+  //  Network,
+    'VSwatches': () => import('vue-swatches'),
+  //  'network': () => import('vue-vis-network')
+  },
   created(){
     console.log(this.value)
     //  this.value.color == undefined ? this.value.color = {background: "#D2E5FF", border: "#2B7CE9"} : ""

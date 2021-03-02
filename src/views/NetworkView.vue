@@ -221,7 +221,7 @@ text-align: center;
     display: none;
   }
   .vis-button:after {
-    content:"____"
+    content:"           .."
   }
 }
 
