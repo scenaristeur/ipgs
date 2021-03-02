@@ -65,16 +65,16 @@ export default {
       let docu = JSON.parse(doc.document)
       console.log("THE DOC", docu)
 
+let item = {}
+  item.name=  docu.object.label || docu.object['rdfs:label']
+  item.url= docu.object.id ||  docu.object['@id']
+  item.length= docu.object['@graph'] != undefined ? docu.object['@graph'].length : 0
+  item.type = docu.object.type ||  docu.object['@type']
+  item.actor =  docu.actor || docu.creator
+  item.published = new Date(docu.published).toLocaleString() || ""
 
 
-      this.items.push({
-        name: docu.object['rdfs:label'],
-        url: docu.object['@id'],
-        length: docu.object['@graph'].length,
-        type: docu.object['@type'],
-        actor: docu.creator,
-        published: new Date(docu.published).toLocaleString()
-      })
+      this.items.push(item)
     }
 
   }

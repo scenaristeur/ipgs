@@ -131,9 +131,9 @@ export default {
             // }
           },
           font:{color:'black'},
-          shapeProperties: {
-            useBorderWithImage:true
-          }
+          // shapeProperties: {
+          //   useBorderWithImage:true
+          // }
         },
         edges: {
           arrows: 'to',
@@ -143,6 +143,7 @@ export default {
     }
   }),
   methods: {
+
     // drawBg(ctx) {
     //   let mapBgWidth = document.getElementById("scream").width;
     //   let mapBgHeight = document.getElementById("scream").height;

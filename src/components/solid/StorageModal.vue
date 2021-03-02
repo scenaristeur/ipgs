@@ -119,6 +119,10 @@ export default {
           content = JSON.stringify(jsonld_data, undefined, 2)
           console.log('new content',content)
         }
+        // if (this.dataToSave.format ==  'json'){
+        //   content = JSON.stringify(this.dataToSave.content)
+        //
+        // }
 
 
         let contentType = mimetypes[this.dataToSave.format]
@@ -128,47 +132,69 @@ export default {
           var r = confirm(new_file_url +' already exists, do you want to replace it ?')
           if (r == true) {
 
-         await fc.createFile( new_file_url, content, contentType ).then(
+            await fc.createFile( new_file_url, content, contentType ).then(
               f => {
                 console.log(f)
                 //    console.log(f.headers.get('location'))
 
                 let loc =  f.headers.get('location')
                 console.log(loc)
+
+                if (this.publish == true){
+                  let activity = new Activity()
+                  activity.jsonld.actor = this.webId
+                  activity.jsonld.object = content
+
+                  console.log(activity)
+                  activity.publish()
+                }
+
                 this.$bvModal.hide("storage-modal")
+
                 this.$router.push({ path: 'network', query: { url: new_file_url } })
                 //  this.getData({url: res_url, group: ""})
               }
             ) .catch(err => alert(`Error: ${err}`))
           }
         }else{
-         await fc.createFile( new_file_url, content, contentType ).then(
+          await fc.createFile( new_file_url, content, contentType ).then(
             f => {
               console.log(f)
               //    console.log(f.headers.get('location'))
 
               let loc =  f.headers.get('location')
               console.log(loc)
+
+              if (this.publish == true){
+                let activity = new Activity()
+                activity.jsonld.actor = this.webId
+                activity.jsonld.object = content
+
+                console.log(activity)
+                activity.publish()
+              }
+
               this.$bvModal.hide("storage-modal")
+          
               this.$router.push({ path: 'network', query: { url: new_file_url } })
               //  this.getData({url: res_url, group: ""})
             }
           ) .catch(err => alert(`Error: ${err}`))
         }
 
-  // let loc_url = loc.startsWith('/') ? this.storage + loc.substring(1) : loc
-  //
-  // if (this.publish == true){
-  //   let activity = new Activity()
-  //   activity.jsonld.creator = this.webId
-  //   activity.jsonld.object = this.content
-  //
-  //   console.log(activity)
-  //   activity.publish()
-  // }
+        // let loc_url = loc.startsWith('/') ? this.storage + loc.substring(1) : loc
+        //
+        // if (this.publish == true){
+        //   let activity = new Activity()
+        //   activity.jsonld.creator = this.webId
+        //   activity.jsonld.object = this.content
+        //
+        //   console.log(activity)
+        //   activity.publish()
+        // }
 
-  // this.$bvModal.hide("storage-modal")
-  // this.$router.push({ path: 'network', query: { url: loc_url } })
+        // this.$bvModal.hide("storage-modal")
+        // this.$router.push({ path: 'network', query: { url: loc_url } })
 
 
       }else{

@@ -30,14 +30,14 @@ export default class Loader {
 
   }
 
-  async load(url){
+  async load2(url){
     console.log(url)
     this.url = url
     await this.readJsonld()
     return this
   }
 
-  async load1(url){
+  async load(url){
     console.log(url)
     this.url = url
 

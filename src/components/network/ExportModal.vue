@@ -93,7 +93,10 @@ export default {
     save() {
       console.log('save')
       this.$store.commit('ipgs/setDataToSave', {content: this.content, format: this.format})
-      this.$bvModal.show("storage-modal")
+
+
+                      this.$bvModal.show("storage-modal")
+                      //  this.$bvModal.hide("export-popup")
     },
   },
   watch:{

@@ -1,6 +1,18 @@
 import networkUtilMixin from '@/mixins/networkUtilMixin'
+import Network from '@/models/Network.js'
+import Loader from '@/util/Loader.js'
+
 export default {
   mixins: [networkUtilMixin],
+  data() {
+    return {
+
+
+
+      // A VIRER
+      loader: new Loader(),
+    }
+  },
   async created(){
     let app = this
     this.network.options.manipulation = {
@@ -12,15 +24,27 @@ export default {
     }
 
 
+    // if (this.$route.query.url != undefined ){
+    //   this.url = this.$route.query.url
+    //   console.log('url',this.url)
+    //
+    // }
+    // this.storage = this.$store.state.solid.storage
+    //
+    // if(this.storage != null){
+    //   console.log("storage",this.storage)
+    // }
+
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
-      console.log('url',this.url)
-
-    }
-    this.storage = this.$store.state.solid.storage
-
-    if(this.storage != null){
-      console.log("storage",this.storage)
+    //  console.log(this.url)
+      await this.load(this.url)
+    }else{
+      this.storage = this.$store.state.solid.storage
+      //console.log(this.storage)
+      if (this.storage != null){
+        await this.load(this.storage)
+      }
     }
 
 
@@ -28,6 +52,17 @@ export default {
 
   },
   methods: {
+    async load(url){
+      let d = new Date()
+      this.net = new Network()
+      let dat = await this.loader.load(url)
+      //  console.log("DAT",dat)
+      await this.net.hydrate(dat)
+      this.network.nodes = this.net.visRepresentation.nodes
+      this.network.edges = this.net.visRepresentation.edges
+      console.warn(d, this.network)
+      //console.warn(this.network)
+    },
     onSelectNode(p){
       console.log(p)
       console.log(p.nodes[0])
