@@ -76,7 +76,7 @@
 
 <script>
 import { Network } from "vue-vis-network";
-import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+import "vis-network/dist/dist/vis-network.min.css";
 
 
 import NetMixin from '@/mixins/NetMixin'
@@ -218,13 +218,13 @@ text-align: center;
 
 }
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   .vis-label {
     display: none;
   }
   .vis-button:after {
     content:"°°"
   }
-}
+} */
 
 </style>
