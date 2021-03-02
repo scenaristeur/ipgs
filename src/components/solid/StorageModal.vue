@@ -143,7 +143,7 @@ export default {
                 if (this.publish == true){
                   let activity = new Activity()
                   activity.jsonld.actor = this.webId
-                  activity.jsonld.object = content
+                  activity.jsonld.object = this.dataToSave.format == 'ttl' ? content : JSON.parse(content)
 
                   console.log(activity)
                   activity.publish()
@@ -168,14 +168,14 @@ export default {
               if (this.publish == true){
                 let activity = new Activity()
                 activity.jsonld.actor = this.webId
-                activity.jsonld.object = content
+                activity.jsonld.object = this.dataToSave.format == 'ttl' ? content : JSON.parse(content)
 
                 console.log(activity)
                 activity.publish()
               }
 
               this.$bvModal.hide("storage-modal")
-          
+
               this.$router.push({ path: 'network', query: { url: new_file_url } })
               //  this.getData({url: res_url, group: ""})
             }
