@@ -8,7 +8,7 @@ import store from './store'
 import { Network } from "vue-vis-network";
 Vue.component('network', Network);
 // import "vis-network/dist/vis-network.esm.min.js";
-import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+import "vis-network/dist/dist/vis-network.min.css";
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'  // Install BootstrapVue
 

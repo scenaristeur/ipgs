@@ -76,7 +76,7 @@
 
 <script>
 //import { Network } from "vue-vis-network";
-//import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+import "vis-network/dist/dist/vis-network.min.css";
 
 import NetMixin from '@/mixins/NetMixin'
 
@@ -101,7 +101,7 @@ export default {
   name: 'NetworkView',
   mixins: [NetMixin],
   components: {
-  //  Network,
+    //  Network,
     'NetworkPopups': () => import('@/components/network/NetworkPopups'),
     //  'network': () => import('vue-vis-network')
   },
@@ -216,12 +216,12 @@ text-align: center;
 }
 
 /* @media only screen and (max-width: 600px) {
-  .vis-label {
-    display: none;
-  }
-  .vis-button:after {
-    content:"°°"
-  }
+.vis-label {
+display: none;
+}
+.vis-button:after {
+content:"°°"
+}
 } */
 
 </style>
