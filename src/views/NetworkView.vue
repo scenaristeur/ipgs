@@ -76,7 +76,7 @@
 
 <script>
 import { Network } from "vue-vis-network";
-import "vis-network/dist/dist/vis-network.min.css";
+import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
 
 import NetMixin from '@/mixins/NetMixin'
