@@ -212,6 +212,17 @@ text-align: center;
   height: 95vh;
 }
 .vis-label{
-  color: black
+  color: black;
+
 }
+
+@media only screen and (max-width: 600px) {
+  .vis-label {
+    display: none;
+  }
+  .vis-button:after {
+    content:"____"
+  }
+}
+
 </style>

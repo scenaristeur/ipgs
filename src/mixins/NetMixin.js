@@ -37,7 +37,7 @@ export default {
 
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
-    //  console.log(this.url)
+      //  console.log(this.url)
       await this.load(this.url)
     }else{
       this.storage = this.$store.state.solid.storage
@@ -67,10 +67,22 @@ export default {
       console.log(p)
       console.log(p.nodes[0])
       //console.log(this.nodes)
-      this.nodeData = this.network.nodes.find(x => x.id==p.nodes[0]);
-      console.log(this.nodeData)
-
-      this.$bvModal.show("node-menu")
+      let node = this.network.nodes.find(x => x.id==p.nodes[0]);
+      console.log(node)
+      this.$store.commit('ipgs/addToHistory', node)
+      //  if(node.type == 'folder' || node.type == 'file'){
+      try{
+        if(node.id.startsWith('http')){
+            this.load(node.id)
+        }else{
+          this.$store.commit('ipgs/setCommandInput', node.label+' ')
+        }
+      }catch(e){
+        alert(e)
+      }
+      // console.log(this.nodeData)
+      //
+      // this.$bvModal.show("node-menu")
 
       //}
 
