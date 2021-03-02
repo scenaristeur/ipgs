@@ -103,7 +103,7 @@ export default {
   components: {
     //  Network,
     'NetworkPopups': () => import('@/components/network/NetworkPopups'),
-    //  'network': () => import('vue-vis-network')
+     'network': () => import('vue-vis-network')
   },
   data: () => ({
     networkEvents: "",
