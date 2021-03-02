@@ -39,10 +39,16 @@
 
           <label for="backgroundcolorpicker">Background : </label>
           <!-- <input type="color" v-model="value.color.background" value="#D2E5FF"><br> -->
-            <v-swatches v-model="value.color.background" value="#D2E5FF"></v-swatches>
+            <v-swatches v-model="value.color.background" value="#D2E5FF"  show-fallback
+        fallback-input-type="color"
+
+        popover-x="left"></v-swatches>
           <label for="bordercolorpicker">Border : </label>
            <!-- <input type="color" v-model="value.color.border" value="#2B7CE9"> -->
-           <v-swatches  v-model="value.color.border" value="#2B7CE9"></v-swatches>
+           <v-swatches  v-model="value.color.border" value="#2B7CE9"  show-fallback
+        fallback-input-type="color"
+
+        popover-x="left"></v-swatches>
 
           <b-button @click="defaultColor" size="sm" variant="light">reset colors</b-button>
 
