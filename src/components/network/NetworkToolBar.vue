@@ -1,5 +1,5 @@
 <template  >
-  <b-dropdown class="mx-1" right text="graph" variant="info">
+  <b-dropdown class="mx-1" size="sm" right variant="info">
     <b-dropdown-item variant="info" v-for="c in commands" :key="c.value" @click="sendCommand(c.value)">{{c.text}}</b-dropdown-item>
 
   </b-dropdown>
@@ -11,10 +11,10 @@ export default {
   data() {
     return {
       commands: [
-        {value: '/n', text: "New Graph"},
-        {value: '/s', text: "save to pod"},
-        {value: '/t', text: "export ttl"},
-        {value: '/e', text: "export json"},
+        {value: '/n', text: "new graph"},
+        {value: '/e', text: "export / save"},
+        {value: '/i', text: "import"},
+
         {value: '/c', text: "capture a picture"},
         //  {value: '/p', text: "share"},
         {value: '/h', text: "help"},
