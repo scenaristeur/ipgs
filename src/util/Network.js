@@ -4,19 +4,32 @@ export default class Network {
   constructor(){
     this.nodes = []
     this.edges = []
+    this.technicalPreds = ['@context',
+    'id', 'publicKey', 'publicKeyPem',
+    'http://www.w3.org/ns/posix/stat#size',
+    'http://www.w3.org/ns/posix/stat#mtime',
+    'dcterms:modified',
+    'inbox', 'outbox',
+    'x', 'y']
+    this.predicates = []
     //  this.cid = 0
   }
 
   async buildVis(loadedSources){
     for await (const s of loadedSources) {
       console.error("main node",s.compacted.id)
-      let n = {id: await s.compacted.id, label: this.label(await s.compacted), shape: 'box', color: {background: "#CCFFCB", border:'green'}}
+      let n = {id: await s.compacted.id, label: this.label(await s.compacted), shape: 'circle', color: {background: "#CCFFCB", border:'green'}}
       let node = this.addNode(n)
       for await (const [key, value] of Object.entries(s.compacted)) {
         this.parse(node.id,key,value, node.id)
+
       }
+      // remove noeud central
+    //  this.nodes = this.nodes.filter(x => {return x.id != s.compacted.id})
+
     }
-    return {nodes: this.nodes, edges: this.edges}
+
+    return {nodes: this.nodes, edges: this.edges, predicates: this.predicates}
   }
 
   label(d){
@@ -24,28 +37,58 @@ export default class Network {
   }
 
   async parse(subjectId, predicateString, value, parent){
-    if (Array.isArray(value)){
-      for await (const v of value) {
-        this.parse(subjectId, predicateString, v, parent)
-      }
-    }else{
-
-      if (typeof value == 'string'){
-        console.warn(subjectId, predicateString, value/*, parent*/)
-        let object = {shape: 'box'}
-        if(value.startsWith('http') || value.startsWith('#') || value.startsWith('_:') ){
-          object.id = value
-        }else{
-          object.id = uuidv4()
+    if(!this.technicalPreds.includes(predicateString)){
+      !this.predicates.includes(predicateString) ? this.predicates.push(predicateString) : ""
+      //  console.log(predicateString)
+      if (Array.isArray(value)){
+        for await (const v of value) {
+        //  console.log("lazyload",v, parent)
+            this.parse(subjectId, predicateString, v, parent)
         }
-        object.label = this.label(value)
-        let node = this.addNode(object)
-        let edge = {from: subjectId, to: node.id, label: predicateString }
-        this.addEdge(edge)
-
       }else{
-        console.log("-------------todo-object")
-        //    console.info(subjectId, predicateString,value, parent)
+
+        if (typeof value == 'string' && value.length > 0){
+          //  console.warn(subjectId, predicateString, value/*, parent*/)
+          let object = {shape: 'box'}
+          if(value.startsWith('http') || value.startsWith('#') || value.startsWith('_:') ){
+            object.id = value
+          }else{
+            object.id = uuidv4()
+          }
+          if(predicateString == 'type'){
+            object.color = {background: 'red',border:'green'}
+            object.shape = 'box'
+            object.id = value
+          }
+          object.label = this.label(value)
+          let node = this.addNode(object)
+          let edge = {from: subjectId, to: node.id, label: predicateString }
+          this.addEdge(edge)
+
+        }else{
+          //  console.log("-------------todo-object")
+          if(typeof value == 'object'){
+            if ( value.id == undefined || value.id.length==0){
+              value.id = uuidv4()
+            }
+
+
+            value.label == undefined || value.label.length == 0 ? value.label = this.label(value) : ""
+            let node = this.addNode(value)
+            let edge = {from: subjectId, to: node.id, label: predicateString }
+            this.addEdge(edge)
+
+            for await (const [key, value] of Object.entries(node)) {
+              this.parse(node.id,key,value, node.id)
+            }
+          }else{
+            console.log("todo typeof ", typeof value)
+          }
+          // }else{
+          //   console.info(subjectId, predicateString,value/*, parent*/)
+          //
+          // }
+        }
       }
     }
   }
@@ -54,6 +97,10 @@ export default class Network {
   addNode(n){
     let node = this.nodes.find(x => x.id == n.id)
     if (node == undefined){
+      if(n.x == undefined){
+        n.x = Math.floor(Math.random() * 500) -250;
+        n.y = Math.floor(Math.random() * 500) -250;
+      }
       this.nodes.push(n)
       node = n
     }

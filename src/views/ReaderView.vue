@@ -17,6 +17,7 @@
       ></network>
 
     </div>
+    {{ filters }}
     <div>
       <b-table striped hover :items="loadedSources" >
 
@@ -42,6 +43,7 @@ export default {
   name: 'Reader',
   data() {
     return {
+      filters: [],
       network: {
         nodes: [],
         edges: [],
@@ -52,6 +54,56 @@ export default {
           //     "avoidOverlap": 0.5
           //   }
           // },
+          physics:{
+            enabled: true,
+            barnesHut: {
+              //  theta: 0.5,
+              gravitationalConstant: -2000,
+              centralGravity: 0.3,
+              springLength: 95,
+              springConstant: 0.04,
+              damping: 0.09,
+              avoidOverlap: 0
+            },
+            forceAtlas2Based: {
+              //  theta: 0.5,
+              gravitationalConstant: -50,
+              centralGravity: 0.01,
+              springConstant: 0.08,
+              springLength: 100,
+              damping: 0.4,
+              avoidOverlap: 0
+            },
+            repulsion: {
+              centralGravity: 0.2,
+              springLength: 200,
+              springConstant: 0.05,
+              nodeDistance: 100,
+              damping: 0.09
+            },
+            hierarchicalRepulsion: {
+              centralGravity: 0.0,
+              springLength: 100,
+              springConstant: 0.01,
+              nodeDistance: 120,
+              damping: 0.09,
+              //  avoidOverlap: 0
+            },
+            maxVelocity: 50,
+            minVelocity: 0.1,
+            solver: 'repulsion',
+            stabilization: {
+              enabled: true,
+              iterations: 1000,
+              updateInterval: 500,
+              //onlyDynamicEdges: true,
+              //  fit: true
+            },
+            timestep: 0.5,
+            adaptiveTimestep: true,
+            // wind: { x: 0, y: 0 }
+
+          },
           interaction: {
             navigationButtons: true,
           },
@@ -78,29 +130,33 @@ export default {
           },
           edges: {
             arrows: 'to',
+            // "smooth": { //https://visjs.github.io/vis-network/examples/network/edgeStyles/smooth.html
+            //   "type": "discrete",
+            //   "forceDirection": "none"
+            // }
             //  color: 'lightgray'
           },
         }
       },
       sources: [
-        {name: 'One graph', url: 'https://spoggy-test9.solidcommunity.net/public/network/chop/ypoup.json'},
-        {name: 'One activity', url: 'https://ipgs.solidcommunity.net/public/activity/data/fe0919de-eabf-4f79-9196-1128cab202c2.json'},
-        {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
-        {name: 'Spoggy-Test9 pod storage public folder', url: 'https://spoggy-test9.solidcommunity.net/public/', status: 'pending'},
-        {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
-        {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
-        {name: "Angelo's public folder", url: 'https://angelo.veltens.org/public/'},
-        {name: 'public folder without trailing slash', url: 'https://angelo.veltens.org/public'},
-        {name: 'ttl without extension', url: 'https://angelo.veltens.org/public/tweets/2020/05/1260959812579405826'},
-        {name: 'multiple ttl folder', url: 'https://spoggy.solidcommunity.net/public/Notes/'},
+        // {name: 'One graph', url: 'https://spoggy-test9.solidcommunity.net/public/network/chop/ypoup.json'},
+        // {name: 'One activity', url: 'https://ipgs.solidcommunity.net/public/activity/data/fe0919de-eabf-4f79-9196-1128cab202c2.json'},
+        // {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
+        // {name: 'Spoggy-Test9 pod storage public folder', url: 'https://spoggy-test9.solidcommunity.net/public/', status: 'pending'},
+        // {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
+        // {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
+        // {name: "Angelo's public folder", url: 'https://angelo.veltens.org/public/'},
+        // {name: 'public folder without trailing slash', url: 'https://angelo.veltens.org/public'},
+        // {name: 'ttl without extension', url: 'https://angelo.veltens.org/public/tweets/2020/05/1260959812579405826'},
+        // {name: 'multiple ttl folder', url: 'https://spoggy.solidcommunity.net/public/Notes/'},
 
         // -
         //
         //  semaps containers
         {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
-        // {name: 'Semapps Orga', url: 'https://data.virtual-assembly.org/organizations'},
-        // {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users'},
-        // {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
+        {name: 'Semapps Orga', url: 'https://data.virtual-assembly.org/organizations'},
+        {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users'},
+        {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
         // {name: 'Semapps Themes', url: 'https://data.virtual-assembly.org/themes'},
 
         //  {name: 'Semapps All in one', url: 'https://data.virtual-assembly.org/'},
@@ -133,10 +189,13 @@ export default {
       this.loadedSources = await loader.load(this.sources)
       console.log(this.loadedSources)
 
-      let netVis = await net.buildVis(this.loadedSources)
-      console.log(netVis)
-      this.network.nodes = netVis.nodes
-      this.network.edges = netVis.edges
+      this.netVis = await net.buildVis(this.loadedSources)
+      console.log(this.netVis)
+      this.filters = this.netVis.predicates
+      this.network.nodes = this.netVis.nodes
+      this.network.edges = this.netVis.edges.filter(x => x.label == "type")
+
+      //  this.network.edges = netVis.edges
 
     },
     networkEvent(eventName) {
@@ -148,8 +207,9 @@ export default {
       console.log(p)
       let n = this.network.nodes.find(x => x.id == p.nodes[0])
       console.log(n)
-      this.sources.push({name: n.label, url: n.id})
-      this.init()
+      this.network.edges = this.netVis.edges.filter(x => x.from == n.id || x.to == n.id)
+      //  this.sources.push({name: n.label, url: n.id})
+      //  this.init()
     }
   }
 }
