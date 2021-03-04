@@ -4,21 +4,23 @@
     Reader
 
     <div>
-      <b-table striped hover :items="networks" >
+      <b-table striped hover :items="loadedSources" >
 
         <!-- :fields="fields"
         <template #cell(compacted)="data">
-              {{data.item}}
-             </template> -->
+        {{data.item}}
+      </template> -->
 
-      </b-table>
-    </div>
+    </b-table>
   </div>
+</div>
 </template>
 
 <script>
 import DataLoader from '@/util/DataLoader.js'
+import Network from '@/util/Network.js'
 let loader = new DataLoader()
+let net = new Network()
 
 
 export default {
@@ -26,10 +28,13 @@ export default {
   data() {
     return {
       sources: [
-        {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
-        {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
-        {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
-         {name: "Angelo's public folder", url: 'https://angelo.veltens.org/public/'},
+        {name: 'One graph', url: 'https://spoggy-test9.solidcommunity.net/public/network/chop/ypoup.json'},
+        {name: 'One activity', url: 'https://ipgs.solidcommunity.net/public/activity/data/fe0919de-eabf-4f79-9196-1128cab202c2.json'},
+        //    {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
+        {name: 'Spoggy-Test9 pod storage public folder', url: 'https://spoggy-test9.solidcommunity.net/public/', status: 'pending'},
+        // {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
+        // {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
+        //  {name: "Angelo's public folder", url: 'https://angelo.veltens.org/public/'},
         // {name: 'public folder without trailing slash', url: 'https://angelo.veltens.org/public'},
         // {name: 'ttl without extension', url: 'https://angelo.veltens.org/public/tweets/2020/05/1260959812579405826'},
         // {name: 'multiple ttl folder', url: 'https://spoggy.solidcommunity.net/public/Notes/'},
@@ -37,7 +42,7 @@ export default {
         // -
         //
         //  semaps containers
-        {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
+          {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
         // {name: 'Semapps Orga', url: 'https://data.virtual-assembly.org/organizations'},
         // {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users'},
         // {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
@@ -53,8 +58,8 @@ export default {
         // {name: 'visjs file with nodes & edges arrays', url: ''},
         // {name: 'folder/container with many different files', url: ''},
       ],
-      networks: [],
-    //  fields: ['@id', 'id','compacted', 'network', 'documentUrl']
+      loadedSources: [],
+      //  fields: ['@id', 'id','compacted', 'network', 'documentUrl']
     }
   },
   async created(){
@@ -70,8 +75,11 @@ export default {
   },
   methods: {
     async init() {
-      this.networks = await loader.load(this.sources)
-      console.log(this.networks)
+      this.loadedSources = await loader.load(this.sources)
+      console.log(this.loadedSources)
+
+      this.netVis = await net.buildVis(this.loadedSources)
+      console.log(this.netVis)
 
     }
   }

@@ -27,9 +27,10 @@ export default class DataLoader {
       }
       //  console.log('doc',doc)
       //return doc
+      doc.name = s.name
       doc = await this.prepare(doc)
-      doc = await this.sanitize(doc)
-      doc = await this.buildNetwork(doc)
+      //  doc = await this.sanitize(doc)
+      //  doc = await this.buildNetwork(doc)
       data.push(doc)
     }
     //  console.log('data',data)
@@ -47,38 +48,6 @@ export default class DataLoader {
     return doc
   }
 
-  async sanitize(doc){
-
-
-    return doc
-  }
-
-  async buildNetwork(doc){
-    doc.network = {}
-    doc.network.nodes = []
-    doc.network.edges = []
-    let main_node = {id: await doc.compacted.id || await doc.compacted['@id']}
-    doc.network.nodes.push(main_node)
-
-    //  let module = this
-    for await (const [key, value] of Object.entries(doc.compacted)) {
-      console.log(key, value);
-      //   if(key != 'id'){
-      //     doc.network = await module.parse(key, value, doc)
-      //   }
-
-    }
-
-
-
-    return doc
-  }
-
-  async parse(key, value, network){
-    console.log(key, value)
-    return await network
-  }
-
   async compact(doc){
     // doc['@id']= doc.jsonld['@id']
     // doc.id = doc.jsonld.id
@@ -87,12 +56,14 @@ export default class DataLoader {
 
 
     if(typeof context == 'object'){
-      if (context['@base'] == undefined || context['@base'].length == 0 ){
-        context['@base'] = doc.documentUrl
-      }
+      // if (context['@base'] == undefined || context['@base'].length == 0 ){
+      //   context['@base'] = doc.documentUrl
+      // }
       context.id = "@id"
       context.type = "@type"
-      context.base = '@base'
+      context.graph = "@graph"
+    //  context.label = [{'@id': 'pair:label'}, {'@id': 'rdfs:label'}]
+      //  context.base = '@base'
     }
 
     const compacted = await jsonld.compact(doc.jsonld, context);
@@ -104,53 +75,87 @@ export default class DataLoader {
     //  console.log(doc.compacted)
     return doc
   }
+
+  // async sanitize(doc){
   //
-  // async parse1(data){
-  //   console.log("PARSE",data)
-  //   switch (typeof data) {
+  //
+  //   return doc
+  // }
+  //
+  // async buildNetwork(doc){
+  //   // doc.network = {}
+  //   // doc.network.nodes = []
+  //   // doc.network.edges = []
+  //   //
+  //   // doc.network.nodes.push({id: doc.compacted.id})
+  //
+  //   // let module = this
+  //   // for await (const [key, value] of Object.entries(doc.compacted)) {
+  //   //   //  console.log(key, value);
+  //   //   if(key != 'id' && key != '@context'){
+  //   //     doc.network = await module.parse(key, value, doc.network)
+  //   //   }
+  //   //
+  //   // }
+  //   // doc.nodes_length = doc.network.nodes.length
+  //   return doc
+  // }
+
+  // async parse(key, value, network){
+  //   console.log(key, value)
+  //   return await network
+  // }
+
+
+  //
+  // async parse(key, value, network){
+  //   console.warn("PARSE",typeof value, value)
+  //   switch (typeof value) {
   //     case 'object':
-  //     await this.parseObject(data)
+  //     network = await this.parseObject(key, value, network)
   //     break;
   //     case 'string':
-  //     await this.parseString(data)
+  //     network = await this.parseString(key, value, network)
   //     break;
   //     case 'array':
-  //     await this.parseArray(data)
+  //     network = await this.parseArray(key, value, network)
   //     break;
   //     default:
-  //     console.log('type non traité: ',typeof data)
+  //     console.log('type non traité: ',typeof value)
   //   }
+  //   return network
   // }
   //
-  // async parseObject(data){
-  //   if (Array.isArray(data)){
-  //     await this.parseArray(data)
+  // async parseObject(key, value, network){
+  //   if (Array.isArray(value)){
+  //     network = await this.parseArray(key, value, network)
   //     //  return
   //   }else{
-  //     console.log("OBJECT",data)
-  //     let node = {id: data['@id'], label: data['@id']}
+  //     console.log("OBJECT",key, value)
+  //     let node = {id: value.id, label: value.id}
   //     //await this.network.nodes.push(node)
   //     console.log('node',node)
-  //     const compacted = await jsonld.compact(data, jsonldcontext);
-  //
-  //
-  //     //console.log("compacted",JSON.stringify(compacted, null, 2));
-  //     console.log("compacted",compacted)
+  //     network.nodes.push(node)
   //   }
+  //   return network
   // }
   //
-  // async parseString(data){
-  //   console.log("STRING",data)
+  // async parseString(key, value, network){
+  //   console.log("STRING",key, value, network)
+  //   return network
   // }
   //
-  // async parseArray(data){
+  // async parseArray(key, value, network){
   //   let module = this
   //   // example pour default pod Storage
-  //   console.log("ARRAY",data)
-  //   data.forEach(async function (d) {
-  //     await module.parse(d)
+  //   console.log("ARRAY",key, value, network)
+  //   value.forEach(async function (v) {
+  //     network = await module.parse(key, v, network)
   //   });
+  //   return network
   // }
+
+
 
 
 
