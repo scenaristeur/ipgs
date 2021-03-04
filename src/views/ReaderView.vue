@@ -154,9 +154,9 @@ export default {
         //
         //  semaps containers
       //  {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
-        {name: 'Semapps Orga', url: 'https://data.virtual-assembly.org/organizations'},
-        {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users'},
-        // {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
+      //  {name: 'Semapps Orga', url: 'https://data.virtual-assembly.org/organizations'},
+      //  {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users'},
+         {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
         // {name: 'Semapps Themes', url: 'https://data.virtual-assembly.org/themes'},
 
         //  {name: 'Semapps All in one', url: 'https://data.virtual-assembly.org/'},
