@@ -107,54 +107,6 @@ export default class DataLoader {
   // }
 
 
-  //
-  // async parse(key, value, network){
-  //   console.warn("PARSE",typeof value, value)
-  //   switch (typeof value) {
-  //     case 'object':
-  //     network = await this.parseObject(key, value, network)
-  //     break;
-  //     case 'string':
-  //     network = await this.parseString(key, value, network)
-  //     break;
-  //     case 'array':
-  //     network = await this.parseArray(key, value, network)
-  //     break;
-  //     default:
-  //     console.log('type non traité: ',typeof value)
-  //   }
-  //   return network
-  // }
-  //
-  // async parseObject(key, value, network){
-  //   if (Array.isArray(value)){
-  //     network = await this.parseArray(key, value, network)
-  //     //  return
-  //   }else{
-  //     console.log("OBJECT",key, value)
-  //     let node = {id: value.id, label: value.id}
-  //     //await this.network.nodes.push(node)
-  //     console.log('node',node)
-  //     network.nodes.push(node)
-  //   }
-  //   return network
-  // }
-  //
-  // async parseString(key, value, network){
-  //   console.log("STRING",key, value, network)
-  //   return network
-  // }
-  //
-  // async parseArray(key, value, network){
-  //   let module = this
-  //   // example pour default pod Storage
-  //   console.log("ARRAY",key, value, network)
-  //   value.forEach(async function (v) {
-  //     network = await module.parse(key, v, network)
-  //   });
-  //   return network
-  // }
-
 
 
 

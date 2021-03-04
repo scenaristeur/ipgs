@@ -2,7 +2,21 @@
   <div>
 
     Reader
+    <div class="wrapper">
+      <network
+      id="network"
+      class="network"
+      ref="network"
+      :nodes="network.nodes"
+      :edges="network.edges"
+      :options="network.options"
+      @click="networkEvent('click')"
+      @select-node="onSelectNode"
+      @select-edge="networkEvent('selectEdge')"
 
+      ></network>
+
+    </div>
     <div>
       <b-table striped hover :items="loadedSources" >
 
@@ -17,6 +31,7 @@
 </template>
 
 <script>
+import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import DataLoader from '@/util/DataLoader.js'
 import Network from '@/util/Network.js'
 let loader = new DataLoader()
@@ -27,11 +42,45 @@ export default {
   name: 'Reader',
   data() {
     return {
+      network: {
+        nodes: [],
+        edges: [],
+        options: {
+          interaction: {
+            navigationButtons: true,
+          },
+          manipulation: true,
+          nodes: {
+            // shape: "circle",
+            // size:24,
+            color: {
+              background: '#D2E5FF',
+              border: '#2B7CE9',
+              highlight: {
+                border: 'black',
+                background: 'white'
+              },
+              // hover: {
+              //   border: 'orange',
+              //   background: 'grey'
+              // }
+            },
+            font:{color:'black'},
+            // shapeProperties: {
+            //   useBorderWithImage:true
+            // }
+          },
+          edges: {
+            arrows: 'to',
+            //  color: 'lightgray'
+          },
+        }
+      },
       sources: [
         {name: 'One graph', url: 'https://spoggy-test9.solidcommunity.net/public/network/chop/ypoup.json'},
         {name: 'One activity', url: 'https://ipgs.solidcommunity.net/public/activity/data/fe0919de-eabf-4f79-9196-1128cab202c2.json'},
-        //    {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
-        {name: 'Spoggy-Test9 pod storage public folder', url: 'https://spoggy-test9.solidcommunity.net/public/', status: 'pending'},
+        // {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
+        // {name: 'Spoggy-Test9 pod storage public folder', url: 'https://spoggy-test9.solidcommunity.net/public/', status: 'pending'},
         // {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
         // {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
         //  {name: "Angelo's public folder", url: 'https://angelo.veltens.org/public/'},
@@ -42,7 +91,7 @@ export default {
         // -
         //
         //  semaps containers
-          {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
+        // {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
         // {name: 'Semapps Orga', url: 'https://data.virtual-assembly.org/organizations'},
         // {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users'},
         // {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
@@ -69,7 +118,7 @@ export default {
       this.sources.push({name: 'Url Query', url: this.url})
       //  this.$router.push(({ name: 'Network', query: { url: this.url } }))
     }
-
+    this.loadedSources = this.sources
     await this.init()
 
   },
@@ -78,14 +127,59 @@ export default {
       this.loadedSources = await loader.load(this.sources)
       console.log(this.loadedSources)
 
-      this.netVis = await net.buildVis(this.loadedSources)
-      console.log(this.netVis)
+      let netVis = await net.buildVis(this.loadedSources)
+      console.log(netVis)
+      this.network.nodes = netVis.nodes
+      this.network.edges = netVis.edges
 
+    },
+    networkEvent(eventName) {
+      console.log(eventName)
+      // if (this.networkEvents.length > 500) this.networkEvents = "";
+      // this.networkEvents += `${eventName}, `;
+    },
+    onSelectNode(p){
+      console.log(p)
+      let n = this.network.nodes.find(x => x.id = p.nodes[0])
+      console.log(n)
     }
   }
 }
 </script>
 
 <style>
+* {
+  font-family: sans-serif;
+}
+
+/* .wrapper {
+padding: 20px 50px;
+text-align: center;
+} */
+.events {
+  text-align: left;
+  height: 70px;
+}
+
+.network{
+  min-height: 80vh; /* 95vh;*/
+  border: 1px solid black;
+  background: linear-gradient(to bottom, rgba(215, 215, 255), rgba(250, 250, 170));
+  padding: 10px;
+  height: 80vh; /* 95vh;*/
+}
+.vis-label{
+  color: black;
+
+}
+
+/* @media only screen and (max-width: 600px) {
+.vis-label {
+display: none;
+}
+.vis-button:after {
+content:"°°"
+}
+} */
 
 </style>
