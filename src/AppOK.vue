@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <!-- <Navbar size="sm" /> -->
+    <Navbar size="sm" />
     <!-- <b-button variant="outline-success">Button</b-button>
     <b-button variant="info">Button</b-button> -->
 
@@ -16,8 +16,8 @@
     <router-view/>
   </transition>
 
-  <!-- <SolidTrackSession />
-  <HelpView /> -->
+  <SolidTrackSession />
+  <HelpView />
 </div>
 </template>
 <script>
@@ -26,17 +26,16 @@ import { mapState } from 'vuex';
 export default {
   name: 'App',
   components: {
-    // 'Navbar': () => import('@/components/layout/Navbar'),
-    // 'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
-    // 'HelpView': () => import('@/views/HelpView'),
+    'Navbar': () => import('@/components/layout/Navbar'),
+    'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
+    'HelpView': () => import('@/views/HelpView'),
     //  'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     //  'Fab': () => import('@/components/basic/Fab.vue')
   },
   created(){
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
-      console.log(this.url)
-      //  this.$router.push(({ name: 'Network', query: { url: this.url } }))
+      this.$router.push(({ name: 'Network', query: { url: this.url } }))
     }
   },
   methods: {

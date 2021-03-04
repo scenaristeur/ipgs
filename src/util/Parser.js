@@ -42,7 +42,6 @@ export default class Parser {
       default:
       console.log('type non traité: ',typeof data)
     }
-
   }
 
   async parseObject(data){

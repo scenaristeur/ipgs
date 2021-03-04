@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Reader />
+    <NetworkView />
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   name: 'Home',
   components: {
     // HelloWorld,
-    'Reader': () => import('@/views/ReaderView'),
+    'NetworkView': () => import('@/views/NetworkView'),
   },
 }
 </script>
