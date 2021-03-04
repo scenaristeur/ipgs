@@ -19,16 +19,21 @@ export default class Network {
     for await (const s of loadedSources) {
       console.error("main node",s.compacted.id)
       let n = {id: await s.compacted.id, label: this.label(await s.compacted), shape: 'circle', color: {background: "#CCFFCB", border:'green'}}
-      let node = this.addNode(n)
-      for await (const [key, value] of Object.entries(s.compacted)) {
-        this.parse(node.id,key,value, node.id)
-
-      }
+       this.addNode(n)
+    this.expand(s.compacted)
       // remove noeud central
-    //  this.nodes = this.nodes.filter(x => {return x.id != s.compacted.id})
+      //  this.nodes = this.nodes.filter(x => {return x.id != s.compacted.id})
 
     }
+    console.log('verifier si on doit return ici puisqu on return a expand')
+    return {nodes: this.nodes, edges: this.edges, predicates: this.predicates}
+  }
 
+  async expand(node){
+    console.log(node)
+    for await (const [key, value] of Object.entries(node)) {
+      this.parse(node.id,key,value, node.id)
+    }
     return {nodes: this.nodes, edges: this.edges, predicates: this.predicates}
   }
 
@@ -39,11 +44,11 @@ export default class Network {
   async parse(subjectId, predicateString, value, parent){
     if(!this.technicalPreds.includes(predicateString)){
       !this.predicates.includes(predicateString) ? this.predicates.push(predicateString) : ""
-      //  console.log(predicateString)
+    //  console.log(predicateString, typeof value )
       if (Array.isArray(value)){
         for await (const v of value) {
-        //  console.log("lazyload",v, parent)
-            this.parse(subjectId, predicateString, v, parent)
+          //  console.log("lazyload",v, parent)
+          this.parse(subjectId, predicateString, v, parent)
         }
       }else{
 

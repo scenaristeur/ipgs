@@ -153,10 +153,10 @@ export default {
         // -
         //
         //  semaps containers
-        {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
+      //  {name: 'Semapps Skills', url: 'https://data.virtual-assembly.org/skills'},
         {name: 'Semapps Orga', url: 'https://data.virtual-assembly.org/organizations'},
         {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users'},
-        {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
+        // {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
         // {name: 'Semapps Themes', url: 'https://data.virtual-assembly.org/themes'},
 
         //  {name: 'Semapps All in one', url: 'https://data.virtual-assembly.org/'},
@@ -189,14 +189,27 @@ export default {
       this.loadedSources = await loader.load(this.sources)
       console.log(this.loadedSources)
 
+      for await (let ls of this.loadedSources){
+        if (ls.compacted.shape == undefined || ls.compacted.shape.length == 0){ ls.compacted.shape = 'star'}
+
+        if (ls.compacted.label == undefined || ls.compacted.label.length == 0){ ls.compacted.label = ls.name}
+        this.network.nodes.push(ls.compacted)
+      }
+
+      await this.visNetwork()
+
+    },
+    label(d){
+      return d.label || d['rdfs:label'] || d['pair:label'] || d.id || d
+    },
+    async visNetwork(){
       this.netVis = await net.buildVis(this.loadedSources)
       console.log(this.netVis)
       this.filters = this.netVis.predicates
       this.network.nodes = this.netVis.nodes
-      this.network.edges = this.netVis.edges.filter(x => x.label == "type")
+      //  this.network.edges = this.netVis.edges.filter(x => x.label == "type")
 
-      //  this.network.edges = netVis.edges
-
+      this.network.edges = this.netVis.edges
     },
     networkEvent(eventName) {
       console.log(eventName)
@@ -207,9 +220,26 @@ export default {
       console.log(p)
       let n = this.network.nodes.find(x => x.id == p.nodes[0])
       console.log(n)
-      this.network.edges = this.netVis.edges.filter(x => x.from == n.id || x.to == n.id)
+      this.expand(n)
+      // this.network.edges = this.netVis.edges.filter(x => x.from == n.id || x.to == n.id)
       //  this.sources.push({name: n.label, url: n.id})
       //  this.init()
+    },
+    async expand(node){
+      node.expand = !node.expand
+      console.log(node.expand)
+      if (node.expand == true){
+        this.netVis = await net.expand(node)
+        console.log(this.netVis)
+        this.network.nodes = this.netVis.nodes
+        //  this.network.edges = this.netVis.edges.filter(x => x.label == "type")
+
+        this.network.edges = this.netVis.edges
+      }
+
+
+
+
     }
   }
 }
