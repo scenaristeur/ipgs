@@ -7,7 +7,8 @@ const state = () => ({
   history: [],
   action: null,
   editorContent: {},
-  dataToSave: {}
+  dataToSave: {},
+  socketMessages : []
   // graphs: [],
   // currentGraphId: null,
   // network: {
@@ -85,6 +86,9 @@ const mutations = {
   setAction(state, a){
     console.log(a)
     state.action = a
+  },
+  addSocketMessages(state, msg){
+    state.socketMessages.push(msg)
   },
   setInputObject(state, io){
     console.log(io)

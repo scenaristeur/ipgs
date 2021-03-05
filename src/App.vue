@@ -16,8 +16,8 @@
     <router-view/>
   </transition>
 
-  <!-- <SolidTrackSession />
-  <HelpView /> -->
+  <SolidTrackSession />
+  <!--<HelpView /> -->
 </div>
 </template>
 <script>
@@ -27,7 +27,7 @@ export default {
   name: 'App',
   components: {
     // 'Navbar': () => import('@/components/layout/Navbar'),
-    // 'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
+     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
     // 'HelpView': () => import('@/views/HelpView'),
     //  'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     //  'Fab': () => import('@/components/basic/Fab.vue')

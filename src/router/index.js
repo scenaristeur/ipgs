@@ -91,6 +91,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "agora" */ '../views/AgoraView.vue')
   },
   {
+    path: '/collab',
+    name: 'Collab',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "collab" */ '../views/CollabView.vue')
+  },
+  {
     path: '/suggested',
     name: 'Suggested',
     // route level code-splitting
