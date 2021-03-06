@@ -234,3 +234,14 @@ IRI : The absolute form of an IRI containing a scheme along with a path and opti
       - https://gitlab.com/fluidlog/cartosemapps/-/blob/master/assets/fluidgraph/app/convert.js
       - https://pad.lescommuns.org/lUf72zpWQz2bP2TsFI2X7Q?view
       - https://fluidlog.gitlab.io/cartosemapps/
+
+
+
+##
+transformation visjs en jsonld ->ajout d'un context
+-> https://tinyurl.com/y97mls4p ou examples dans /doc ou https://json-ld.org/playground/#startTab=tab-expanded&json-ld=%7B%22%40context%22%3A%7B%22as%22%3A%22https%3A%2F%2Fwww.w3.org%2Fns%2Factivitystreams%22%2C%22terms%22%3A%22http%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%22%2C%22rdfs%22%3A%22http%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%22%2C%22label%22%3A%22rdfs%3Alabel%22%2C%22motifs%22%3A%22http%3A%2F%2Fpurl.org%2Fnet%2Fwf-motifs%23%22%2C%22ipgs%22%3A%22https%3A%2F%2Fscenaristeur.github.io%2Fipgs%23%22%2C%22id%22%3A%22%40id%22%2C%22from%22%3A%22ipgs%3Afrom%22%2C%22to%22%3A%22ipgs%3Ato%22%2C%22%40base%22%3A%22https%3A%2F%2Fspoggy-test9.solidcommunity.net%2Fpublic%2Fnetwork%2Fipgs%2520webapp.json%22%2C%22vis%22%3A%22https%3A%2F%2Fvisjs.github.io%2Fvis-network%2Fdocs%2Fnetwork%2F%22%2C%22nodes%22%3A%22https%3A%2F%2Fvisjs.github.io%2Fvis-network%2Fdocs%2Fnetwork%2Fnodes%22%2C%22edges%22%3A%22vis%3Aedges%22%2C%22color%22%3A%22vis%3Acolor%22%2C%22background%22%3A%22vis%3Anodes%2Fcolor%2Fbackground%22%2C%22border%22%3A%22vis%3Anodes%2Fcolor%2Fborder%22%2C%22shape%22%3A%22vis%3Anodes%2Fshape%22%7D%2C%22_comment%22%3A%22should%20we%20use%20'nodes'%3A%20'https%3A%2F%2Fvisjs.github.io%2Fvis-network%2Fdocs%2Fnetwork%2Fnodes.html'%20or%20'edges'%3A%20'ipgs%3Aedges'%22%2C%22nodes%22%3A%5B%7B%22id%22%3A%22%23dav%22%2C%22label%22%3A%22dav%22%2C%22color%22%3A%7B%22background%22%3A%22%23D2E5FF%22%2C%22border%22%3A%22%232B7CE9%22%7D%2C%22shape%22%3A%22ellipse%22%7D%2C%7B%22id%22%3A%22%23man%22%2C%22label%22%3A%22man%22%2C%22color%22%3A%7B%22background%22%3A%22%23D2E5FF%22%2C%22border%22%3A%22%232B7CE9%22%7D%2C%22shape%22%3A%22ellipse%22%7D%5D%2C%22edges%22%3A%5B%7B%22from%22%3A%22%23dav%22%2C%22to%22%3A%22%23man%22%2C%22label%22%3A%22a%22%2C%22id%22%3A%2255bdf57d-9a5d-4199-b24b-cdbab7936b07%22%7D%5D%7D
+- utiliser typescript definitions plutôt que url de la doc https://github.com/visjs/vis-network/issues/135, https://www.npmjs.com/package/@types/vis
+- https://github.com/digitalbazaar/jsonld.js/issues/157
+- https://stackoverflow.com/questions/56096357/json-ld-typescript-classes
+- >> https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/vis/index.d.ts
+- > https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html

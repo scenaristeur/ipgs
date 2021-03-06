@@ -1,4 +1,32 @@
-import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Loader.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Loader.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
 import { getSolidDataset/*, saveSolidDatasetAt*/ } from "@inrupt/solid-client";
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
@@ -6,9 +34,7 @@ const fc = new FC( auth )
 
 import * as jsonld from 'jsonld';
 import DataLoader from '@/util/DataLoader.js'
-let dataLoader = new DataLoader
-import Network from '@/util/Network.js'
-let net = new Network()
+let dataLoader = new DataLoader()
 
 import Parser from '@/util/Parser.js'
 
@@ -124,7 +150,7 @@ export default class Loader {
   @param {string} author - The author of the book.
   */
   /**
-  * to doc d'après https://jsdoc.app/index.html#block-tags
+
   * no param,  using global this.url
   * Plusieurs cas possibles
   * jsonld
@@ -140,11 +166,6 @@ export default class Loader {
 
     this.loadedSources = await dataLoader.load(sources)
     console.log(this.loadedSources)
-    this.netVis = await net.buildVis(this.loadedSources)
-      console.log(this.netVis)
-      this.filters = this.netVis.predicates
-      this.nodes = this.netVis.nodes
-      this.edges = this.netVis.edges
 
   }
 
@@ -164,7 +185,7 @@ export default class Loader {
     this.json = JSON.parse(this.file)
     //  console.log(this.json)
 
-    if (this.json['@id'] != undefined && this.json['@id'].length == 0){
+    if (this.json['@id'] != undefined &amp;&amp; this.json['@id'].length == 0){
       this.json['@id'] = this.url
       this.json['@context']['@base'] = this.url
     }
@@ -215,7 +236,7 @@ export default class Loader {
 
 
             Object.entries(v).forEach( async function([prop, object]) {
-              if (prop != '@id' && prop != 'pair:label' && prop != 'id' && prop != 'label'){
+              if (prop != '@id' &amp;&amp; prop != 'pair:label' &amp;&amp; prop != 'id' &amp;&amp; prop != 'label'){
                 console.log("----",prop)
                 if(Array.isArray(object)){
                   object.forEach(async function(o) {
@@ -225,7 +246,7 @@ export default class Loader {
                     var indexO = module.nodes.findIndex(x => x.id==o.id);
                     indexO === -1 ? module.nodes.push({id: o.id, label: o.label}) : console.log("object already exists")
                     let edge = {from: v.id, to: o.id, label: prop}
-                    var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+                    var indexE = module.edges.findIndex(x => x.from==edge.from &amp;&amp; x.to == edge.to &amp;&amp; x.label == edge.label);
                     indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
                   });
                 }else{
@@ -233,7 +254,7 @@ export default class Loader {
                   // var indexO = module.nodes.findIndex(x => x.id==object);
                   // indexO === -1 ? module.nodes.push({id: object, label: await module.lastPart(object)}) : console.log("object already exists")
                   // let edge = {from: v.id, to: object, label: await module.lastPart(prop)}
-                  // var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+                  // var indexE = module.edges.findIndex(x => x.from==edge.from &amp;&amp; x.to == edge.to &amp;&amp; x.label == edge.label);
                   // indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
                 }
               }
@@ -267,10 +288,10 @@ export default class Loader {
     this.json = JSON.parse(this.file)
     console.log(this.json)
     // si visRepresentation
-    if (this.json.visRepresentation != undefined && this.json.visRepresentation.nodes.length > 0){
+    if (this.json.visRepresentation != undefined &amp;&amp; this.json.visRepresentation.nodes.length > 0){
       this.nodes = this.json.visRepresentation.nodes
       this.edges = this.json.visRepresentation.edges
-    }else if (this.json.jsonldRepresentation != undefined && this.json.jsonldRepresentation['@id'] != undefined){
+    }else if (this.json.jsonldRepresentation != undefined &amp;&amp; this.json.jsonldRepresentation['@id'] != undefined){
       if (this.json.jsonldRepresentation['@id'].length == 0){
         this.json.jsonldRepresentation['@id'] = this.url
         this.json.jsonldRepresentation['@context']['@base'] = this.url
@@ -307,7 +328,7 @@ export default class Loader {
         });
       }
       // for (const [key, value] of Object.entries(this.json.jsonldRepresentation)) {
-      //   //  if (key != 'id' && key != '@id' && key != '@context'){
+      //   //  if (key != 'id' &amp;&amp; key != '@id' &amp;&amp; key != '@context'){
       //
       //   if(Array.isArray(value)){
       //     value.forEach(async function(v) {
@@ -315,7 +336,7 @@ export default class Loader {
       //       var indexO = module.nodes.findIndex(x => x.id==v);
       //       indexO === -1 ? module.nodes.push({id: v, label: await module.lastPart(v)}) : console.log("object already exists")
       //       let edge = {from: module.json.id, to: v, label: await module.lastPart(key)}
-      //       var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+      //       var indexE = module.edges.findIndex(x => x.from==edge.from &amp;&amp; x.to == edge.to &amp;&amp; x.label == edge.label);
       //       indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
       //     });
       //   }else if (typeof value == 'string'){
@@ -323,7 +344,7 @@ export default class Loader {
       //     var indexO = module.nodes.findIndex(x => x.id==value);
       //     indexO === -1 ? module.nodes.push({id: value, label: await module.lastPart(value)}) : console.log("object already exists")
       //     let edge = {from: module.json.id, to: value, label: await module.lastPart(key)}
-      //     var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+      //     var indexE = module.edges.findIndex(x => x.from==edge.from &amp;&amp; x.to == edge.to &amp;&amp; x.label == edge.label);
       //     indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
       //   }else{
       //     console.log("TODO",typeof value, key,value)
@@ -347,21 +368,21 @@ export default class Loader {
     //  console.log('module', this)
 
     for (const [key, value] of Object.entries(this.json)) {
-      //  if (key != 'id' && key != '@id' && key != '@context'){
+      //  if (key != 'id' &amp;&amp; key != '@id' &amp;&amp; key != '@context'){
       console.log(key,value)
       if(Array.isArray(value)){
         value.forEach(async function(v) {
           var indexO = module.nodes.findIndex(x => x.id==v);
           indexO === -1 ? module.nodes.push({id: v, label: await module.lastPart(v)}) : console.log("object already exists")
           let edge = {from: module.json.id, to: v, label: await module.lastPart(key)}
-          var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+          var indexE = module.edges.findIndex(x => x.from==edge.from &amp;&amp; x.to == edge.to &amp;&amp; x.label == edge.label);
           indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
         });
       }else{
         var indexO = module.nodes.findIndex(x => x.id==value);
         indexO === -1 ? module.nodes.push({id: value, label: await module.lastPart(value)}) : console.log("object already exists")
         let edge = {from: module.json.id, to: value, label: await module.lastPart(key)}
-        var indexE = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+        var indexE = module.edges.findIndex(x => x.from==edge.from &amp;&amp; x.to == edge.to &amp;&amp; x.label == edge.label);
         indexE === -1 ? module.edges.push(edge) : console.log("object already exists")
       }
       //  }
@@ -383,7 +404,7 @@ export default class Loader {
       var indexO = module.nodes.findIndex(x => x.id==o.id);
       indexO === -1 ? module.nodes.push(o) : console.log("object already exists")
       let edge = {from: s.id, to: o.id, label: await module.lastPart(p)}
-      var indexP = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+      var indexP = module.edges.findIndex(x => x.from==edge.from &amp;&amp; x.to == edge.to &amp;&amp; x.label == edge.label);
       indexP === -1 ? module.edges.push(edge) : console.log("object already exists")
     });
   }
@@ -396,9 +417,9 @@ export default class Loader {
 
   async lastPart(text){
     //  console.log(text, typeof text)
-    if (typeof text == 'object' && text['rdfs:labale'] != undefined){
+    if (typeof text == 'object' &amp;&amp; text['rdfs:labale'] != undefined){
       return text['rdfs:label']
-    }else if (typeof text == 'string' && text.startsWith('http')){
+    }else if (typeof text == 'string' &amp;&amp; text.startsWith('http')){
       var n = text.lastIndexOf('/');
       return text.substring(n + 1);
     }
@@ -407,3 +428,26 @@ export default class Loader {
     }
   }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#jsonParse">jsonParse</a></li><li><a href="global.html#load">load</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Mar 05 2021 11:15:01 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

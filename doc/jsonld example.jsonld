@@ -1,0 +1,48 @@
+{  "@context": {
+  "as": "https://www.w3.org/ns/activitystreams",
+  "terms": "http://purl.org/dc/terms/",
+  "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+  "label": "rdfs:label",
+  "motifs": "http://purl.org/net/wf-motifs#",
+  "ipgs": "https://scenaristeur.github.io/ipgs#",
+  "id": "@id",
+  "from": "ipgs:from",
+  "to": "ipgs:to",
+  "@base": "https://spoggy-test9.solidcommunity.net/public/network/ipgs%20webapp.json",
+  "nodes": "https://visjs.github.io/vis-network/docs/network/nodes.html",
+  "edges": "ipgs:edges",
+  "color": "ipgs:color",
+  "background": "ipgs:backgroundColor",
+  "border": "ipgs:borderColor",
+  "shape": "ipgs:shape"
+},
+"_comment": "should we use 'nodes': 'https://visjs.github.io/vis-network/docs/network/nodes.html' or 'edges': 'ipgs:edges'",
+"nodes": [
+  {
+    "id": "#dav",
+    "label": "dav",
+    "color": {
+      "background": "#D2E5FF",
+      "border": "#2B7CE9"
+    },
+    "shape": "ellipse"
+  },
+  {
+    "id": "#man",
+    "label": "man",
+    "color": {
+      "background": "#D2E5FF",
+      "border": "#2B7CE9"
+    },
+    "shape": "ellipse"
+  }
+],
+"edges": [
+  {
+    "from": "#dav",
+    "to": "#man",
+    "label": "a",
+    "id": "55bdf57d-9a5d-4199-b24b-cdbab7936b07"
+  }
+]
+}
