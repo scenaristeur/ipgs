@@ -1,36 +1,41 @@
 import * as jsonld from 'jsonld';
 import jsonldcontext from '@/util/ldp.json' // https://gist.github.com/nandana/661d5961b91b78ff50b6
 console.log(jsonldcontext)
-
+import visContext from '@/util/visContext.json'
+// dcm: "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+// ldp: "http://www.w3.org/ns/ldp#",
+// json: "http://www.w3.org/ns/iana/media-types/application/json#",
 
 // const context = {
 //   "name": "http://schema.org/name",
 //   "homepage": {"@id": "http://schema.org/url", "@type": "@id"},
 //   "image": {"@id": "http://schema.org/image", "@type": "@id"}
 // };
-const context ={
-  // ALIAS IN JSLONLD https://github.com/schemaorg/schemaorg/issues/854
-  // "owl":"http://www.w3.org/2002/07/owl#",
-  "as":"https://www.w3.org/ns/activitystreams",
-  // "schema":"http://schema.org/",
-  // "life": "http://purl.org/vocab/lifecycle/schema#",
-  terms: "http://purl.org/dc/terms/",
-  rdfs: "http://www.w3.org/2000/01/rdf-schema#",
-  label: "rdfs:label",
-  // dcm: "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
-  // ldp: "http://www.w3.org/ns/ldp#",
-  // json: "http://www.w3.org/ns/iana/media-types/application/json#",
-  motifs: "http://purl.org/net/wf-motifs#",
-  ipgs: "https://scenaristeur.github.io/ipgs#",
-  "id": "@id",
-  from: "ipgs:from",
-  to: "ipgs:to",
-  '@base': ''
-};
+//const context =;
+// ALIAS IN JSLONLD https://github.com/schemaorg/schemaorg/issues/854
+// "owl":"http://www.w3.org/2002/07/owl#",
+//"as":"https://www.w3.org/ns/activitystreams",
+// "schema":"http://schema.org/",
+// "life": "http://purl.org/vocab/lifecycle/schema#",
 
 
 export default {
   methods: {
+    async load(url){
+      let compacted = await jsonld.compact(url, visContext);
+      console.log("compacted loaded", compacted)
+
+      if (compacted.type == 'vis'){
+        this.network.nodes = []
+        this.network.edges = []
+        Array.isArray(compacted.nodes) ? this.network.nodes =  compacted.nodes : this.network.nodes.push(compacted.nodes)
+        Array.isArray(compacted.edges) ? this.network.edges =  compacted.edges : this.network.edges.push(compacted.edges)
+      }
+
+      console.log(this.network)
+      return compacted
+
+    },
     nodeFromLabel(label) {
       return {id: "#"+label.trim().split(' ').join('_'),
       label: label,
@@ -43,7 +48,16 @@ export default {
 
 
     async jsonToJsonLd(json){
-      let compacted = await jsonld.compact(json, context);
+      //  let compacted = await jsonld.compact(json, context);
+      let ld = {}
+      Object.assign(ld, json)
+      ld['@context'] = visContext
+      ld.type = 'vis'
+      return ld
+    },
+
+    async jsonToJsonLd1(json){
+      let compacted = await jsonld.compact(json, visContext);
       compacted['@id'] = ''
       compacted['@graph'] = []
       json.nodes.forEach(async function(n) {
@@ -222,7 +236,7 @@ export default {
       downloadFile(){
         var contenu = this.content
         var format = this.format;
-      //  console.log(contenu, format)
+        //  console.log(contenu, format)
         var contentType = "";
         var fileNameToSaveAs = ""
         var filename = prompt("Choose a name for the exported file :", "Spoggy");

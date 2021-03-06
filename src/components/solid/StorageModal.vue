@@ -113,8 +113,8 @@ export default {
           console.log(jsonld_data)
           jsonld_data['@context']['@base'] = new_file_url
           jsonld_data['@id'] = new_file_url
-          jsonld_data.label = this.new_graph_name
-          jsonld_data['as:actor'] = {'@id': this.webId}
+          jsonld_data.label = this.new_graph_name.split('/').pop() // en cas de sous dossiers dans le nom
+          jsonld_data.creator = {'@id': this.webId}
 
           content = JSON.stringify(jsonld_data, undefined, 2)
           console.log('new content',content)

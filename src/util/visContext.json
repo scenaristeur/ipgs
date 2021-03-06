@@ -1,0 +1,21 @@
+{
+  "id": "@id",
+  "type": "@type",
+  "vis": "https://visjs.github.io/vis-network/docs/network/",
+  "nodes": "vis:nodes",
+  "edges": "vis:edges",
+  "color": "vis:color",
+  "background": "vis:nodes#color/background",
+  "border": "vis:nodes#color/border",
+  "shape": "vis:nodes/shape",
+  "from": "vis:edges#from",
+  "to": "vis:edges#to",
+  "terms": "http://purl.org/dc/terms/",
+  "created": "terms:created",
+  "creator": "terms:creator",
+  "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+  "label": "rdfs:label",
+  "motifs": "http://purl.org/net/wf-motifs#",
+  "ipgs": "https://scenaristeur.github.io/ipgs#",
+  "@base": ""
+}

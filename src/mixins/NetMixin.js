@@ -52,7 +52,8 @@ export default {
 
   },
   methods: {
-    async load(url){
+
+    async load1(url){
       let d = new Date()
       this.net = new Network()
       let dat = await this.loader.load(url)
