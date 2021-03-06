@@ -97,7 +97,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "suggested" */ '../views/SuggestedView.vue')
-  }
+  },
+  {
+    path: '/tscontext',
+    name: 'TsContext',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "tscontext" */ '../views/TypescriptToContext.vue')
+  },
 
 ]
 
