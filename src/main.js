@@ -7,6 +7,9 @@ import store from './store'
 import { Network } from "vue-vis-network";
 Vue.component('network', Network);
 
+import VueSocialSharing from 'vue-social-sharing'
+Vue.use(VueSocialSharing);
+
 // import { Network } from "vue-vis-network";
 // Vue.component('network', Network);
 // // import "vis-network/dist/vis-network.esm.min.js";

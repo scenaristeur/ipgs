@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <Navbar size="sm" />
     <!-- <b-button variant="outline-success">Button</b-button>
     <b-button variant="info">Button</b-button> -->

@@ -204,6 +204,12 @@ IRI : The absolute form of an IRI containing a scheme along with a path and opti
       # share fallback
       - https://dev.to/daviddalbusco/how-to-implement-the-web-share-api-with-a-fallback-b3
       - https://www.npmjs.com/package/web-social-share
+      - or
+      - https://madewithvuejs.com/vue-social-sharing
+      - https://vuejsexamples.com/one-easy-to-use-button-component-for-vue-js/
+      - https://vuejsexamples.com/a-highly-customizable-vue-js-component-for-sharing-links-on-social-networks/
+      - https://vuejsexamples.com/yandex-vue-component-for-the-share-block/
+      - take a look at social app https://vuejsexamples.com/a-social-application-built-with-vue-and-vuex/
 
       # google api
       - https://github.com/tralves/vue-gdrive
