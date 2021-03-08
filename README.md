@@ -251,3 +251,8 @@ transformation visjs en jsonld ->ajout d'un context
 - https://stackoverflow.com/questions/56096357/json-ld-typescript-classes
 - >> https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/vis/index.d.ts
 - > https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
+
+
+## wikipedia api
+- https://gist.github.com/maxim75/1037392
+- https://fr.wikipedia.org/w/api.php
