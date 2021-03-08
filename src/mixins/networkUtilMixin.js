@@ -43,7 +43,7 @@ export default {
 
 
 
-      if(json.nodes.length > 0){
+      if(json.nodes != undefined && Array.isArray(json.nodes) && json.edges != undefined && Array.isArray(json.edges)){
         this.network.nodes = json.nodes
         this.network.edges = json.edges
         return json
