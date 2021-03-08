@@ -6,6 +6,8 @@
   <b-input-group size="sm" prepend="Label">
     <b-form-input v-model="value.label" autofocus v-on:keyup.enter="addEdgeModal"></b-form-input>
   </b-input-group>
+
+
 </b-modal>
 </template>
 <script>
@@ -13,6 +15,9 @@
 export default {
   name: 'EdgeModal',
   props: ['value'],
+  created(){
+    console.log("EDGE", this.value)
+  },
   methods: {
     addEdgeModal(){
       console.log(this.value)

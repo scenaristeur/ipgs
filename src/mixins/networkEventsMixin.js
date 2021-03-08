@@ -69,7 +69,7 @@ export default {
       }
       this.editEdgeWithoutDrag(edge, callback);
     },
-    editEdge(edge, callback){ this.editEdgeWithoutDrag(edge, callback); },
+  //  editEdge(edge, callback){ this.editEdgeWithoutDrag(edge, callback); },
     editEdgeWithoutDrag(edge, callback){
       //  this.edge = edge
       //  console.log(this.edge)

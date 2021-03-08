@@ -20,8 +20,14 @@ export default {
       addNode: async (node, callback) => { node.label = "" ; app.editNode(node, callback) },
       editNode: async (node, callback) => { app.editNode(node, callback) },
       addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
-      editEdge: { editWithoutDrag: async (edge, callback) => {app.editEdgeWithoutDrag(edge, callback)} }
+      editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
+
+      //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
+      //  editEdge: {}
     }
+
+    //  this.network.options.manipulation.editEdge.editWithoutDrag = async (edge, callback) => {app.editWithoutDrag(edge, callback)}
+
 
 
     // if (this.$route.query.url != undefined ){
@@ -74,7 +80,7 @@ export default {
       //  if(node.type == 'folder' || node.type == 'file'){
       try{
         if(node.id.startsWith('http')){
-            this.load(node.id)
+          this.load(node.id)
         }else{
           this.$store.commit('ipgs/setCommandInput', node.label+' ')
         }
@@ -102,13 +108,16 @@ export default {
         var r = confirm("Do you want to connect the node to itself?");
         if (r != true) { callback(null); return; }
       }
-      this.editEdgeWithoutDrag(edge, callback);
+      this.editWithoutDrag(edge, callback);
     },
-    editEdge(edge, callback){ this.editEdgeWithoutDrag(edge, callback); },
-    editEdgeWithoutDrag(edge, callback){
+    //  editEdge(edge, callback){ this.editWithoutDrag(edge, callback); },
+    editWithoutDrag(edge, callback){
       //  this.edge = edge
-      //  console.log(this.edge)
-      this.$store.commit('ipgs/setAction', {action: 'editEdge', edge: edge})
+      console.log(this.edge)
+      let bugEdge = edge
+      bugEdge.from = edge.from.id
+      bugEdge.to  = edge.to.id
+      this.$store.commit('ipgs/setAction', {action: 'editEdge', edge: bugEdge})
       //  this.$bvModal.show("edge-popup")
       callback()
     },
@@ -172,6 +181,7 @@ export default {
       console.log(e)
       var index = this.network.edges.findIndex(x => x.id==e.id);
       index === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[index], e)
+      console.log(this.network)
     },
   },
   computed: {

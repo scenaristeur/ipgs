@@ -116,7 +116,7 @@ export default {
         interaction: {
           navigationButtons: true,
         },
-        manipulation: true,
+      //  manipulation: true,
         nodes: {
           // shape: "circle",
           // size:24,
@@ -157,7 +157,8 @@ export default {
     //   );
     // },
     networkEvent(eventName) {
-      console.log(eventName)
+      console.log(eventName, this.network)
+
       // if (this.networkEvents.length > 500) this.networkEvents = "";
       // this.networkEvents += `${eventName}, `;
     },
