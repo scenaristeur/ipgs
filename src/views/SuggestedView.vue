@@ -28,6 +28,8 @@ export default {
   data() {
     return {
       items: [
+        {name: 'Bonnie & Clyde, jsonld on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/GangBarrowTest.jsonld'},
+        {name: 'Simple Vis Network on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/davman.json'},
         {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
         {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
         {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
@@ -45,14 +47,17 @@ export default {
         {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects'},
         {name: 'Semapps Themes', url: 'https://data.virtual-assembly.org/themes'},
         {name: 'Semapps All in one', url: 'https://data.virtual-assembly.org/'},
-        {name: 'simple json', url: ''},
-        {name: 'jsonld file with @id', url: ''},
-        {name: 'jsonld file without @id', url: ''},
-        {name: 'jsonld file with @id with @context', url: ''},
-        {name: 'jsonld file without @id without @context', url: ''},
-        {name: 'jsonld file with @id replaced by id in @context', url: ''},
-        {name: 'visjs file with nodes & edges arrays', url: ''},
-        {name: 'folder/container with many different files', url: ''},
+
+        {name: 'Lyon on dbPedia', "url": 'http://fr.dbpedia.org/data/Lyon.jsonld'}
+        // {name: 'simple json', url: ''},
+        // {name: 'jsonld file with @id', url: ''},
+        // {name: 'jsonld file without @id', url: ''},
+        // {name: 'jsonld file with @id with @context', url: ''},
+        // {name: 'jsonld file without @id without @context', url: ''},
+        // {name: 'jsonld file with @id replaced by id in @context', url: ''},
+        // {name: 'visjs file with nodes & edges arrays', url: ''},
+        // {name: 'folder/container with many different files', url: ''},
+
       ]
     }
   }

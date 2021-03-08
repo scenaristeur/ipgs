@@ -22,18 +22,51 @@ import visContext from '@/util/visContext.json'
 export default {
   methods: {
     async load(url){
-      let compacted = await jsonld.compact(url, visContext);
-      console.log("compacted loaded", compacted)
 
-      if (compacted.type == 'vis'){
-        this.network.nodes = []
-        this.network.edges = []
-        Array.isArray(compacted.nodes) ? this.network.nodes =  compacted.nodes : this.network.nodes.push(compacted.nodes)
-        Array.isArray(compacted.edges) ? this.network.edges =  compacted.edges : this.network.edges.push(compacted.edges)
+      // FIRST TRY TO LOAD JSONLD
+      let documentLoaderType = 'xhr'
+      await jsonld.useDocumentLoader(documentLoaderType/*, options*/);
+      const iri = this.url;
+      let doc = {}
+      try{
+        doc = await jsonld.documentLoader(iri, function(err) {
+          if(err) {
+            console.log(err)
+          }
+        })
+      }catch(e){
+        alert(e)
+      }
+      console.log(doc)
+      let json = JSON.parse(doc.document)
+      console.log("JSON",json)
+
+
+
+      if(json.nodes.length > 0){
+        this.network.nodes = json.nodes
+        this.network.edges = json.edges
+        return json
+      }else{
+        // try jsonld
+        let compacted = await jsonld.compact(url, visContext);
+        console.log("compacted loaded", compacted)
+
+        if (compacted.type == 'vis'){
+          this.network.nodes = []
+          this.network.edges = []
+          Array.isArray(compacted.nodes) ? this.network.nodes =  compacted.nodes : this.network.nodes.push(compacted.nodes)
+          Array.isArray(compacted.edges) ? this.network.edges =  compacted.edges : this.network.edges.push(compacted.edges)
+        }else{
+
+          //  let parser = new Parser(doc)
+        }
+
+        console.log(this.network)
+        return compacted
       }
 
-      console.log(this.network)
-      return compacted
+
 
     },
     nodeFromLabel(label) {
