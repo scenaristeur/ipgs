@@ -1,7 +1,11 @@
 import * as jsonld from 'jsonld';
-import jsonldcontext from '@/util/ldp.json' // https://gist.github.com/nandana/661d5961b91b78ff50b6
-console.log(jsonldcontext)
+import ldp from '@/util/ldp.json' // https://gist.github.com/nandana/661d5961b91b78ff50b6
+//console.log(jsonldcontext)
 import visContext from '@/util/visContext.json'
+
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
 // dcm: "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
 // ldp: "http://www.w3.org/ns/ldp#",
 // json: "http://www.w3.org/ns/iana/media-types/application/json#",
@@ -21,7 +25,123 @@ import visContext from '@/util/visContext.json'
 
 export default {
   methods: {
+
+    async loadFRAMED(url){
+      let file = await fc.readFile(url, {
+        headers: {
+          'Accept': 'application/ld+json',
+          'Content-Type': 'application/ld+json'
+        },
+        // method: "POST",
+        // body: JSON.stringify({a: 1, b: 2})
+      })
+      //  console.log("FILE",this.file)
+      let jsonFile = JSON.parse(file)
+      console.log("jsonFile",jsonFile)
+      if(Array.isArray(jsonFile) && jsonFile.length == 1 && jsonFile[0]['@id'] != undefined ){
+        this.parsePossibleJsonld(url, jsonFile[0])
+      }else if(Array.isArray(jsonFile) && jsonFile.length > 1){
+        this.parseFolder(url)
+      }else{
+        //  console.log("todo", jsonFile)
+        this.parsePossibleJsonld(url, jsonFile)
+      }
+      //solid folder : jsonFile is array
+
+    },
+
+
+    async parseFolder(url){
+      let folder = await fc.readFolder(url)
+      console.log("FOLDER", folder)
+    },
+
+    async parsePossibleJsonld(url, jsonFile){
+      console.log("possible jsonld",url, jsonFile)
+
+
+
+      // let doc = {
+      //   "@context": {
+      //     "@vocab": "http://example.org/",
+      //     "contains": {"@type": "@id"}
+      //   },
+      //   "@graph": [{
+      //     "@id": "http://example.org/library",
+      //     "@type": "Library",
+      //     "location": "Athens",
+      //     "contains": "http://example.org/library/the-republic"
+      //   }, {
+      //     "@id": "http://example.org/library/the-republic",
+      //     "@type": "Book",
+      //     "creator": "Plato",
+      //     "title": "The Republic",
+      //     "contains": "http://example.org/library/the-republic#introduction"
+      //   }, {
+      //     "@id": "http://example.org/library/the-republic#introduction",
+      //     "@type": "Chapter",
+      //     "description": "An introductory chapter on The Republic.",
+      //     "title": "The Introduction"
+      //   }]
+      // }
+
+
+      //compact or frame ???? https://w3c.github.io/json-ld-framing/#framing
+      let frame = {
+        "@context": {"@vocab": "http://example.org/"},
+        "@type": "Library",
+        "contains": {
+          "@type": "Book",
+          "contains": {
+            "@type": "Chapter"
+          }
+        },
+        "ldp:contains": {
+          "@type": "Book",
+          "ldp:contains": {
+            "@type": "Chapter"
+          }
+        },
+        nodes: [],
+        edges: []
+      }
+
+      //  const framed = await jsonld.frame(doc, frame);
+      const framed = await jsonld.frame(jsonFile, frame);
+      console.log("FRAMED", framed)
+
+      let compacted = {}
+      if (jsonFile['@context'] != undefined ){
+        let cont = await jsonFile['@context']
+        compacted =  await jsonld.compact(url, cont);
+      }else{
+        compacted = await jsonld.compact(url, ldp['@context']);
+      }
+      console.log("compacted loaded", compacted)
+    },
+
+
     async load(url){
+
+      // let file = await fc.readFile(url, {
+      //   headers: {
+      //     'Accept': 'application/ld+json',
+      //     'Content-Type': 'application/ld+json'
+      //   },
+      //   // method: "POST",
+      //   // body: JSON.stringify({a: 1, b: 2})
+      // })
+      // //  console.log("FILE",this.file)
+      // let jsonFile = JSON.parse(file)
+      // console.log("jsonFile",jsonFile)
+      //
+      //
+      //
+      // let folder = await fc.readFolder(url)
+      // console.log("FOLDER", folder)
+
+
+
 
       // FIRST TRY TO LOAD JSONLD
       let documentLoaderType = 'xhr'
@@ -37,7 +157,7 @@ export default {
       }catch(e){
         alert(e)
       }
-      console.log(doc)
+//      console.log(doc)
       let json = JSON.parse(doc.document)
       console.log("JSON",json)
 
@@ -49,7 +169,16 @@ export default {
         return json
       }else{
         // try jsonld
-        let compacted = await jsonld.compact(url, visContext);
+
+        let compacted = {}
+        if (json['@context'] != undefined ){
+          let cont = await json['@context']
+          compacted = await jsonld.compact(url, cont);
+        }else{
+          compacted = await jsonld.compact(url, visContext);
+        }
+
+
         console.log("compacted loaded", compacted)
 
         if (compacted.type == 'vis'){

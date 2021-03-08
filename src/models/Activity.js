@@ -14,7 +14,7 @@ export default class Activity {
       "@context": "https://www.w3.org/ns/activitystreams",
       "@type": "Create",
       "@id": agora+'data/'+uuidv4()+".json",
-      "actor": "https://example.net/~mallory",
+    //  "actor": "https://example.net/~mallory",
       "object": {
         "id": "https://example.com/~mallory/note/72",
         "type": "Note",
@@ -49,12 +49,6 @@ export default class Activity {
         //  this.getData({url: res_url, group: ""})
       }
     )
-
-
-
-
-
-
 
   }
 

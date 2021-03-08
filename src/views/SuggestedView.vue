@@ -30,6 +30,7 @@ export default {
       items: [
         {name: 'Bonnie & Clyde, jsonld on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/GangBarrowTest.jsonld'},
         {name: 'Simple Vis Network on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/davman.json'},
+        {name: 'Basic Ttl file on Pod', url:'https://spoggy-test9.solidcommunity.net/public/table/workspaces/560f57a6-d26d-4e20-85f1-f794c3ebafb6.ttl'},
         {name: 'Spoggy-Test9 pod storage', url: 'https://spoggy-test9.solidcommunity.net', status: 'pending'},
         {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
         {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},

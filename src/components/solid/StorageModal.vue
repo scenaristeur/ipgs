@@ -142,7 +142,7 @@ export default {
 
                 if (this.publish == true){
                   let activity = new Activity()
-                  activity.jsonld.actor = this.webId
+                  activity.jsonld.creator = this.webId
                   activity.jsonld.object = this.dataToSave.format == 'ttl' ? content : JSON.parse(content)
 
                   console.log(activity)
@@ -167,8 +167,9 @@ export default {
 
               if (this.publish == true){
                 let activity = new Activity()
-                activity.jsonld.actor = this.webId
+                activity.jsonld.creator = this.webId
                 activity.jsonld.object = this.dataToSave.format == 'ttl' ? content : JSON.parse(content)
+                activity.jsonld.object.url = new_file_url
 
                 console.log(activity)
                 activity.publish()

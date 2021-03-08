@@ -43,7 +43,7 @@ export default {
 
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
-      //  console.log(this.url)
+      console.log(this.url)
       await this.load(this.url)
     }else{
       this.storage = this.$store.state.solid.storage
@@ -60,6 +60,7 @@ export default {
   methods: {
 
     async load1(url){
+      console.log("load",url)
       let d = new Date()
       this.net = new Network()
       let dat = await this.loader.load(url)
