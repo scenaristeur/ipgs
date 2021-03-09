@@ -122,7 +122,7 @@ export default {
 
 
     async load(url){
-
+      console.log("LOAD",url)
       // let file = await fc.readFile(url, {
       //   headers: {
       //     'Accept': 'application/ld+json',
@@ -146,10 +146,10 @@ export default {
       // FIRST TRY TO LOAD JSONLD
       let documentLoaderType = 'xhr'
       await jsonld.useDocumentLoader(documentLoaderType/*, options*/);
-      const iri = this.url;
+    //  const iri = url;
       let doc = {}
       try{
-        doc = await jsonld.documentLoader(iri, function(err) {
+        doc = await jsonld.documentLoader(url, function(err) {
           if(err) {
             console.log(err)
           }
@@ -157,7 +157,7 @@ export default {
       }catch(e){
         alert(e)
       }
-//      console.log(doc)
+      //      console.log(doc)
       let json = JSON.parse(doc.document)
       console.log("JSON",json)
 

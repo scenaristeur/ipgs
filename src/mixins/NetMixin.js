@@ -43,12 +43,13 @@ export default {
 
     if (this.$route.query.url != undefined ){
       this.url = this.$route.query.url
-      console.log(this.url)
+      console.log("load url",this.url)
       await this.load(this.url)
     }else{
       this.storage = this.$store.state.solid.storage
       //console.log(this.storage)
       if (this.storage != null){
+        console.log("load storage",this.storage)
         await this.load(this.storage)
       }
     }
@@ -58,7 +59,20 @@ export default {
 
   },
   methods: {
-
+    /**
+    * Catch @nodes-remove event of vue-vis-network and update network.nodes
+    * @param {object} e - parameters of the nodes-remove event.
+    */
+    onRemoveNodes(e){
+    this.network.nodes = this.network.nodes.filter(x => !e.properties.items.includes(x.id))
+    },
+    /**
+    * Catch @edges-remove event of vue-vis-network and update network.edges
+    * @param {object} e - parameters of the edges-remove event.
+    */
+    onRemoveEdges(p){
+      this.network.edges = this.network.edges.filter(x => !p.properties.items.includes(x.id))
+    },
     async load1(url){
       console.log("load",url)
       let d = new Date()

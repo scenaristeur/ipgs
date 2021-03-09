@@ -2,7 +2,10 @@
 
 InterPlanetary Graph System based on Solid & Ipfs
 
-!!! there is a bug with chrome and vis network -> prefer Firefox !!!
+# generate-docs in /out folder
+```
+npm run generate-docs
+```
 
 # new load test
 * solid

@@ -10,6 +10,8 @@
     @click="networkEvent('click')"
     @select-node="onSelectNode"
     @select-edge="networkEvent('selectEdge')"
+    @nodes-remove="onRemoveNodes"
+    @edges-remove="onRemoveEdges"
 
     ></network>
     <!--       @before-drawing="drawBg"
