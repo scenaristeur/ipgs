@@ -162,6 +162,9 @@ export default {
           this.outputMessage.hidden = true;
           this.outputData.parentElement.hidden = false;
           this.outputData.innerText = code.data;
+        //  console.log(this.$route)
+// TODO remove infinite scan ?
+          this.$router.push({ path: 'network', query: { url: code.data.split('?url=')[1] } })
         }
         //  else {
         //   this.outputMessage.hidden = false;
@@ -322,7 +325,7 @@ position: relative;
 }
 
 #canvasScan {
-  width: 100%;
+  width: 95%;
 }
 
 #output {
