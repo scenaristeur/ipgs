@@ -8,79 +8,86 @@
 
 
   <!-- <b-input-group size="sm" prepend="Id" v-if="value.id != calculatedId && calculatedId != '#'">
-    <b-form-input v-model="value.id"></b-form-input>
-    <br>
-    <b-button @click="updateId">Update id to:  {{ calculatedId }}</b-button>
-  </b-input-group> -->
-  <!-- <b-form-select v-model="value.node_type" :options="node_types" size="sm" class="mt-3"></b-form-select> -->
+  <b-form-input v-model="value.id"></b-form-input>
+  <br>
+  <b-button @click="updateId">Update id to:  {{ calculatedId }}</b-button>
+</b-input-group> -->
+<!-- <b-form-select v-model="value.node_type" :options="node_types" size="sm" class="mt-3"></b-form-select> -->
 
-  <!-- Using value -->
-  <!-- <b-button v-b-toggle="'collapse-node-id'" class="m-1" variant="primary" size ="sm">Id</b-button>
-  <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
-  <b-button v-b-toggle="'collapse-node-expert'" class="m-1" variant="light" size="sm">Expert</b-button> -->
+<!-- Using value -->
+<!-- <b-button v-b-toggle="'collapse-node-id'" class="m-1" variant="primary" size ="sm">Id</b-button>
+<b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
+<b-button v-b-toggle="'collapse-node-expert'" class="m-1" variant="light" size="sm">Expert</b-button> -->
+<!-- <b-button v-b-toggle="'collapse-node-color'" class="m-1" variant="dark" size="sm">Color</b-button>
+<b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button> -->
+<!-- <b-button v-b-toggle="'collapse-node-icon'" class="m-1" variant="dark" size="sm">Icon</b-button> -->
+
+<div class="input-group" style="display:table; width:100%;">
   <b-button v-b-toggle="'collapse-node-color'" class="m-1" variant="dark" size="sm">Color</b-button>
   <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
-  <!-- <b-button v-b-toggle="'collapse-node-icon'" class="m-1" variant="dark" size="sm">Icon</b-button> -->
+
+  <span style="display: table-cell; width: 190px;">
+    <!-- <b-button @click="newGraphFromNode" class="m-1" variant="light" size="sm">New Graph from this node</b-button> -->
+  </span>
+</div>
 
 
-
-
-  <!-- Element to collapse -->
-  <b-collapse id="collapse-node-id">
-    <b-card>
-      <b-input-group size="sm" prepend="Id">
-        <b-form-input v-model="value.id"></b-form-input>
-      </b-input-group>
-    </b-card>
-  </b-collapse>
-
-  <b-collapse id="collapse-node-color">
-    <b-card>
-
-          <label for="backgroundcolorpicker">Background : </label>
-          <!-- <input type="color" v-model="value.color.background" value="#D2E5FF"><br> -->
-            <v-swatches v-model="value.color.background" value="#D2E5FF"  show-fallback
-        fallback-input-type="color"
-
-        popover-x="left"></v-swatches>
-          <label for="bordercolorpicker">Border : </label>
-           <!-- <input type="color" v-model="value.color.border" value="#2B7CE9"> -->
-           <v-swatches  v-model="value.color.border" value="#2B7CE9"  show-fallback
-        fallback-input-type="color"
-
-        popover-x="left"></v-swatches>
-
-          <b-button @click="defaultColor" size="sm" variant="light">reset colors</b-button>
-
-    </b-card>
-  </b-collapse>
-
-  <b-collapse id="collapse-node-shape">
-    <b-card>
-      <b-input-group size="sm" prepend="shape">
-        <b-form-select v-model="value.shape" :options="shapes" size="sm" class="mt-3"></b-form-select>
-        <!-- <b-form-input v-if="value.shape=='icon'" v-model="icon.code"></b-form-input> -->
-        <div v-if="value.shape=='icon'">
-          Icon must be selected in shape <a href="https://fontawesome.com/cheatsheet" target="_blank">icon list</a>
-          <vfa-picker  v-model="icon_code" is-unicode="true">
-            <template v-slot:activator="{ on }">
-              <input v-model="icon_code" @click="on" placeholder="Icon Unicode" type="text" />
-
-            </template>
-          </vfa-picker>
-          <input v-model="icon_color" label="icon color" type="color" />
-        </div>
-      </b-input-group>
-    </b-card>
-  </b-collapse>
-
-  <b-collapse id="collapse-node-expert">
-
-    <b-input-group size="sm" prepend="expert">
+<!-- Element to collapse -->
+<b-collapse id="collapse-node-id">
+  <b-card>
+    <b-input-group size="sm" prepend="Id">
       <b-form-input v-model="value.id"></b-form-input>
     </b-input-group>
+  </b-card>
+</b-collapse>
 
-  </b-collapse>
+<b-collapse id="collapse-node-color">
+  <b-card>
+
+    <label for="backgroundcolorpicker">Background : </label>
+    <!-- <input type="color" v-model="value.color.background" value="#D2E5FF"><br> -->
+    <v-swatches v-model="value.color.background" value="#D2E5FF"  show-fallback
+    fallback-input-type="color"
+
+    popover-x="left"></v-swatches>
+    <label for="bordercolorpicker">Border : </label>
+    <!-- <input type="color" v-model="value.color.border" value="#2B7CE9"> -->
+    <v-swatches  v-model="value.color.border" value="#2B7CE9"  show-fallback
+    fallback-input-type="color"
+
+    popover-x="left"></v-swatches>
+
+    <b-button @click="defaultColor" size="sm" variant="light">reset colors</b-button>
+
+  </b-card>
+</b-collapse>
+
+<b-collapse id="collapse-node-shape">
+  <b-card>
+    <b-input-group size="sm" prepend="shape">
+      <b-form-select v-model="value.shape" :options="shapes" size="sm" class="mt-3"></b-form-select>
+      <!-- <b-form-input v-if="value.shape=='icon'" v-model="icon.code"></b-form-input> -->
+      <div v-if="value.shape=='icon'">
+        Icon must be selected in shape <a href="https://fontawesome.com/cheatsheet" target="_blank">icon list</a>
+        <vfa-picker  v-model="icon_code" is-unicode="true">
+          <template v-slot:activator="{ on }">
+            <input v-model="icon_code" @click="on" placeholder="Icon Unicode" type="text" />
+
+          </template>
+        </vfa-picker>
+        <input v-model="icon_color" label="icon color" type="color" />
+      </div>
+    </b-input-group>
+  </b-card>
+</b-collapse>
+
+<b-collapse id="collapse-node-expert">
+
+  <b-input-group size="sm" prepend="expert">
+    <b-form-input v-model="value.id"></b-form-input>
+  </b-input-group>
+
+</b-collapse>
 
 </b-modal>
 </template>
@@ -91,9 +98,9 @@ export default {
   name: 'NodeModal',
   props: ['value'],
   components: {
-  //  Network,
+    //  Network,
     'VSwatches': () => import('vue-swatches'),
-  //  'network': () => import('vue-vis-network')
+    //  'network': () => import('vue-vis-network')
   },
   created(){
     console.log(this.value)
@@ -147,14 +154,10 @@ export default {
   },
   methods: {
     addNodeModal(){
-
-      if (this.value.shape == 'icon'){
-
-
-        // !this.icon.code.startsWith("\u") ? this.icon.code = '\\u'+this.icon.code : ""
-        //  this.icon.code = "\uf007"
-
-      }
+      // if (this.value.shape == 'icon'){
+      //   // !this.icon.code.startsWith("\u") ? this.icon.code = '\\u'+this.icon.code : ""
+      //   //  this.icon.code = "\uf007"
+      // }
       console.log(this.value)
       this.$emit('ok', this.value)
       this.$bvModal.hide("node-popup")
@@ -163,6 +166,9 @@ export default {
       this.value.color.background="#D2E5FF"
       this.value.color.border="#2B7CE9"
     },
+    newGraphFromNode(){
+      console.log(this.value)
+    }
     // updateId(){
     //   this.value.id = this.calculatedId
     // }
