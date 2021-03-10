@@ -25,6 +25,7 @@
           <b-nav-item to="/browser">Browser</b-nav-item>
           <b-nav-item to="/history">History</b-nav-item>
           <b-nav-item to="/suggested">Suggested</b-nav-item>
+          <b-nav-item to="/reunion">Reunion</b-nav-item>
           <b-nav-item to="/about">About</b-nav-item>
           <!-- <b-nav-item to="/simple">S</b-nav-item> -->
 
