@@ -17,14 +17,18 @@
 
 
           <b-button @click="createShareAndOpen" variant="warning">Create, share & open</b-button>
+          <b-button @click="openScanner" variant="warning">Scan QR code</b-button>
 
         </b-col>
 
         <b-col>
 
           <canvas id="canvasCode"></canvas>
-          <b-button v-if="createdUrl.length > 0" :to="'network?url='+createdUrl" variant="warning">Open</b-button>
-          <b-button @click="openScanner">Scan QR code</b-button>
+          <div  v-if="createdUrl.length > 0">
+            <b-button :to="'network?url='+createdUrl" variant="warning">Open</b-button>
+            <b-button :to="'network?url='+createdUrl" variant="warning" disabled>Share</b-button>
+          </div>
+
 
         </b-col>
 
@@ -90,7 +94,7 @@ export default {
       name: '',
       visibility: 'public',
       reunions: [],
-      fields: ["name", "visibility", "creator", "join"],
+      fields: ["name", "join", "visibility", "creator"],
       createdUrl: ""
     };
   },
@@ -162,8 +166,8 @@ export default {
           this.outputMessage.hidden = true;
           this.outputData.parentElement.hidden = false;
           this.outputData.innerText = code.data;
-        //  console.log(this.$route)
-// TODO remove infinite scan ?
+          //  console.log(this.$route)
+          // TODO remove infinite scan ?
           this.$router.push({ path: 'network', query: { url: code.data.split('?url=')[1] } })
         }
         //  else {
