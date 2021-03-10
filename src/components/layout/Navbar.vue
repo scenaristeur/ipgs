@@ -1,12 +1,12 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" type="dark" variant="info" class="m-sm-0">
       <!-- <b-navbar-brand to="/">ipgs</b-navbar-brand> -->
       <CommandInput />
       <Notification />
       <NetworkToolBar />
       <!-- <b-button @click="help">?</b-button> -->
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav-collapse" class="p-0 m-0"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>

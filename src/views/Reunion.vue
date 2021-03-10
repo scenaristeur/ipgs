@@ -39,7 +39,7 @@
     </b-container>
 
 
-    <b-table striped hover :items="reunions" :fields="fields"  > <!--  -->
+    <b-table striped hover :items="reunions" :fields="fields"  responsive> <!--  -->
 
       <template #cell(creator)="data">
         <a :href="data.item.creator" target="_blank">{{data.item.creator != undefined ? data.item.creator.split('/')[2] : data.item.creator}}</a>
