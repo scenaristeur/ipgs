@@ -90,17 +90,17 @@ export default {
         console.log("TODO must send only if different ")
         let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
         console.log("identiques",identiques)
-        if (identiques == false){
-       this.json.nodes = this.network.nodes
-       this.json.edges = this.network.edges
-       this.json.modified = new Date()
-        console.log(this.json)
+        if (identiques == false && this.url != undefined){
+          this.json.nodes = this.network.nodes
+          this.json.edges = this.network.edges
+          this.json.modified = new Date()
+          console.log(this.json)
 
-        await fc.createFile( this.json.url, JSON.stringify(this.json), "application/ld+json" ).then(
-          f => {
-            console.log(f)
-          });
-      }
+          await fc.createFile( this.json.url, JSON.stringify(this.json), "application/ld+json" ).then(
+            f => {
+              console.log(f)
+            });
+          }
         }
 
       },
@@ -161,10 +161,10 @@ export default {
       //  editEdge(edge, callback){ this.editWithoutDrag(edge, callback); },
       editWithoutDrag(edge, callback){
         //  this.edge = edge
-        console.log(this.edge)
+        console.log(edge)
         let bugEdge = edge
-        bugEdge.from = edge.from.id
-        bugEdge.to  = edge.to.id
+        bugEdge.from = edge.from.id != undefined ? edge.from.id : edge.from
+        bugEdge.to  = edge.to.id != undefined ? edge.to.id : edge.to
         this.$store.commit('ipgs/setAction', {action: 'editEdge', edge: bugEdge})
         //  this.$bvModal.show("edge-popup")
         callback()
@@ -224,12 +224,14 @@ export default {
       saveNode(n){
         var index = this.network.nodes.findIndex(x => x.id==n.id);
         index === -1 ? this.network.nodes.push(n) : Object.assign(this.network.nodes[index], n)
+        this.sendUpdate(n)
       },
       saveEdge(e){
         console.log(e)
         var index = this.network.edges.findIndex(x => x.id==e.id);
         index === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[index], e)
         console.log(this.network)
+        this.sendUpdate(e)
       },
     },
     computed: {

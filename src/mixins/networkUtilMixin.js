@@ -27,27 +27,27 @@ import Websocket from '@/util/Websocket.js'
 
 export default {
   methods: {
-//     equalsIgnoreOrder(a, b) {
-// if (a.length !== b.length) return false;
-// const uniqueValues = new Set([...a, ...b]);
-// for (const v of uniqueValues) {
-//   const aCount = a.filter(e => e === v).length;
-//   const bCount = b.filter(e => e === v).length;
-//   if (aCount !== bCount) return false;
-// }
-// return true;
-// },
+    //     equalsIgnoreOrder(a, b) {
+    // if (a.length !== b.length) return false;
+    // const uniqueValues = new Set([...a, ...b]);
+    // for (const v of uniqueValues) {
+    //   const aCount = a.filter(e => e === v).length;
+    //   const bCount = b.filter(e => e === v).length;
+    //   if (aCount !== bCount) return false;
+    // }
+    // return true;
+    // },
 
-arraysEqual(a1, a2) {
-  return a1.length === a2.length && a1.every((o, idx) => this.objectsEqual(o, a2[idx]));
- },
+    arraysEqual(a1, a2) {
+      return a1 != undefined && a2 != undefined && a1.length === a2.length && a1.every((o, idx) => this.objectsEqual(o, a2[idx]));
+    },
 
-objectsEqual(o1, o2){
-  return typeof o1 === 'object' && Object.keys(o1).length > 0
-        ? Object.keys(o1).length === Object.keys(o2).length
-            && Object.keys(o1).every(p => this.objectsEqual(o1[p], o2[p]))
-        : o1 === o2;
-      },
+    objectsEqual(o1, o2){
+      return typeof o1 === 'object' && Object.keys(o1).length > 0
+      ? Object.keys(o1).length === Object.keys(o2).length
+      && Object.keys(o1).every(p => this.objectsEqual(o1[p], o2[p]))
+      : o1 === o2;
+    },
     async loadFRAMED(url){
       let file = await fc.readFile(url, {
         headers: {
@@ -198,10 +198,10 @@ objectsEqual(o1, o2){
       if(json.nodes != undefined && Array.isArray(json.nodes) && json.edges != undefined && Array.isArray(json.edges)){
         let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
         console.log("identiques",identiques)
-        if (identiques != true){ //false or undefined
-        this.network.nodes = json.nodes
-        this.network.edges = json.edges
-      }
+        if (identiques != true && this.url != undefined){ //false or undefined
+          this.network.nodes = json.nodes
+          this.network.edges = json.edges
+        }
         return json
       }else{
         // try jsonld
@@ -220,12 +220,12 @@ objectsEqual(o1, o2){
         if (compacted.type == 'vis'){
           let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
           console.log("identiques",identiques)
-          if (identiques == false){
-          this.network.nodes = []
-          this.network.edges = []
-          Array.isArray(compacted.nodes) ? this.network.nodes =  compacted.nodes : this.network.nodes.push(compacted.nodes)
-          Array.isArray(compacted.edges) ? this.network.edges =  compacted.edges : this.network.edges.push(compacted.edges)
-        }
+          if (identiques == false && this.url != undefined){
+            this.network.nodes = []
+            this.network.edges = []
+            Array.isArray(compacted.nodes) ? this.network.nodes =  compacted.nodes : this.network.nodes.push(compacted.nodes)
+            Array.isArray(compacted.edges) ? this.network.edges =  compacted.edges : this.network.edges.push(compacted.edges)
+          }
         }else{
 
           //  let parser = new Parser(doc)
