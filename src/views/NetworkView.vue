@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+
     <network
     id="network"
     class="network"
@@ -12,9 +13,21 @@
     @select-edge="networkEvent('selectEdge')"
     @nodes-remove="onRemoveNodes"
     @edges-remove="onRemoveEdges"
+    @nodes-add="sendUpdate"
+    @nodes-update="sendUpdate"
+    @edges-mounted="sendUpdate"
+    @edges-add="sendUpdate"
+    @edges-update="sendUpdate"
+
 
     ></network>
-    <!--       @before-drawing="drawBg"
+    <!--
+    @edges-remove="networkEvent('edges-remove')"
+    @nodes-remove="networkEvent('nodes-remove')"
+
+
+
+    @before-drawing="drawBg"
     @double-click="networkEvent('doubleClick')"
     @oncontext="networkEvent('oncontext')"
     @hold="networkEvent('hold')"
@@ -110,6 +123,7 @@ export default {
     // 'network': () => import('vue-vis-network')
   },
   data: () => ({
+    sockets: [],
     networkEvents: "",
     network: {
       nodes: defNodes.slice(0),
@@ -118,7 +132,7 @@ export default {
         interaction: {
           navigationButtons: true,
         },
-      //  manipulation: true,
+        //  manipulation: true,
         nodes: {
           // shape: "circle",
           // size:24,

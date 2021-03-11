@@ -6,6 +6,8 @@ import visContext from '@/util/visContext.json'
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
+
+import Websocket from '@/util/Websocket.js'
 // dcm: "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
 // ldp: "http://www.w3.org/ns/ldp#",
 // json: "http://www.w3.org/ns/iana/media-types/application/json#",
@@ -25,7 +27,16 @@ const fc = new FC( auth )
 
 export default {
   methods: {
-
+    equalsIgnoreOrder(a, b) {
+if (a.length !== b.length) return false;
+const uniqueValues = new Set([...a, ...b]);
+for (const v of uniqueValues) {
+  const aCount = a.filter(e => e === v).length;
+  const bCount = b.filter(e => e === v).length;
+  if (aCount !== bCount) return false;
+}
+return true;
+},
     async loadFRAMED(url){
       let file = await fc.readFile(url, {
         headers: {
@@ -122,7 +133,16 @@ export default {
 
 
     async load(url){
-      console.log("LOAD",url)
+      console.log("LOAD",url, !this.sockets.includes(url))
+      if (!this.sockets.includes(url)){
+        this.sockets.push(url)
+        let websocket = new Websocket(url, this.load)
+        console.log(websocket)
+        console.log("SOCKETS",this.sockets)
+      }
+      console.log("LOAD 2",url, !this.sockets.includes(url))
+
+
       // let file = await fc.readFile(url, {
       //   headers: {
       //     'Accept': 'application/ld+json',
@@ -146,7 +166,7 @@ export default {
       // FIRST TRY TO LOAD JSONLD
       let documentLoaderType = 'xhr'
       await jsonld.useDocumentLoader(documentLoaderType/*, options*/);
-    //  const iri = url;
+      //  const iri = url;
       let doc = {}
       try{
         doc = await jsonld.documentLoader(url, function(err) {
@@ -160,12 +180,17 @@ export default {
       //      console.log(doc)
       let json = JSON.parse(doc.document)
       console.log("JSON",json)
+      this.json =json
 
 
 
       if(json.nodes != undefined && Array.isArray(json.nodes) && json.edges != undefined && Array.isArray(json.edges)){
+        let identiques = this.equalsIgnoreOrder(this.json.nodes, this.network.nodes) && this.equalsIgnoreOrder(this.json.edges, this.network.edges)
+        console.log("identiques",identiques)
+        if (identiques == false){
         this.network.nodes = json.nodes
         this.network.edges = json.edges
+      }
         return json
       }else{
         // try jsonld
@@ -182,17 +207,27 @@ export default {
         console.log("compacted loaded", compacted)
 
         if (compacted.type == 'vis'){
+          let identiques = this.equalsIgnoreOrder(this.json.nodes, this.network.nodes) && this.equalsIgnoreOrder(this.json.edges, this.network.edges)
+          console.log("identiques",identiques)
+          if (identiques == false){
           this.network.nodes = []
           this.network.edges = []
           Array.isArray(compacted.nodes) ? this.network.nodes =  compacted.nodes : this.network.nodes.push(compacted.nodes)
           Array.isArray(compacted.edges) ? this.network.edges =  compacted.edges : this.network.edges.push(compacted.edges)
+        }
         }else{
 
           //  let parser = new Parser(doc)
         }
 
+
+
         console.log(this.network)
         return compacted
+
+
+
+
       }
 
 

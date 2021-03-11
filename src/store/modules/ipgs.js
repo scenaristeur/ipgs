@@ -7,7 +7,8 @@ const state = () => ({
   history: [],
   action: null,
   editorContent: {},
-  dataToSave: {}
+  dataToSave: {},
+  socketMessageUrl: "gr"
   // graphs: [],
   // currentGraphId: null,
   // network: {
@@ -85,6 +86,10 @@ const mutations = {
   setAction(state, a){
     console.log(a)
     state.action = a
+  },
+  setWebsocketMesssage(state, url){
+    console.log("message in store", url)
+    state.socketMessageUrl = url
   },
   setInputObject(state, io){
     console.log(io)

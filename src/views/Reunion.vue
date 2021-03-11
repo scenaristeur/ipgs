@@ -95,7 +95,8 @@ export default {
       visibility: 'public',
       reunions: [],
       fields: ["name", "join", "visibility", "creator"],
-      createdUrl: ""
+      createdUrl: "",
+      code: ""
     };
   },
   created(){
@@ -127,9 +128,6 @@ export default {
         app.video.play();
         requestAnimationFrame(app.tick);
       });
-
-
-
     },
     drawLine(begin, end, color) {
       this.canvas.beginPath();
@@ -158,17 +156,19 @@ export default {
         var code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: "dontInvert",
         });
-        if (code) {
-          this.drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-          this.drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-          this.drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-          this.drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-          this.outputMessage.hidden = true;
-          this.outputData.parentElement.hidden = false;
-          this.outputData.innerText = code.data;
+        if (code && code.data != this.code.data) {
+          // this.drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+          // this.drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+          // this.drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+          // this.drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+          // this.outputMessage.hidden = true;
+          // this.outputData.parentElement.hidden = false;
+          // this.outputData.innerText = code.data;
+
+          this.code = code
           //  console.log(this.$route)
-          // TODO remove infinite scan ?
-          this.$router.push({ path: 'network', query: { url: code.data.split('?url=')[1] } })
+          // // TODO remove infinite scan ?
+          // this.$router.push({ path: 'network', query: { url: code.data.split('?url=')[1] } })
         }
         //  else {
         //   this.outputMessage.hidden = false;
@@ -176,6 +176,10 @@ export default {
         // }
       }
       requestAnimationFrame(this.tick);
+    },
+    codeChanged(){
+      console.log("code found", this.code)
+      this.$router.push({ path: 'network', query: { url: this.code.data.split('?url=')[1] } })
     },
     async initReunions(){
       this.reunions = []
@@ -283,6 +287,9 @@ export default {
   watch:{
     storage(){
       this.initReunions()
+    },
+    code(){
+      this.codeChanged()
     }
   },
   computed:{
