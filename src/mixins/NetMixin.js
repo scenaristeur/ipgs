@@ -88,7 +88,7 @@ export default {
 
       if(this.json != undefined){
         console.log("TODO must send only if different ")
-        let identiques = this.equalsIgnoreOrder(this.json.nodes, this.network.nodes) && this.equalsIgnoreOrder(this.json.edges, this.network.edges)
+        let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
         console.log("identiques",identiques)
         if (identiques == false){
        this.json.nodes = this.network.nodes

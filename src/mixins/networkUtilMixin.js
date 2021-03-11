@@ -27,16 +27,27 @@ import Websocket from '@/util/Websocket.js'
 
 export default {
   methods: {
-    equalsIgnoreOrder(a, b) {
-if (a.length !== b.length) return false;
-const uniqueValues = new Set([...a, ...b]);
-for (const v of uniqueValues) {
-  const aCount = a.filter(e => e === v).length;
-  const bCount = b.filter(e => e === v).length;
-  if (aCount !== bCount) return false;
-}
-return true;
-},
+//     equalsIgnoreOrder(a, b) {
+// if (a.length !== b.length) return false;
+// const uniqueValues = new Set([...a, ...b]);
+// for (const v of uniqueValues) {
+//   const aCount = a.filter(e => e === v).length;
+//   const bCount = b.filter(e => e === v).length;
+//   if (aCount !== bCount) return false;
+// }
+// return true;
+// },
+
+arraysEqual(a1, a2) {
+  return a1.length === a2.length && a1.every((o, idx) => this.objectsEqual(o, a2[idx]));
+ },
+
+objectsEqual(o1, o2){
+  return typeof o1 === 'object' && Object.keys(o1).length > 0
+        ? Object.keys(o1).length === Object.keys(o2).length
+            && Object.keys(o1).every(p => this.objectsEqual(o1[p], o2[p]))
+        : o1 === o2;
+      },
     async loadFRAMED(url){
       let file = await fc.readFile(url, {
         headers: {
@@ -185,9 +196,9 @@ return true;
 
 
       if(json.nodes != undefined && Array.isArray(json.nodes) && json.edges != undefined && Array.isArray(json.edges)){
-        let identiques = this.equalsIgnoreOrder(this.json.nodes, this.network.nodes) && this.equalsIgnoreOrder(this.json.edges, this.network.edges)
+        let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
         console.log("identiques",identiques)
-        if (identiques == false){
+        if (identiques != true){ //false or undefined
         this.network.nodes = json.nodes
         this.network.edges = json.edges
       }
@@ -207,7 +218,7 @@ return true;
         console.log("compacted loaded", compacted)
 
         if (compacted.type == 'vis'){
-          let identiques = this.equalsIgnoreOrder(this.json.nodes, this.network.nodes) && this.equalsIgnoreOrder(this.json.edges, this.network.edges)
+          let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
           console.log("identiques",identiques)
           if (identiques == false){
           this.network.nodes = []
