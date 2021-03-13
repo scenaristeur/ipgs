@@ -243,12 +243,32 @@ export default {
         get () { return this.$store.state.ipgs.inputObject},
         set (/*value*/) { /*this.updateTodo(value)*/ }
       },
+      newGraph: {
+        get () { return this.$store.state.ipgs.newGraph},
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      }
       // socketMessageUrl: {
       //   get () { return this.$store.state.ipgs.socketMessageUrl},
       //   set (/*value*/) { /*this.updateTodo(value)*/ }
       // }
     },
     watch:{
+      newGraph(){
+        console.log('New Graph',this.newGraph)
+
+        this.network.nodes = []
+        this.network.edges = []
+        let n = this.newGraph.node
+        n.id = this.newGraph.url
+        this.network.nodes.push (n)
+      //  alert ("todo: you must create a new file")
+        let inputObject = {}
+        inputObject.type = "commande";
+        inputObject.value = '/e';
+        inputObject.inputNew = "";
+        this.$store.commit('ipgs/setInputObject', inputObject)
+
+      },
       // socketMessageUrl(){
       //   this.load(this.socketMessageUrl)
       // //  console.log("MUST UPDATEEEEEEEEEEEEEEEEEEEEEEE",this.socketMessageUrl)

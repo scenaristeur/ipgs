@@ -27,7 +27,7 @@
   <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
 
   <span style="display: table-cell; width: 190px;">
-    <!-- <b-button @click="newGraphFromNode" class="m-1" variant="light" size="sm">New Graph from this node</b-button> -->
+    <b-button @click="newGraphFromNode" class="m-1" variant="light" size="sm">New Graph from this node</b-button>
   </span>
 </div>
 
@@ -167,7 +167,22 @@ export default {
       this.value.color.border="#2B7CE9"
     },
     newGraphFromNode(){
-      console.log(this.value)
+      console.log(this.value.id)
+      if (this.$route.query.url != undefined ){
+        this.url = this.$route.query.url
+        console.log("url", this.url)
+        let nodeFullUri = this.url.substr(0,this.url.lastIndexOf('/'))+this.value.id
+        console.log(nodeFullUri, this.value)
+        let g = {url: nodeFullUri, node: this.value}
+        this.$store.commit('ipgs/setNewGraph', g)
+
+
+
+      }else{
+        console.log("url undefined", this.url)
+      }
+
+
     }
     // updateId(){
     //   this.value.id = this.calculatedId
