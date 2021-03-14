@@ -40,6 +40,18 @@ npm run generate-docs
 - https://js.ipfs.io/
 - https://docs.ipfs.io/
 - https://github.com/ipfs-shipyard/ipfs-desktop
+- https://github.com/ipfs/js-ipfs/tree/c47a6335b77d5284711f13a83349000820f85775/examples/browser-vue
+
+- examples https://github.com/ipfs/js-ipfs/blob/c47a6335b77d5284711f13a83349000820f85775/examples/protoschool.md
+- host git repo on ipfs https://docs.ipfs.io/how-to/host-git-style-repo/
+
+-patch json on ipfs with version control for collaborative https://medium.com/textileio/building-a-simple-decentralized-version-control-system-with-ipfs-textile-8135e9557f78
+- MFS mutable File system https://github.com/ipfs/js-ipfs/blob/master/docs/core-api/FILES.md#the-mutable-files-api
+- ipfs cluster https://collab.ipfscluster.io/#instructions or https://cluster.ipfs.io/documentation/collaborative/
+- MFS https://docs.ipfs.io/concepts/file-systems/#mutable-file-system-mfs
+- mfs unix js https://github.com/ipfs/js-ipfs-unixfs
+- MFS tuto https://proto.school/mutable-file-system/01
+
 
 # json-ld processor js
 - https://github.com/digitalbazaar/jsonld.js/

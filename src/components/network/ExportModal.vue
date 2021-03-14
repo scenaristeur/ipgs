@@ -31,11 +31,12 @@
       <b-dropdown-item @click="onFormatChange('json')">json</b-dropdown-item>
       <b-dropdown-item @click="onFormatChange('ttl')">ttl</b-dropdown-item>
       <b-dropdown-item @click="onFormatChange('jsonld')">jsonld</b-dropdown-item>
+      <!-- <b-dropdown-item @click="onFormatChange('ipfs')">ipfs</b-dropdown-item> -->
     </b-dropdown>
     <b-button-group class="mx-1">
       <b-button @click="downloadFile">Download</b-button>
       <b-button @click="save">Save</b-button>
-      <!-- <b-button to="/">Cancel</b-button> -->
+      <b-button @click="IpfsAdd">Save a copy on Ipfs</b-button>
     </b-button-group>
   </b-button-toolbar>
 </div>
@@ -70,7 +71,26 @@ export default {
   created(){
     this.editorContent = this.$store.state.ipgs.editorContent
   },
+  mounted() {
+    this.getIpfsNodeInfo();
+  },
   methods: {
+    async getIpfsNodeInfo() {
+      try {
+        // Await for ipfs node instance.
+        this.ipfs = await this.$ipfs;
+        // Call ipfs `id` method.
+        // Returns the identity of the Peer.
+        const { agentVersion, id } = await this.ipfs.id();
+        this.agentVersion = agentVersion;
+        this.id = id;
+        // Set successful status text.
+        this.status = "Connected to IPFS =)";
+      } catch (err) {
+        // Set error status text.
+        this.status = `Error: ${err}`;
+      }
+    },
     async onFormatChange(f){
       this.format = f
       console.log("FORMAT CHANGED",f)
@@ -84,19 +104,34 @@ export default {
         case 'jsonld':
         this.content = JSON.stringify(await this.jsonToJsonLd(this.editorContent.content), undefined, 2)
         break;
+        // case 'ipfs':
+        // this.IpfsAdd()
+        // break;
         default:
         console.warn('UNKNOWN FORMAT', f)
 
       }
 
     },
+    async IpfsAdd(){
+      console.log(this.ipfs)
+      console.log(this.editorContent.content)
+      const results = await this.ipfs.add(JSON.stringify(this.editorContent.content))
+      console.log("res", results)
+      console.log(await results.cid)
+
+      alert ("A copy has been saved on IPFS with cid '"+results.cid+"'. You can see it at https://ipfs.io/ipfs/"+results.cid)
+      // this.editorContent.content.ipfscid = results.cid
+      // this.cid = results.cid
+    },
+
     save() {
       console.log('save')
       this.$store.commit('ipgs/setDataToSave', {content: this.content, format: this.format})
 
 
-                      this.$bvModal.show("storage-modal")
-                      //  this.$bvModal.hide("export-popup")
+      this.$bvModal.show("storage-modal")
+      //  this.$bvModal.hide("export-popup")
     },
   },
   watch:{
