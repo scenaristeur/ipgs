@@ -1,10 +1,11 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info" class="m-sm-0">
-      <!-- <b-navbar-brand to="/">ipgs</b-navbar-brand> -->
+    <b-navbar toggleable="lg" type="dark" variant="info" class="p-1 pl-sm-3">
+      <b-navbar-brand>
       <CommandInput />
+      </b-navbar-brand>
       <Notification />
-      <NetworkToolBar />
+
       <!-- <b-button @click="help">?</b-button> -->
       <b-navbar-toggle target="nav-collapse" class="p-0 m-0"></b-navbar-toggle>
 
@@ -68,7 +69,7 @@ export default {
     'CommandInput': () => import('@/components/layout/CommandInput'),
     'Notification': () => import('@/components/layout/Notification'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
-    'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
+  //  'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
   },
   // methods: {
   //   help() {
