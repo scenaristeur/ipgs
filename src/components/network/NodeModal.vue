@@ -158,6 +158,13 @@ export default {
       //   // !this.icon.code.startsWith("\u") ? this.icon.code = '\\u'+this.icon.code : ""
       //   //  this.icon.code = "\uf007"
       // }
+      //
+
+      let isUUID = this.value.id.split`-`.map(x=>x.length+`0x${x}0`*0)=="8,4,4,4,12"
+      if(isUUID){
+        this.value.id= "#"+this.value.label.trim().split(' ').join('_')
+      }
+
       console.log(this.value)
       this.$emit('ok', this.value)
       this.$bvModal.hide("node-popup")

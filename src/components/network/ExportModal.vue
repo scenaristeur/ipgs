@@ -42,6 +42,7 @@
 </div>
 </editor>
 <StorageModal />
+<IpfsModal :cid="cid" />
 </b-modal>
 </template>
 
@@ -61,11 +62,14 @@ export default {
   components: {
     'Editor': () => import('vue2x-ace-editor'),
     'StorageModal': () => import('@/components/solid/StorageModal'),
+    'IpfsModal': () => import('@/components/storage/IpfsModal'),
+
   },
   data() {
     return {
       content: "content",
-      format: 'json'
+      format: 'json',
+      cid: ""
     }
   },
   created(){
@@ -119,8 +123,8 @@ export default {
       const results = await this.ipfs.add(JSON.stringify(this.editorContent.content))
       console.log("res", results)
       console.log(await results.cid)
-
-      alert ("A copy has been saved on IPFS with cid '"+results.cid+"'. You can see it at https://ipfs.io/ipfs/"+results.cid)
+      this.cid = results.cid
+      this.$bvModal.show("ipfs-modal")
       // this.editorContent.content.ipfscid = results.cid
       // this.cid = results.cid
     },
