@@ -26,7 +26,7 @@ export default {
           if(!omitted.includes(k) && v.trim().length > 0){
             var indexO = network.nodes.findIndex(x => x.id==v);
             if(indexO === -1){
-              let ob = k == "type" ?  {id: v, shape: "star", color: "red"} : {id: v, shape: "box", color: "yellow"}
+              let ob =   {id: v, shape: "box"}
               if (v.length > 50 ){
                 ob.label = v.substring(0,50)+".."
                 ob.title = v
@@ -34,6 +34,20 @@ export default {
               else{
                 ob.label = v
               }
+              
+              if (v.startsWith('http')){
+                ob.color = "green"
+                ob.label = v.split("/").pop()
+                ob.title = v
+              }else{
+                ob.color = "yellow"
+              }
+              if( k == "type"){
+                ob.shape = "star"
+                ob.color= "red"
+              }
+
+
               ob.built = true
               network.nodes.push(ob)
             }
