@@ -103,7 +103,6 @@ export default {
     //  'network': () => import('vue-vis-network')
   },
   created(){
-    console.log(this.value)
     //  this.value.color == undefined ? this.value.color = {background: "#D2E5FF", border: "#2B7CE9"} : ""
     this.value.node_type == undefined ? this.value.node_type = 'default' : ""
   },

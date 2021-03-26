@@ -24,17 +24,17 @@ export default {
     var socket = new WebSocket('wss://ipgs.solidcommunity.net/', ['solid-0.1']);
     //  var socket = new WebSocket('wss://solidweb.org');
 
-    console.log(socket)
+  //  console.log(socket)
     socket.onopen = function() {
-      console.log("socket open")
+    //  console.log("socket open")
       this.send('sub '+app.log);
-      console.log("socket sub to "+app.log)
+      //console.log("socket sub to "+app.log)
     };
     socket.onmessage = function(msg) {
     //  console.log("message",msg)
       if (msg.data && msg.data.slice(0, 3) === 'pub') {
       //  console.log(msg)
-        console.log(msg.data)
+        //console.log(msg.data)
         app.updateNb()
         // resource updated, refetch resource
       }
@@ -43,13 +43,13 @@ export default {
   methods: {
     async updateNb() {
       let nb = 0
+      let notifications = []
       await ldflex.clearCache()
       for await (const agoraEvent of ldflex[this.log]['https://www.dublincore.org/specifications/dublin-core/dcmi-terms/hasPart']){
-        console.log(`${agoraEvent}`)
+        notifications.push(`${agoraEvent}`)
         nb++
       }
       this.nb = nb
-
     }
   }
 }

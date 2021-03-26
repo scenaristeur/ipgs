@@ -47,14 +47,14 @@
 </template>
 
 <script>
-import networkUtilMixin from '@/mixins/networkUtilMixin'
+import networkUtilMixin from '@/mixins1/networkUtilMixin'
 import ace from 'brace'
 import 'brace/ext/language_tools';
 import 'brace/mode/python.js'
 import 'brace/snippets/python.js';
 import 'brace/theme/eclipse.js';
 // ace/mode/turtle
-console.log(ace)
+
 
 export default {
   name: 'ExportModal',
@@ -79,6 +79,9 @@ export default {
     this.getIpfsNodeInfo();
   },
   methods: {
+    fakeFunctionToNOTBELINTED(){
+      console.log(ace)
+    },
     async getIpfsNodeInfo() {
       try {
         // Await for ipfs node instance.

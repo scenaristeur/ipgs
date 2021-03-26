@@ -396,7 +396,7 @@ export default class Loader {
 
   async lastPart(text){
     //  console.log(text, typeof text)
-    if (typeof text == 'object' && text['rdfs:labale'] != undefined){
+    if (typeof text == 'object' && text['rdfs:label'] != undefined){
       return text['rdfs:label']
     }else if (typeof text == 'string' && text.startsWith('http')){
       var n = text.lastIndexOf('/');

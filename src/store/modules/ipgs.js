@@ -1,6 +1,11 @@
 //let ldflex = window.solid
 
 const state = () => ({
+  //  sources: [],
+  spinner: 0,
+  graphs: [],
+
+  /////////////////////////////////////
   inputObject: null,
   commands : {'/i': 'import', '/h': 'help', '/n': 'newGraph', '/e': 'export', '/c': 'capture' },
   commandInput: "",
@@ -136,7 +141,17 @@ const mutations = {
   setDataToSave(state, d){
     console.log(d)
     state.dataToSave = d
+  },
+  spinnerAdd(state){
+    state.spinner++
+  },
+  spinnerRemove(state){
+    state.spinner--
+  },
+  setGraphs(state, graphs){
+    state.graphs = graphs
   }
+
 
 }
 
