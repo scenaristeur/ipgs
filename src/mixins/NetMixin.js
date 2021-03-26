@@ -86,7 +86,7 @@ export default {
       console.log("le json", this.json)
 
 
-      if(this.json != undefined){
+      if(this.json != undefined && this.json["@context"] != "https://data.virtual-assembly.org/context.json"){
         console.log("TODO must send only if different ")
         let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
         console.log("identiques",identiques)

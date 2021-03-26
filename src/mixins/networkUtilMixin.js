@@ -226,24 +226,31 @@ export default {
             Array.isArray(compacted.nodes) ? this.network.nodes =  compacted.nodes : this.network.nodes.push(compacted.nodes)
             Array.isArray(compacted.edges) ? this.network.edges =  compacted.edges : this.network.edges.push(compacted.edges)
           }
-        }else{
-
-          //  let parser = new Parser(doc)
+        }else if(
+          compacted["@context"] =="https://data.virtual-assembly.org/context.json"
+        ){
+          compacted["@context"] = [compacted["@context"]]
+          compacted["@base"] = url
+          console.log(compacted)
+          this.network = this.pairToVis(compacted)
         }
-
-
-
         console.log(this.network)
         return compacted
-
-
-
-
       }
-
-
-
     },
+
+    pairToVis(compacted){
+      let nodes = [], edges = []
+      console.log("base",compacted["@base"] )
+      console.log(compacted["ldp:contains"])
+      let items = compacted["ldp:contains"].map(obj=> ({ ...obj, label: obj.id }))
+
+      Array.isArray(items) ? nodes = items : console.info("i cant deal with", items)
+      return {nodes: nodes, edges: edges}
+    },
+
+
+
     nodeFromLabel(label) {
       return {id: "#"+label.trim().split(' ').join('_'),
       label: label,
