@@ -120,7 +120,7 @@ export default class Source {
   async pairToGraph(doc){
     let graph = {nodes: [], edges: []}
     let items = doc.jsonld["ldp:contains"]
-    graph.nodes = items.map(obj=> ({ ...obj, label: this.getLabel(obj) })) // if no name -> id as label
+    graph.nodes = items//.map(obj=> ({ ...obj, label: this.getLabel(obj) })) // if no name -> id as label
     return graph
   }
 
