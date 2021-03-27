@@ -9,7 +9,7 @@ export default {
     async  checkQueryUrl() {
       this.$store.commit('ipgs/spinnerInit')
       if (this.$route.query.url != undefined && this.$route.query.url.length > 0){
-      await this.load({name:"Query_url", url:this.$route.query.url})
+        await this.load({name:"Query_url", url:this.$route.query.url})
       }else{
         this.storage = this.$store.state.solid.storage
         //console.log(this.storage)
@@ -19,7 +19,9 @@ export default {
         }
       }
     },
-  async load(s){
+    async load(s){
+
+      console.log("TODO, find another way to not clear the graph when navig with Solid folder, and allow expanding when clicking on a node for ldp semapps container")
       this.$store.commit('ipgs/setGraphs', [{nodes:[], edges: []}])
 
       this.$store.commit('ipgs/spinnerAdd')

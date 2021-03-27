@@ -3,6 +3,8 @@ import FC from 'solid-file-client'
 const fc = new FC( auth )
 
 import * as jsonld from 'jsonld';
+import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
+import { getSolidDataset/*, saveSolidDatasetAt*/ } from "@inrupt/solid-client";
 
 /**
 * Represents a Source of Data.
@@ -29,11 +31,9 @@ export default class Source {
         case "folder":
         await this.loadFolder(s)
         break;
+          case "profile":
         case "ttl":
         await this.loadTtl(s)
-        break;
-        case "profile":
-        await this.loadProfile(s)
         break;
         case "json":
         await this.loadJson(s)
@@ -42,8 +42,14 @@ export default class Source {
         await this.loadJsonld(s)
         break;
         default:
+  try{
 
-        await this.loadJsonld(s)
+      await this.loadFolder(s)
+  }catch(e){
+      await this.loadTtl(s)
+
+  }
+
 
         //  alert("I dont know how to read ",s.url)
       }
@@ -81,30 +87,32 @@ export default class Source {
 
   async loadFolder(s){
     console.log("Solid Folder or Semapps container ?",s)
-    try{
+    // try{
       let folder = await fc.readFolder(s.url)
       if (folder.size == undefined){
+
         await this.loadJsonld(s)
       }else{
         console.log(folder)
         await this.folderToGraph(folder)
       }
-    }catch(e){
-      alert(e)
-    }
+    // }catch(e){
+    //   alert(e)
+    // }
   }
 
   async loadTtl(s){
     console.log("Load",s)
+    await this.rdfParse(s)
   }
 
-  async loadProfile(s){
-    console.log("Load",s)
-  }
+  // async loadProfile(s){
+  //   console.log("Load",s)
+  // }
 
   async loadJson(s){
     console.log("Load",s)
-        await this.loadJsonld(s)
+    await this.loadJsonld(s)
   }
 
   async loadJsonld(s){
@@ -207,7 +215,47 @@ export default class Source {
     return graph
   }
 
+  async rdfParse(s){
+    let module = this
+    let graph = {nodes: [], edges: []}
+    let dataset = await getSolidDataset(s.url, { fetch: fetch });
+    console.log(dataset)
+    await dataset.quads.forEach(async function (q)  {
+      let [s,p,o] = [
+        {id:q.subject.id, label: await module.lastPart(q.subject.id)},
+        q.predicate.id,
+        {id:q.object.id, label: await module.lastPart(q.object.id)}
+      ]
+      console.log(s,p,o)
+      var indexS = graph.nodes.findIndex(x => x.id==s.id);
+      indexS === -1 ? graph.nodes.push(s) : console.log("object already exists")
+      var indexO = graph.nodes.findIndex(x => x.id==o.id);
+      indexO === -1 ? graph.nodes.push(o) : console.log("object already exists")
+      let edge = {from: s.id, to: o.id, label: await module.lastPart(p)}
+      var indexP = graph.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
+      indexP === -1 ? graph.edges.push(edge) : console.log("object already exists")
+    });
+    this.graphs.push(graph)
+  }
 
+  // async readFolder(url){
+  //   //console.log(url)
+  //   this.folder = await fc.readFolder(url)
+  //   //  console.log(this)
+  // }
+
+  async lastPart(text){
+    //  console.log(text, typeof text)
+    if (typeof text == 'object' && text['rdfs:label'] != undefined){
+      return text['rdfs:label']
+    }else if (typeof text == 'string' && text.startsWith('http')){
+      var n = text.lastIndexOf('/');
+      return text.substring(n + 1);
+    }
+    else{
+      return text
+    }
+  }
   // tryGetHeaders(){
   //   // await fetch(s.url, { method: 'head', mode: 'no-cors' })
   //   // .then(response => { console.log("RESP",response)

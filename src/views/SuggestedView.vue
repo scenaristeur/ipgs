@@ -33,13 +33,10 @@ export default {
         {name: 'Semapps Users', url: 'https://data.virtual-assembly.org/users/'},
         {name: 'Semapps Projects', url: 'https://data.virtual-assembly.org/projects/'},
         {name: 'Semapps Themes', url: 'https://data.virtual-assembly.org/themes/'},
-        {name: 'Semapps All in one', url: 'https://data.virtual-assembly.org/'},
         {name: "Angelo's public folder", url: 'https://angelo.veltens.org/public/'},
         {name: 'multiple ttl folder', url: 'https://spoggy.solidcommunity.net/public/Notes/'},
         {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
-        
-
-        {name: 'Lyon on dbPedia', "url": 'http://fr.dbpedia.org/data/Lyon.jsonld'},
+                
         {name: 'Bonnie & Clyde, jsonld on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/GangBarrowTest.jsonld'},
         {name: 'Simple Vis Network on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/davman.json'},
         {name: 'Basic Ttl file on Pod', url:'https://spoggy-test9.solidcommunity.net/public/table/workspaces/560f57a6-d26d-4e20-85f1-f794c3ebafb6.ttl'},
@@ -47,6 +44,9 @@ export default {
         {name: 'Simple Log turtle file', url: 'https://ipgs.solidcommunity.net/public/activity/log.ttl', status:""},
         {name: 'public folder without trailing slash', url: 'https://angelo.veltens.org/public'},
         {name: 'ttl without extension', url: 'https://angelo.veltens.org/public/tweets/2020/05/1260959812579405826'},
+
+        {name: 'Semapps All in one', url: 'https://data.virtual-assembly.org/'},
+        {name: 'Lyon on dbPedia', "url": 'http://fr.dbpedia.org/data/Lyon.jsonld'},
 
         // -
         //
