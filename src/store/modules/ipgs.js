@@ -143,9 +143,11 @@ const mutations = {
     state.dataToSave = d
   },
   spinnerAdd(state){
+    console.log("spinnerAdd", new Date())
     state.spinner++
   },
   spinnerRemove(state){
+      console.log("spinnerRemove", new Date())
     state.spinner--
   },
   spinnerInit(state){

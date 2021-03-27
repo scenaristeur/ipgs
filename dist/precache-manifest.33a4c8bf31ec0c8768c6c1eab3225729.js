@@ -132,7 +132,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "a485e79817d0c5c8500494a566458a98",
+    "revision": "55eaa1c90a246a839a024b454c628c24",
     "url": "/ipgs/index.html"
   },
   {
@@ -144,8 +144,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/agora.13eed8d6.js"
   },
   {
-    "revision": "3bb7d08ccbd419c56829",
-    "url": "/ipgs/js/app.1d25080f.js"
+    "revision": "555e65b5715bc7cf33a9",
+    "url": "/ipgs/js/app.3ed31922.js"
   },
   {
     "revision": "0cec2d4313635e6f5113",
@@ -278,6 +278,18 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "735ab4f94fbcd57074377afca324c813",
     "url": "/ipgs/robots.txt"
+  },
+  {
+    "revision": "db2e98f309aa536c0a3e39589707a7c9",
+    "url": "/ipgs/simple.html"
+  },
+  {
+    "revision": "4ac35f5cd9fd3c596bf437a5204dcff5",
+    "url": "/ipgs/simple/main.js"
+  },
+  {
+    "revision": "bbb227831eaad9c1b4e703d8f820e6c1",
+    "url": "/ipgs/simple/modules/Source.js"
   },
   {
     "revision": "9ccfd7df5ebb1112798322bbf48dd3fc",
