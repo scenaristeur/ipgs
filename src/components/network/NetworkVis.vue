@@ -105,7 +105,10 @@ let defNodes = [
   { id: 'n3', label: "InterPlanetary Graph System" },
   { id: 'n4', label: "Mindmap App" },
   { id: 'n5', label: "To know how to use Ipgs, type /h in the top input box and hit Enter", shape: 'box'},
-  { id: 'n6', label: "Pour savoir comment utiliser Ipgs, tapez /h dans le champ de saisie tout en haut", shape: 'box' }
+  { id: 'n6', label: "Pour savoir comment utiliser Ipgs, tapez /h dans le champ de saisie tout en haut", shape: 'box' },
+  { id: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "Archipel Semapps", shape: 'star', color: '#7FD1B9'},
+  { id: "https://spoggy-test9.solidcommunity.net/public/", label: "Spoggy-test9 Public Folder", shape: 'star', color: '#7FD1B9'},
+
 ]
 
 let defEdges = [
@@ -113,7 +116,9 @@ let defEdges = [
   { id: 'e2', from: 'n1', to: 'n3', label: 'long name' },
   { id: 'e3', from: 'n1', to: 'n4', label: 'category' },
   { id: 'e4', from: 'n1', to: 'n5', label: 'help EN' },
-  { id: 'e5', from: 'n1', to: 'n6', label: 'help FR' }
+  { id: 'e5', from: 'n1', to: 'n6', label: 'help FR' },
+  { id: 'e6', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "example"},
+  { id: 'e7', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/", label: "example"}
 ]
 
 

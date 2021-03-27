@@ -36,7 +36,7 @@ export default {
         {name: "Angelo's public folder", url: 'https://angelo.veltens.org/public/'},
         {name: 'multiple ttl folder', url: 'https://spoggy.solidcommunity.net/public/Notes/'},
         {name: 'Spoggy solid profile', url: 'https://spoggy.solidcommunity.net/profile/card#me'},
-                
+
         {name: 'Bonnie & Clyde, jsonld on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/GangBarrowTest.jsonld'},
         {name: 'Simple Vis Network on Solid Pod', url: 'https://spoggy-test9.solidcommunity.net/public/network/davman.json'},
         {name: 'Basic Ttl file on Pod', url:'https://spoggy-test9.solidcommunity.net/public/table/workspaces/560f57a6-d26d-4e20-85f1-f794c3ebafb6.ttl'},
@@ -45,7 +45,7 @@ export default {
         {name: 'public folder without trailing slash', url: 'https://angelo.veltens.org/public'},
         {name: 'ttl without extension', url: 'https://angelo.veltens.org/public/tweets/2020/05/1260959812579405826'},
 
-        {name: 'Semapps All in one', url: 'https://data.virtual-assembly.org/'},
+        {name: 'Semapps All in one', url: 'https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld'},
         {name: 'Lyon on dbPedia', "url": 'http://fr.dbpedia.org/data/Lyon.jsonld'},
 
         // -
