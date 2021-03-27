@@ -10,23 +10,23 @@ export default {
       let nodes = this.network.nodes.filter(n => ev.properties.items.includes(n.id))
       console.log(nodes)
 
-      nodes.forEach(async function (n) {
+      nodes.forEach( function (n) {
         if(n.built == undefined){
-          await app.buildEdges(n)
+          app.buildEdges(n)
         }
       });
     },
-    async buildEdges(n){
+    buildEdges(n){
       for (const [k, v] of Object.entries(n)) {
-        await this.parse(n,k,v)
+        this.parse(n,k,v)
       }
       n.built = true
     },
 
-    async parse(n, k, v){
+    parse(n, k, v){
+      let network = this.network
       if (typeof v == "string"){
         v = v.trim()
-        let network = this.network
         if(!omitted.includes(k) && v.length > 0){
           var indexO = network.nodes.findIndex(x => x.id==v);
           if(indexO === -1){
@@ -82,8 +82,25 @@ export default {
 
 
       } else{
-        if(!omitted.includes(k)){
-          console.log("TODO",typeof v,k, v)
+        if(!omitted.includes(k) && typeof v == "object"){
+
+          var indexOBJ = network.nodes.findIndex(x => x.id==v.id);
+          if(indexOBJ === -1){
+            console.log("ADDING",n.id, typeof v,k, v)
+            network.nodes.push(v)
+
+
+          }
+          network.edges.push({from: n.id, to: v.id, label: k})
+          console.log("ADDING edge",n.id, k, v.id)
+        }
+        else  if(!omitted.includes(k) && typeof v == "number"){
+          console.log("TODO",n.id, typeof v,k, v)
+          //  this.parse(n, k, v)
+        }
+        else
+        {
+          console.log("TODO",n.id, typeof v,k, v)
         }
 
       }
@@ -111,7 +128,7 @@ export default {
         }
       }else{
         let node = this.network.nodes.find(x => x.id==nodeId);
-          this.$store.commit('ipgs/setCommandInput', node.label+' ')
+        this.$store.commit('ipgs/setCommandInput', node.label+' ')
       }
     },
     networkClickEvent(ev){
