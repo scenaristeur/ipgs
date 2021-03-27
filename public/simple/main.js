@@ -13,10 +13,12 @@ document.getElementById("load_btn").addEventListener("click", function() {
 
 
 async function asyncCall() {
-  document.getElementById("result").innerHTML = JSON.stringify("LOADING")
+  document.getElementById("result").innerHTML = JSON.stringify("LOADING") + new Date() +"<hr>"
   let g = await source.load()
-  document.getElementById("result").innerHTML = JSON.stringify("LOADED")
+  document.getElementById("result").innerHTML = JSON.stringify("LOADED") + new Date() + "<hr>" +  document.getElementById("result").innerHTML
   await process(g)
+  document.getElementById("result").innerHTML = JSON.stringify("EDGES BUILD, DONE") + new Date() + "<hr>" +  document.getElementById("result").innerHTML
+
   // expected output: "resolved"
 }
 
@@ -50,7 +52,7 @@ async function  buildEdges(n){
     await parse(n,k,v)
   }
   n.built = true
-  document.getElementById("result").innerHTML = JSON.stringify(network, undefined, 2)
+  document.getElementById("result").innerHTML = document.getElementById("result").innerHTML +JSON.stringify(network, undefined, 2)
 }
 
 async function parse(n, k, v){

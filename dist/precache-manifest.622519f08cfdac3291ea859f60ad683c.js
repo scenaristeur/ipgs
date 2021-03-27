@@ -280,11 +280,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/robots.txt"
   },
   {
-    "revision": "db2e98f309aa536c0a3e39589707a7c9",
+    "revision": "801a03abcc8a5ff2f417633d2da89a93",
     "url": "/ipgs/simple.html"
   },
   {
-    "revision": "4ac35f5cd9fd3c596bf437a5204dcff5",
+    "revision": "cccb2e7c7ee72632ec2445df7dd81dad",
     "url": "/ipgs/simple/main.js"
   },
   {
