@@ -148,6 +148,9 @@ const mutations = {
   spinnerRemove(state){
     state.spinner--
   },
+  spinnerInit(state){
+    state.spinner = 0
+  },
   setGraphs(state, graphs){
     state.graphs = graphs
   }

@@ -29,13 +29,20 @@ export default {
   watch:{
     $route (){
       this.checkQueryUrl()
-    }
+    },
+    // storage (){
+    //   this.checkQueryUrl()
+    // }
   },
   computed: {
     spinner: {
       get () { return this.$store.state.ipgs.spinner},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+    // storage: {
+    //   get () { return this.$store.state.solid.storage},
+    //   set (/*value*/) { /*this.updateTodo(value)*/ }
+    // },
   }
 }
 </script>

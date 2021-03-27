@@ -9,20 +9,23 @@
     :nodes="network.nodes"
     :edges="network.edges"
     :options="network.options"
-    @click="networkEvent"
-    @select-node="networkEvent"
-    @select-edge="networkEvent"
-    @nodes-remove="networkEvent"
-    @edges-remove="networkEvent"
+
+    @select-node="selectNodeEvent"
+
     @nodes-add="addNodeEvent"
-    @nodes-update="networkEvent"
-    @edges-mounted="networkEvent"
-    @edges-add="networkEvent"
-    @edges-update="networkEvent"
+
 
 
     ></network>
     <!--
+    @click="networkClickEvent"
+    @select-edge="networkEvent"
+    @nodes-remove="networkEvent"
+    @edges-remove="networkEvent"
+    @nodes-update="networkEvent"
+    @edges-mounted="networkEvent"
+    @edges-add="networkEvent"
+    @edges-update="networkEvent"
     @edges-remove="networkEvent('edges-remove')"
     @nodes-remove="networkEvent('nodes-remove')"
 
@@ -93,7 +96,7 @@
 <script>
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 
-//import NetMixin from '@/mixins1/NetMixin'
+import NetMixin from '@/mixins/NetMixin'
 import NetworkEvent from '@/mixins/NetworkEventMixin'
 
 let defNodes = [
@@ -115,8 +118,8 @@ let defEdges = [
 
 
 export default {
-name: "NetworkVis",
-  mixins: [NetworkEvent],
+  name: "NetworkVis",
+  mixins: [NetworkEvent, NetMixin],
   components: {
     //  Network,
     'NetworkPopups': () => import('@/components/network/NetworkPopups'),
@@ -135,18 +138,18 @@ name: "NetworkVis",
           nodes: {
             // shape: "circle",
             // size:24,
-            color: {
-              background: '#D2E5FF',
-              border: '#2B7CE9',
-              highlight: {
-                border: 'black',
-                background: 'white'
-              },
+            // color: {
+            //   background: '#D2E5FF',
+            //   border: '#2B7CE9',
+            //   highlight: {
+            //     border: 'black',
+            //     background: 'white'
+            //   },
               // hover: {
               //   border: 'orange',
               //   background: 'grey'
               // }
-            },
+          //  },
             font:{color:'black'},
             // shapeProperties: {
             //   useBorderWithImage:true
@@ -169,17 +172,17 @@ name: "NetworkVis",
 
 <style>
 /* * {
-  font-family: sans-serif;
+font-family: sans-serif;
 } */
 
 /* .wrapper {
 padding: 20px 50px;
 text-align: center;
 } */
-.events {
+/* .events {
   text-align: left;
   height: 70px;
-}
+} */
 
 .network{
   min-height: 95vh;

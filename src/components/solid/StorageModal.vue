@@ -69,7 +69,7 @@ import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 import Activity from '@/models/Activity.js'
-import Network from '@/models/Network.js'
+//import Network from '@/models/Network.js'
 
 let mimetypes = { json: 'application/json', jsonld: "application/ld+json", ttl: "text/turtle"}
 
@@ -202,38 +202,38 @@ export default {
         alert("If you want to create a Graph, you must provide a name !")
       }
     },
-    async createNew1(){
-
-      if(this.new_graph_name.length>0){
-        let new_file_url = this.url+this.new_graph_name+'.json'
-
-        this.net = new Network()
-
-        let loc = await this.net.create(new_file_url)
-        //  console.log(loc)
-        let loc_url = loc.startsWith('/') ? this.storage + loc.substring(1) : loc
-
-        this.net.setId(loc_url)
-        await this.net.save()
-
-        if (this.publish == true){
-          let activity = new Activity()
-          activity.jsonld.creator = this.webId
-          activity.jsonld.object = this.network.jsonldRepresentation
-
-          console.log(activity)
-          activity.publish()
-        }
-        //         console.log(loc_url)
-        //         this.network.setId(loc_url)
-        //         //console.log('url', res_url)
-        // console.log("new network",this.network)
-        this.$bvModal.hide("storage-modal")
-        this.$router.push({ path: 'network', query: { url: loc_url } })
-      }else{
-        alert("If you want to create a Graph, you must provide a name !")
-      }
-    },
+    // async createNew1(){
+    //
+    //   if(this.new_graph_name.length>0){
+    //     let new_file_url = this.url+this.new_graph_name+'.json'
+    //
+    //     this.net = new Network()
+    //
+    //     let loc = await this.net.create(new_file_url)
+    //     //  console.log(loc)
+    //     let loc_url = loc.startsWith('/') ? this.storage + loc.substring(1) : loc
+    //
+    //     this.net.setId(loc_url)
+    //     await this.net.save()
+    //
+    //     if (this.publish == true){
+    //       let activity = new Activity()
+    //       activity.jsonld.creator = this.webId
+    //       activity.jsonld.object = this.network.jsonldRepresentation
+    //
+    //       console.log(activity)
+    //       activity.publish()
+    //     }
+    //     //         console.log(loc_url)
+    //     //         this.network.setId(loc_url)
+    //     //         //console.log('url', res_url)
+    //     // console.log("new network",this.network)
+    //     this.$bvModal.hide("storage-modal")
+    //     this.$router.push({ path: 'network', query: { url: loc_url } })
+    //   }else{
+    //     alert("If you want to create a Graph, you must provide a name !")
+    //   }
+    // },
     async see(item)
     {
       this.$router.push({ path: 'network', query: { url: item.url } })

@@ -21,8 +21,9 @@ export default class Source {
     console.log(this.sources)
     clear == true ? this.graphs = [] : ""
     for await (let s of this.sources) {
+      //this.tryGetHeaders()
       s.url == undefined ? alert("undefined url for ", s.name) : ""
-      s.type == undefined ? this.findType(s) : ""
+      s.type == undefined ? await this.findType(s) : ""
       console.log(s);
       switch (s.type) {
         case "folder":
@@ -41,13 +42,35 @@ export default class Source {
         await this.loadJsonld(s)
         break;
         default:
-        alert("I dont know how to read ",s.url)
+
+        await this.loadJsonld(s)
+
+        //  alert("I dont know how to read ",s.url)
       }
     }
     return this.graphs
   }
 
-  findType(s){
+  async findType(s){
+    // var myHeaders = new Headers();
+    //
+    // var myInit = { method: 'GET',
+    //                headers: myHeaders,
+    //                mode: 'no-cors',
+    //                cache: 'default' };
+    // fetch(s.url)
+    // .then(response => {
+    //   return response.blob().then(blob => {
+    //     return {
+    //       contentType: response.headers.get("Content-Type"),
+    //       raw: blob
+    //     }
+    //   })
+    // })
+    // .then(data => {
+    //   console.log(data.contentType, data.raw);
+    // });
+
     s.url.endsWith('/') ? s.type = "folder" : ""
     s.url.endsWith('.ttl') ? s.type = "ttl" : ""
     s.url.endsWith('card#me') ? s.type = "profile" : ""
@@ -81,6 +104,7 @@ export default class Source {
 
   async loadJson(s){
     console.log("Load",s)
+        await this.loadJsonld(s)
   }
 
   async loadJsonld(s){
@@ -94,23 +118,39 @@ export default class Source {
     doc.jsonld = JSON.parse(doc.document)
     delete doc.document
     console.log(doc)
-    await this.ldpContainsToGraph(doc)
+    await this.ldpToGraph(doc)
   }
 
-  async ldpContainsToGraph(doc){
+  async ldpToGraph(doc){
     let graph
 
-    if (Array.isArray(doc.jsonld["ldp:contains"]) && doc.jsonld["ldp:contains"].length > 0){
+    if (Array.isArray(doc.jsonld.nodes) && Array.isArray(doc.jsonld.edges) && doc.jsonld.nodes.length > 0){
+      graph = doc.jsonld
+
+    }else if (Array.isArray(doc.jsonld["ldp:contains"]) && doc.jsonld["ldp:contains"].length > 0){
       graph = await this.pairToGraph(doc)
     }else{
-      alert("no ldp:contains for ", doc.documentUrl)
+      //alert("no ldp:contains for ", doc.documentUrl)
+      graph = await this.oneItemToGraph(doc)
     }
     this.graphs.push(graph)
   }
 
-  async folderToGraph(folder){
-    let nodes, edges
-    console.log(folder)
+  async folderToGraph(f){
+    let nodes = [], edges = []
+    console.log(f)
+
+    nodes.push({id: f.url, label: f.name, shape: "image", image: "./assets/folder.png", type: "folder", built: true})
+    nodes.push({id: f.parent, label: f.parent, shape: "image", image: "./assets/parentfolder.png", type: "folder", built: true})
+    edges.push({from: f.parent, to: f.url, label: 'contains'})
+    await f.folders.forEach(async function(fo) {
+      nodes.push({id: fo.url, label: fo.name, shape: "image", image: "./assets/folder.png", type: "folder", built: true})
+      edges.push({from: f.url, to: fo.url, label: 'contains'})
+    });
+    await f.files.forEach(async function(fi) {
+      nodes.push({id: fi.url, label: fi.name, shape: "image", image: "./assets/document.png", type: "file", built: true})
+      edges.push({from: f.url, to: fi.url, label: 'contains'})
+    });
 
 
     this.graphs.push({nodes: nodes, edges: edges})
@@ -124,9 +164,16 @@ export default class Source {
     return graph
   }
 
-  getLabel(obj){
-    return obj.label || obj.name || obj["pair:label"] || obj.id || "NO LABEL KNOWN"
+  async oneItemToGraph(doc){
+    let graph = {nodes: [], edges: []}
+    let item = doc.jsonld
+    graph.nodes.push(item)
+    return graph
   }
+
+  // getLabel(obj){
+  //   return obj.label || obj.name || obj["pair:label"] || obj.id || "NO LABEL KNOWN"
+  // }
 
 
   async pairToGraph1(doc){
@@ -160,6 +207,46 @@ export default class Source {
     return graph
   }
 
+
+  // tryGetHeaders(){
+  //   // await fetch(s.url, { method: 'head', mode: 'no-cors' })
+  //   // .then(response => { console.log("RESP",response)
+  //   // const contentType = response.headers.get("content-type");
+  //   // console.log(contentType)})
+  //   // .catch(error => { console.log("ERR", error) });
+  //
+  //   // try{
+  //   //
+  //   //   fetch(s.url).then(response => {
+  //   //     const contentType = response.headers.get("content-type");
+  //   //     if (contentType && contentType.indexOf("application/json") !== -1) {
+  //   //       return response.json().then(data => {
+  //   //         console.log(data)
+  //   //       });
+  //   //     } else {
+  //   //       return response.text().then(text => {
+  //   //         console.log(text)
+  //   //         // this is text, do something with it
+  //   //       });
+  //   //     }
+  //   //   });
+  //   //
+  //   // }catch(e){
+  //   //   console.log("EEEEE",e)
+  //   // }
+  //
+  //   // var xhttp = new XMLHttpRequest();
+  //   // xhttp.open('HEAD', s.url);
+  //   // xhttp.onreadystatechange = function () {
+  //   //     if (this.readyState == this.DONE) {
+  //   //         console.log(this.status);
+  //   //         console.log(this.getResponseHeader("Content-Type"));
+  //   //     }
+  //   // };
+  //   // xhttp.send();
+  //
+  // }
+
   // async addEdge(n,key,v,graph){
   //   console.log(n.id, key, v, graph)
   //   // let e ={}
@@ -177,18 +264,18 @@ export default class Source {
   //   return graph
   // }
 
-  async lastPart(text){
-    //  console.log(text, typeof text)
-    if (typeof text == 'object' && text['rdfs:label'] != undefined){
-      return text['rdfs:label']
-    }else if (typeof text == 'string' && text.startsWith('http')){
-      var n = text.lastIndexOf('/');
-      return text.substring(n + 1);
-    }
-    else{
-      return text
-    }
-  }
+  // async lastPart(text){
+  //   //  console.log(text, typeof text)
+  //   if (typeof text == 'object' && text['rdfs:label'] != undefined){
+  //     return text['rdfs:label']
+  //   }else if (typeof text == 'string' && text.startsWith('http')){
+  //     var n = text.lastIndexOf('/');
+  //     return text.substring(n + 1);
+  //   }
+  //   else{
+  //     return text
+  //   }
+  // }
 
 
 
