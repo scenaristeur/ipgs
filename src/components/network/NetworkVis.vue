@@ -136,6 +136,40 @@ export default {
         nodes: defNodes.slice(0),
         edges: defEdges.slice(0),
         options: {
+          nodes: {
+            shape: "dot",
+            scaling: {
+              min: 10,
+              max: 30,
+            },
+            font: {
+              size: 12,
+              face: "Tahoma",
+            },
+          },
+          edges: {
+            arrows: 'to',
+            width: 0.15,
+            color: { inherit: "from" },
+            smooth: {
+              type: "continuous",
+            },
+          },
+          physics: {
+            stabilization: false,
+            barnesHut: {
+              gravitationalConstant: -8000, //-8000
+              springConstant: 0.005, //0.001 //0.01
+              springLength: 100, //200
+            },
+          },
+          interaction: {
+            navigationButtons: true,
+            tooltipDelay: 200,
+            hideEdgesOnDrag: true,
+          },
+        },
+        options1: {
           interaction: {
             navigationButtons: true,
           },
@@ -150,11 +184,11 @@ export default {
             //     border: 'black',
             //     background: 'white'
             //   },
-              // hover: {
-              //   border: 'orange',
-              //   background: 'grey'
-              // }
-          //  },
+            // hover: {
+            //   border: 'orange',
+            //   background: 'grey'
+            // }
+            //  },
             font:{color:'black'},
             // shapeProperties: {
             //   useBorderWithImage:true
@@ -185,8 +219,8 @@ padding: 20px 50px;
 text-align: center;
 } */
 /* .events {
-  text-align: left;
-  height: 70px;
+text-align: left;
+height: 70px;
 } */
 
 .network{

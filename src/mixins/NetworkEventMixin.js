@@ -1,5 +1,5 @@
 //import { v4 as uuidv4 } from 'uuid';
-let omitted = [ "@context", "id", "label", "pair:label", "name",  "inbox", "outbox", "followers", "following", "publicKey", "shape", "type", "title", "color", "image"]
+let omitted = [ "@context", "id", "label", "pair:label", "name",  "inbox", "outbox", "followers", "following", "publicKey", "shape", /*"type",*/ "title", "color", "image"]
 
 export default {
 
@@ -27,12 +27,13 @@ export default {
       let network = this.network
       if (typeof v == "string"){
         v = v.trim()
+        let edgeLength = undefined
         if(!omitted.includes(k) && v.length > 0){
           var indexO = network.nodes.findIndex(x => x.id==v);
           if(indexO === -1){
             let ob =   {id: v, shape: "box"}
-            if (v.length > 50 ){
-              ob.label = v.substring(0,50)+".."
+            if (v.length > 20 ){
+              ob.label = v.substring(0,20)+".."
               ob.title = v
             }
             else{
@@ -44,12 +45,15 @@ export default {
               if (v.length > 50 ){
                 let lab = v.endsWith('/') ? v.slice(0, -1) : v
                 ob.label = lab.substr(lab.lastIndexOf('/') + 1);
+                ob.label = ob.label.length > 20 ? ob.label.substring(0,20)+".." : ob.label
+                ob.label = "->"+ob.label
                 ob.title = v
               }else{
                 ob.label = v
               }
             }else{
               ob.color = "#ECC046"
+              edgeLength = 10
             }
             if( k == "type"){
               ob.shape = "star"
@@ -59,9 +63,21 @@ export default {
 
             ob.built = true
             network.nodes.push(ob)
+          }else{
+            console.log(network.nodes[indexO].mass)
+            network.nodes[indexO].mass == undefined ? 1 : network.nodes[indexO].mass++
           }
           let o = network.nodes.find(n => n.id == v)
-          let edge = {from: n.id, to: o.id, label: k}
+
+          if( k == "type"){
+            // must do this test a second time after the node has been added to get network.nodes.length ????
+            edgeLength = 1000
+          }
+          let edge = {from: n.id, to: o.id, label: k }
+          if (edgeLength != undefined){
+            edge.length = edgeLength
+            //edge.strength = 300
+          }
           network.edges.push(edge)
 
         }else{
