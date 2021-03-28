@@ -271,3 +271,21 @@ transformation visjs en jsonld ->ajout d'un context
 ## wikipedia api
 - https://gist.github.com/maxim75/1037392
 - https://fr.wikipedia.org/w/api.php
+
+
+# semantic-forms :
+- http://semantic-forms.cc:1952
+- http://semantic-forms.cc:1952/display?displayuri=http%3A%2F%2Fdeductions.github.io%2Fnature_observation.owl.ttl%23Observation
+- http://semantic-forms.cc:1952/sparql2&url=http://dbpedia.orgresource/Artichoke
+- ok http://semantic-forms.cc:9112/ldp/semantic_forms ! ok http://127.0.0.1:8080/?url=http://semantic-forms.cc:9112/ldp/semantic_forms
+- ok http://semantic-forms.cc:9112/ldp/1564309844694-9410388604994699
+- https://data.grottocenter.org/display?displayuri=https%3A%2F%2Fdata.grottocenter.org%2Fldp%2Fthai%2F3428
+- https://data.grottocenter.org/ldp/thai/3428
+- http://deductions.github.io/nature_observation.owl.ttl#Observation
+- http://semantic-forms.cc:9112/display?displayuri=http%3A%2F%2Fsemantic-forms.cc%3A9112%2Fldp%2F1492512243396-8193190185404223 ->
+ok http://semantic-forms.cc:9112/ldp/1492512243396-8193190185404223
+- ok http%3A%2F%2Fsemantic-forms.cc%3A9112%2Fldp%2F1614267136387-17128267665725272
+- ok http://127.0.0.1:8080/?url=http%3A%2F%2Fsemantic-forms.cc%3A9112%2Fldp%2F1614257587387-17118718665949146
+- ok http://127.0.0.1:8080/?url=http%3A%2F%2Fsemantic-forms.cc%3A9112%2Fldp%2Flotico
+- https://beta.grottocenter.org/api/v1/entrances/4
+- http://semantic-forms.cc:1952/assets/geo-map/geo-map.html?view=points&enrich=yes&link-prefix=semantic-forms.cc:1952/display?displayuri=&lang=fr&label=Jardins%20du%20Lyonnais&url=http://semantic-forms.cc:1952/sparql2?query=PREFIX%20spatial%3A%20%3Chttp%3A%2F%2Fjena.apache.org%2Fspatial%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20geo%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F01%2Fgeo%2Fwgs84_pos%23%3E%0APREFIX%20dbo%3A%20%20%20%20%20%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E%0APREFIX%20dbp%3A%20%3Chttp%3A%2F%2Fdbpedia.org%2Fproperty%2F%3E%0ACONSTRUCT%20%7B%20%0A%20%20%20%20%3Fplace%20rdfs%3Alabel%20%3FplaceName%20.%0A%20%20%20%20%20%3Fplace%20geo%3Along%20%3FLONG.%0A%20%20%20%20%3Fplace%20geo%3Alat%20%3FLAT.%0A%7D%20WHERE%20%7B%0A%20%20%7B%20%3Fplace%20spatial%3Anearby%20(%2045.750000%204.85%20200%20%27km%27)%20.%20%20%23%20Lyon%0A%20%20%20%20%3Fplace%20rdfs%3Alabel%20%3FplaceName%20.%20%7D%20%0A%0A%20%20%20%20%7B%20%3Fplace%20geo%3Along%20%3FLONG%20%20%20%3B%20geo%3Alat%20%3FLAT.%20%20%7D%20UNION%0A%20%20%20%20%7B%20%3Fplace%20dbp%3AlongD%20%3FLONG%20%3B%20dbp%3AlatD%20%3FLAT.%20%20%7D%20UNION%0A%20%20%20%20%7B%20%3Fplace%20%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2Fbased_near%3E%20%3FPLACE%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3FPLACE%20geo%3Along%20%3FLONG.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3FPLACE%20geo%3Alat%20%3FLAT.%20%7D%0A%0A%20%20%20%20%7B%20%3Fplace%20a%20dbo%3AGarden%20.%20%7D%20UNION%0A%20%20%20%20%7B%20%3Fplace%20a%20%3Chttp%3A%2F%2Fdbpedia.org%2Fclass%2Fyago%2FGarden103417345%3E%20.%20%7D%20UNION%0A%20%20%20%20%7B%20%3Fplace%20a%20%3Chttp%3A%2F%2Fdbpedia.org%2Fclass%2Fyago%2FArboretum102733075%3E%20.%20%7D%20UNION%0A%20%20%20%20%7B%20%3Fplace%20a%20%3Chttp%3A%2F%2Fschema.org%2FPark%3E%20.%20%7D%20%20UNION%0A%20%20%20%20%7B%20%3Fplace%20a%20%3Chttp%3A%2F%2Fdbpedia.org%2Fclass%2Fyago%2FPark108615149%3E%20.%20%7D%0A%20%20%20FILTER(%20LANG(%20%3FplaceName)%20%3D%20%27fr%27%20)%0A%7D%0A

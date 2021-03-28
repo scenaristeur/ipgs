@@ -1,8 +1,8 @@
 <template>
   <b-container>
     Reunion
-
-    <b-container>
+    <SolidLoginButton v-if="webId == null" />
+    <b-container v-else>
       <b-row>
 
         <b-col>
@@ -89,6 +89,9 @@ import jsQR from "jsqr";
 
 export default {
   name: "Reunion",
+  components: {
+    'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
+  },
   data() {
     return {
       name: '',

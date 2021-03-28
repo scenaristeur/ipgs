@@ -89,6 +89,10 @@ export default {
             n.shape = "circularImage"
             n.image = v
           }
+          if(k ==  "depiction"){
+            n.shape = "circularImage"
+            n.image = v
+          }
 
         }
       }else if (Array.isArray(v)){
