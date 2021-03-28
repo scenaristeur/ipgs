@@ -12,7 +12,7 @@ const fc = new FC( auth )
 let cid_config = {
   // Standard
   1: { id: "help", label: "Help / Aide"},
-  2: { id: "examples", label: "Examples"},
+  2: { id: "examples", label: "Examples", shape: 'star', color: '#7FD1B9'},
   //Vis
   5: { id: "networks", label: "Networks"},
   6: { id: "history", label: "Navigation History"},
@@ -103,11 +103,11 @@ export default {
           return childOptions.cid == cid;
         },
         clusterNodeProperties: {
-          id: cid_config[cid] != undefined ? cid_config[cid].id : cid,
+          id: cid_config[cid] && cid_config[cid].id ? cid_config[cid].id : cid,
           borderWidth: 3,
-          shape: "box",
-          color: "#ECC046",
-          label: cid_config[cid] != undefined ? cid_config[cid].label : "no name group"
+          shape: cid_config[cid] && cid_config[cid].shape ? cid_config[cid].shape : "box",
+          color: cid_config[cid] && cid_config[cid].color ? cid_config[cid].color : "#ECC046",
+          label: cid_config[cid] &&cid_config[cid].label ? cid_config[cid].label : "no name group"
         },
       });
     });
