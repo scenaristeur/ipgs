@@ -134,8 +134,23 @@ export default {
     //   });
     // },
     selectNodeEvent(ev){
+      console.log(ev)
+
+
+
       let nodeId = ev.nodes[0]
       console.log(nodeId)
+      console.log(this.$refs.network)
+
+      if ( this.$refs.network.isCluster(nodeId)){
+        console.log("is cluster")
+        this.$refs.network.openCluster(nodeId)
+        return
+      }
+
+      let node = this.network.nodes.find(x => x.id==nodeId);
+      console.log(node)
+
       if (nodeId.startsWith('http')){
         if (this.$route.query.url != nodeId){
           this.$router.push({ path: '/', query: { url: nodeId } })
@@ -143,7 +158,6 @@ export default {
           alert ("you are already watching this resource !")
         }
       }else{
-        let node = this.network.nodes.find(x => x.id==nodeId);
         this.$store.commit('ipgs/setCommandInput', node.label+' ')
       }
     },

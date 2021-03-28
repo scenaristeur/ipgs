@@ -14,7 +14,7 @@ export default {
 
 
       // A VIRER
-    //  loader: new Loader(),
+      //  loader: new Loader(),
     }
   },
   async created(){
@@ -29,6 +29,7 @@ export default {
       //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
       //  editEdge: {}
     }
+
 
     //  this.network.options.manipulation.editEdge.editWithoutDrag = async (edge, callback) => {app.editWithoutDrag(edge, callback)}
 
@@ -62,6 +63,27 @@ export default {
 
 
   },
+
+  mounted() {
+    //do something after mounting vue instance
+    console.log("CLUSTER",  this.$refs)
+    console.log("CLUSTER",  this.$refs.network)
+    var clusterOptionsByData = {
+      joinCondition: function (childOptions) {
+        return childOptions.cid == 1;
+      },
+      clusterNodeProperties: {
+        id: "help",
+        borderWidth: 3,
+        shape: "box",
+        color: "#ECC046",
+        label: "HELP / AIDE"
+      },
+    };
+    this.$refs.network.cluster(clusterOptionsByData);
+  },
+
+
   methods: {
     /**
     * Catch @nodes-remove event of vue-vis-network and update network.nodes
@@ -261,7 +283,7 @@ export default {
         let n = this.newGraph.node
         n.id = this.newGraph.url
         this.network.nodes.push (n)
-      //  alert ("todo: you must create a new file")
+        //  alert ("todo: you must create a new file")
         let inputObject = {}
         inputObject.type = "commande";
         inputObject.value = '/e';
