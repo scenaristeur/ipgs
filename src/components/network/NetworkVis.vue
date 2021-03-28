@@ -151,6 +151,9 @@ export default {
             arrows: 'to',
             width: 0.15,
             color: { inherit: "from" },
+            font: {
+              align: 'top'
+            },
             smooth: {
               type: "continuous",
             },
@@ -159,7 +162,7 @@ export default {
             stabilization: false,
             barnesHut: {
               gravitationalConstant: -8000, //-8000
-              springConstant: 0.005, //0.001 //0.01
+              springConstant: 0.03, //0.001 //0.01
               springLength: 100, //200
             },
           },

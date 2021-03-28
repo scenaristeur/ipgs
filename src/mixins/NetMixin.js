@@ -66,8 +66,9 @@ export default {
 
   mounted() {
     //do something after mounting vue instance
-    console.log("CLUSTER",  this.$refs)
-    console.log("CLUSTER",  this.$refs.network)
+
+    var cids = this.network.nodes.map(a => a.foo);
+    console.log(cids)
     var clusterOptionsByData = {
       joinCondition: function (childOptions) {
         return childOptions.cid == 1;
@@ -80,6 +81,7 @@ export default {
         label: "HELP / AIDE"
       },
     };
+    // this.$refs.network is necessary to use network function
     this.$refs.network.cluster(clusterOptionsByData);
   },
 
