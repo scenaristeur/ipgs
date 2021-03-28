@@ -30,7 +30,6 @@ let cid_config = {
   // Forms
   50: { id: "input", label: "Inputs"},
   51: { id: "checkbox", label: "Checkboxes"},
-  
 }
 
 
@@ -39,8 +38,6 @@ export default {
   mixins: [networkUtilMixin],
   data() {
     return {
-
-
 
       // A VIRER
       //  loader: new Loader(),
@@ -106,11 +103,11 @@ export default {
           return childOptions.cid == cid;
         },
         clusterNodeProperties: {
-          id: cid_config[cid].id,
+          id: cid_config[cid] != undefined ? cid_config[cid].id : cid,
           borderWidth: 3,
           shape: "box",
           color: "#ECC046",
-          label: cid_config[cid].label
+          label: cid_config[cid] != undefined ? cid_config[cid].label : "no name group"
         },
       });
     });

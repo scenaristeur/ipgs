@@ -102,9 +102,9 @@ import NetworkEvent from '@/mixins/NetworkEventMixin'
 // see mixins/ NetMixin.js for cid cid_config
 let defNodes = [
   { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
-  { id: 'n2', label: "WebApp", color: {background: 'green'}, shape: 'star', cid: 40 },
+  { id: 'n2', label: "WebApp", color: {background: 'green'}, shape: 'star', cid: 66 },
   { id: 'n3', label: "InterPlanetary Graph System", shape: 'box'},
-  { id: 'n4', label: "Mindmap App", cid: 40 },
+  { id: 'n4', label: "Mindmap App", cid: 66 },
   { id: 'n5', label: "To know how to use Ipgs,\n type /h in the top input box and hit Enter", shape: 'box', color: "#ECC046", cid: 1},
   { id: 'n6', label: "Pour savoir comment utiliser Ipgs,\n tapez /h dans le champ de saisie tout en haut", shape: 'box', color: "#ECC046", cid: 1 },
   { id: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "Archipel Semapps", shape: 'star', color: '#7FD1B9', cid: 2},
