@@ -99,11 +99,12 @@ import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
 import NetMixin from '@/mixins/NetMixin'
 import NetworkEvent from '@/mixins/NetworkEventMixin'
 
+// see mixins/ NetMixin.js for cid cid_config
 let defNodes = [
   { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
-  { id: 'n2', label: "WebApp", color: {background: 'green'}, shape: 'star' },
-  { id: 'n3', label: "InterPlanetary Graph System" },
-  { id: 'n4', label: "Mindmap App" },
+  { id: 'n2', label: "WebApp", color: {background: 'green'}, shape: 'star', cid: 40 },
+  { id: 'n3', label: "InterPlanetary Graph System", shape: 'box'},
+  { id: 'n4', label: "Mindmap App", cid: 40 },
   { id: 'n5', label: "To know how to use Ipgs,\n type /h in the top input box and hit Enter", shape: 'box', color: "#ECC046", cid: 1},
   { id: 'n6', label: "Pour savoir comment utiliser Ipgs,\n tapez /h dans le champ de saisie tout en haut", shape: 'box', color: "#ECC046", cid: 1 },
   { id: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "Archipel Semapps", shape: 'star', color: '#7FD1B9', cid: 2},
@@ -113,8 +114,8 @@ let defNodes = [
 
 let defEdges = [
   { id: 'e1', from: 'n1', to: 'n2', label: 'type' },
-  { id: 'e2', from: 'n1', to: 'n3', label: 'long name' },
-  { id: 'e3', from: 'n1', to: 'n4', label: 'category' },
+  { id: 'e2', from: 'n1', to: 'n3', label: 'name' },
+  { id: 'e3', from: 'n1', to: 'n4', label: 'type' },
   { id: 'e4', from: 'n1', to: 'n5', label: 'help' },
   { id: 'e5', from: 'n1', to: 'n6', label: 'help' },
   { id: 'e6', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "example"},

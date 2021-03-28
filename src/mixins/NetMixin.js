@@ -6,6 +6,35 @@ import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 
+
+// 1 to 99 reserved for technical configs, other cid can start at 100
+// cid are used to cluster/group nodes in a network
+let cid_config = {
+  // Standard
+  1: { id: "help", label: "Help / Aide"},
+  2: { id: "examples", label: "Examples"},
+  //Vis
+  5: { id: "networks", label: "Networks"},
+  6: { id: "history", label: "Navigation History"},
+  //Solid
+  20: { id: "storage", label: "Storage"},
+  21: { id: "profile", label: "User Profile"},
+  22: { id: "friends", label: "Solid Friends"},
+  //Data
+  30: { id: "sources", label: "Data Sources"},
+  // Types
+  40: { id: "type", label: "Types"},
+  41: { id: "literal", label: "Literals"},
+  42: { id: "resource", label: "Resources"},
+  43: { id: "actors", label: "Persons or Actors / Agents"},
+  // Forms
+  50: { id: "input", label: "Inputs"},
+  51: { id: "checkbox", label: "Checkboxes"},
+  
+}
+
+
+
 export default {
   mixins: [networkUtilMixin],
   data() {
@@ -67,22 +96,26 @@ export default {
   mounted() {
     //do something after mounting vue instance
 
-    var cids = this.network.nodes.map(a => a.foo);
-    console.log(cids)
-    var clusterOptionsByData = {
-      joinCondition: function (childOptions) {
-        return childOptions.cid == 1;
-      },
-      clusterNodeProperties: {
-        id: "help",
-        borderWidth: 3,
-        shape: "box",
-        color: "#ECC046",
-        label: "HELP / AIDE"
-      },
-    };
+    var cids = [...new Set(this.network.nodes.map(item => item.cid))].filter(Boolean);
+    console.log("cids",cids)
+    //  var clusterOptionsByData = function(cid) ;
     // this.$refs.network is necessary to use network function
-    this.$refs.network.cluster(clusterOptionsByData);
+    cids.forEach((cid) => {
+      this.$refs.network.cluster({
+        joinCondition: function (childOptions) {
+          return childOptions.cid == cid;
+        },
+        clusterNodeProperties: {
+          id: cid_config[cid].id,
+          borderWidth: 3,
+          shape: "box",
+          color: "#ECC046",
+          label: cid_config[cid].label
+        },
+      });
+    });
+
+
   },
 
 
