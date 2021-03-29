@@ -4,23 +4,46 @@
   <meta charset="utf-8">
   <title>Build nodes & edges for vis.js network from a semapps ldp container.</title>
   <style>
-  canvas {
+  #mynetwork {
+    min-height: 95vh;
     border: 1px solid black;
+    background: linear-gradient(to bottom, rgba(215, 215, 255), rgba(250, 250, 170));
+    padding: 10px;
+    height: 95vh;
   }
   </style>
+
+  <script src="https://unpkg.com/vis-network@9.0.4/standalone/umd/vis-network.min.js"></script>
+
   <script type="module" src="./simple/main.js"></script>
 </head>
 <body>
-<p>
-  Build nodes & edges for vis.js network from a semapps ldp container.
-  <br>
-  Using modules & class in a basic html page ;-)
-  <br>
+  <p>
+    Build nodes & edges for vis.js network from a semapps ldp container.
+    <br>
+    Using modules & class in a basic html page ;-)
+    <br>
 
-  <a href="https://github.com/scenaristeur/ipgs/blob/main/public/simple.html" target="_blank">source<a>
-</p>
-    <input id="url_input" placeholder="semapps container"  size="75" />
-    <button id="load_btn">Load</button>
+    <a href="https://github.com/scenaristeur/ipgs/blob/main/public/simple.html" target="_blank">source<a>
+    </p>
+
+    <p> Test with:
+      <ul>
+        <li>https://data.virtual-assembly.org/organizations/</li>
+        <li>https://data.virtual-assembly.org/users/</li>
+        <li>https://data.virtual-assembly.org/skills/</li>
+        <li>https://data.virtual-assembly.org/projects/</li>
+      </ul>
+    </p>
+    <p>
+      <input id="url_input" placeholder="semapps container"  size="75" />
+      <button id="load_btn">Load</button>
+      <button id="all_btn">Load All</button>
+    </p>
+
+    <div id="mynetwork"></div>
+
+
     <pre>
       <div id="result">
 

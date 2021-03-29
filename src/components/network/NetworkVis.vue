@@ -138,7 +138,7 @@ export default {
         edges: defEdges.slice(0),
         options: {
           nodes: {
-            shape: "dot",
+          //  shape: "dot",
             scaling: {
               min: 10,
               max: 30,

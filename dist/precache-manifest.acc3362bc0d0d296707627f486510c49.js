@@ -56,7 +56,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/css/chunk-61ade157.16bdde28.css"
   },
   {
-    "revision": "3717fd98b89e71f9e5cf",
+    "revision": "410d6c6814f456e968df",
     "url": "/ipgs/css/chunk-753d53b2.10ab6953.css"
   },
   {
@@ -136,7 +136,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "588f2388de278e0a0b764825df90a512",
+    "revision": "f6621a98726322b77172218f389e0b7d",
     "url": "/ipgs/index.html"
   },
   {
@@ -148,8 +148,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/agora.7130c133.js"
   },
   {
-    "revision": "9fe0bbb040c1cc2fe562",
-    "url": "/ipgs/js/app.dd366868.js"
+    "revision": "1caf498315ce72f5b089",
+    "url": "/ipgs/js/app.ef62559f.js"
   },
   {
     "revision": "8cfc5f156d1ddde3536c",
@@ -236,8 +236,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-749e9e5f.75f5644d.js"
   },
   {
-    "revision": "3717fd98b89e71f9e5cf",
-    "url": "/ipgs/js/chunk-753d53b2.fa51a728.js"
+    "revision": "410d6c6814f456e968df",
+    "url": "/ipgs/js/chunk-753d53b2.5fc4feea.js"
   },
   {
     "revision": "f5e283f8c23594e86dcc",
@@ -296,15 +296,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/robots.txt"
   },
   {
-    "revision": "801a03abcc8a5ff2f417633d2da89a93",
+    "revision": "f2cab41ac298518bf3838a55e69267cf",
     "url": "/ipgs/simple.html"
   },
   {
-    "revision": "cccb2e7c7ee72632ec2445df7dd81dad",
+    "revision": "d1f6f84c66805109482fc7fbca6a00a0",
     "url": "/ipgs/simple/main.js"
   },
   {
-    "revision": "bbb227831eaad9c1b4e703d8f820e6c1",
+    "revision": "b8f4022a4938f8ad3fbb0f94e7031d73",
     "url": "/ipgs/simple/modules/Source.js"
   },
   {
@@ -313,6 +313,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "c3c2ce2c896df9f04b37cb65c4309f5c",
-    "url": "/ipgs/workers/worker.js"
+    "url": "/ipgs/workersUNUSED/worker.js"
   }
 ]);
