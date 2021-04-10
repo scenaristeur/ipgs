@@ -1,5 +1,5 @@
 {
-  "name": "Ipgs",
+  "name": "ipgs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,6 +24,7 @@
     "ipfs": "^0.54.4",
     "jsonld": "^5.2.0",
     "jsqr": "^1.3.1",
+    "libp2p-bootstrap": "^0.12.2",
     "qrcode": "^1.4.4",
     "register-service-worker": "^1.7.1",
     "solid-auth-client": "^2.5.4",

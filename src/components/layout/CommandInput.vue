@@ -17,7 +17,6 @@
   </template>
 
 <script>
-//import { mapState } from 'vuex';
 //https://github.com/scenaristeur/spoggy-simple/blob/cc3738baecea9ee6b3f87f81a70f69e0090cf658/js/spoggy.js#L38
 export default {
   name: 'CommandInput',

@@ -8,6 +8,7 @@ npm run generate-docs
 ```
 
 # new load test
+- see menu/Suggested
 * solid
 - turtle file http://127.0.0.1:8080/network?url=https%3A%2F%2Fipgs.solidcommunity.net%2Fpublic%2Factivity%2Flog.ttl
 - solid profile http://127.0.0.1:8080/network?url=https://spoggy.solidcommunity.net/profile/card#me
@@ -16,6 +17,7 @@ npm run generate-docs
 - public folder without trailing slash http://127.0.0.1:8080/network?url=https://angelo.veltens.org/public
 - ttl without extension http://127.0.0.1:8080/network?url=https://angelo.veltens.org/public/tweets/2020/05/1260959812579405826
 - multiple ttl folder http://127.0.0.1:8080/network?url=https://spoggy.solidcommunity.net/public/Notes/
+- ipfs : https://scenaristeur.github.io/ipgs/?url=ipfs://QmQ9Jomuxnhg332QbbNC2ebouzfY5ch3p3st68mqUNcLuK
 - simple json
 - jsonld file with @id
 - jsonld file without @id

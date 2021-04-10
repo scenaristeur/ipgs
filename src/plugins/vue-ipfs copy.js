@@ -1,5 +1,3 @@
-//https://github.com/peer-base/peer-base/commit/1e327a81940ae518ddaa4e12fe3f798136a08c5f
-
 import IPFS from 'ipfs'
 
 const plugin = {
