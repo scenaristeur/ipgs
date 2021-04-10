@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- NetworkPopups : {{ JSON.stringify(action)}} -->
-    <NodeModal v-model="node" @ok="saveNode"/>
-    <EdgeModal v-model="edge" @ok="saveEdge"/>
+    <NodeModal :node="node" @ok="saveNode"/>
+    <EdgeModal :edge="edge" @ok="saveEdge"/>
     <ImportModal />
     <ExportModal />
   </div>
@@ -21,9 +21,13 @@ export default {
   },
   data() {
     return {
-      node: {label: "there is an error this must not be shown", color: {  background: '#D2E5FF', border: '#2B7CE9'}, shape: 'ellipse'},
-      edge: {}
+      node: {label: "", color: {  background: '#D2E5FF', border: '#2B7CE9'}, shape: 'ellipse'},
+      edge: {},
+      n: null
     }
+  },
+  created(){
+    this.n = this.network
   },
   computed: {
     action: {
@@ -35,13 +39,13 @@ export default {
     saveNode(n) {
       console.log(n)
       var index = this.network.nodes.findIndex(x => x.id==n.id);
-      index === -1 ? this.network.nodes.push(n) : Object.assign(this.network.nodes[index], n)
+      index === -1 ? this.n.nodes.push(n) : Object.assign(this.network.nodes[index], n)
       console.log(this.network)
     },
     saveEdge(e){
       console.log(e)
       var index = this.network.edges.findIndex(x => x.id==e.id);
-      index === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[index], e)
+      index === -1 ? this.n.edges.push(e) : Object.assign(this.network.edges[index], e)
     },
   },
   watch:{

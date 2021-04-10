@@ -31,7 +31,7 @@ export default class Source {
         case "folder":
         await this.loadFolder(s)
         break;
-          case "profile":
+        case "profile":
         case "ttl":
         await this.loadTtl(s)
         break;
@@ -42,13 +42,13 @@ export default class Source {
         await this.loadJsonld(s)
         break;
         default:
-  try{
+        try{
 
-      await this.loadFolder(s)
-  }catch(e){
-      await this.loadTtl(s)
+          await this.loadFolder(s)
+        }catch(e){
+          await this.loadTtl(s)
 
-  }
+        }
 
 
         //  alert("I dont know how to read ",s.url)
@@ -88,14 +88,14 @@ export default class Source {
   async loadFolder(s){
     console.log("Solid Folder or Semapps container ?",s)
     // try{
-      let folder = await fc.readFolder(s.url)
-      if (folder.size == undefined){
+    let folder = await fc.readFolder(s.url)
+    if (folder.size == undefined){
 
-        await this.loadJsonld(s)
-      }else{
-        console.log(folder)
-        await this.folderToGraph(folder)
-      }
+      await this.loadJsonld(s)
+    }else{
+      console.log(folder)
+      await this.folderToGraph(folder)
+    }
     // }catch(e){
     //   alert(e)
     // }
