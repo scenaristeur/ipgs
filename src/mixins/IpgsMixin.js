@@ -67,6 +67,7 @@ export default {
         }
         //  this.restit = data
         console.log(data)
+        console.info("must take a look at this solution if always preload error: https://github.com/ipfs/js-ipfs/issues/1481")
 
         try{
           let d = JSON.parse(data)
