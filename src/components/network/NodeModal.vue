@@ -64,7 +64,7 @@
 
 
   <b-card>
-    <b-input-group size="sm" prepend="Id">
+    <b-input-group size="sm" prepend="Id ( ??? Are you sure ???  !!! changing id will break links !!! )">
       <b-form-input v-model="v.id"></b-form-input>
     </b-input-group>
   </b-card>

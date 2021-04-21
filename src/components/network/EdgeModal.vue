@@ -23,6 +23,7 @@ data(){
   },
   methods: {
     addEdgeModal(){
+      console.log(this.v)
       this.$emit('ok', this.v)
       this.$bvModal.hide("edge-popup")
     }

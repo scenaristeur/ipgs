@@ -137,8 +137,9 @@ export default {
         nodes: defNodes.slice(0),
         edges: defEdges.slice(0),
         options: {
+          locale: navigator.language,
           nodes: {
-          //  shape: "dot",
+            //  shape: "dot",
             scaling: {
               min: 10,
               max: 30,
@@ -169,8 +170,8 @@ export default {
           },
           interaction: {
             navigationButtons: true,
-            tooltipDelay: 200,
-            hideEdgesOnDrag: true,
+          //  tooltipDelay: 200,
+          //  hideEdgesOnDrag: true,
           },
         },
         options1: {
