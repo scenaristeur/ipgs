@@ -1,7 +1,8 @@
 <template>
   <b-modal id="node-popup" title="Node"
   no-close-on-backdrop  content-class="shadow"
-  @ok="addNodeModal">
+  @ok="addNodeModal"
+  size="lg">
   <b-input-group size="sm" prepend="Label">
     <b-form-input v-model="v.label" autofocus v-on:keyup.enter="addNodeModal"></b-form-input>
   </b-input-group>
@@ -23,8 +24,8 @@
 <!-- <b-button v-b-toggle="'collapse-node-icon'" class="m-1" variant="dark" size="sm">Icon</b-button> -->
 
 <div class="input-group" style="display:table; width:100%;">
-  <b-button v-b-toggle="'collapse-node-color'" class="m-1" variant="dark" size="sm">Color</b-button>
-  <b-button v-b-toggle="'collapse-node-shape'" class="m-1" variant="dark" size="sm">Shape</b-button>
+  <b-button v-b-toggle="'collapse-node-vis'" class="m-1" variant="dark" size="sm">Vis</b-button>
+  <b-button v-b-toggle="'collapse-node-props'" class="m-1" variant="dark" size="sm">Props</b-button>
 
   <span style="display: table-cell; width: 190px;">
     <b-button @click="newGraphFromNode" class="m-1" variant="light" size="sm">New Graph from this node</b-button>
@@ -33,15 +34,15 @@
 
 
 <!-- Element to collapse -->
-<b-collapse id="collapse-node-id">
-  <b-card>
-    <b-input-group size="sm" prepend="Id">
-      <b-form-input v-model="v.id"></b-form-input>
-    </b-input-group>
-  </b-card>
-</b-collapse>
+<!-- <b-collapse id="collapse-node-id">
+<b-card>
+<b-input-group size="sm" prepend="Id">
+<b-form-input v-model="v.id"></b-form-input>
+</b-input-group>
+</b-card>
+</b-collapse> -->
 
-<b-collapse id="collapse-node-color">
+<b-collapse id="collapse-node-vis">
   <b-card>
 
     <label for="backgroundcolorpicker">Background : </label>
@@ -60,9 +61,7 @@
     <b-button @click="defaultColor" size="sm" variant="light">reset colors</b-button>
 
   </b-card>
-</b-collapse>
 
-<b-collapse id="collapse-node-shape">
   <b-card>
     <b-input-group size="sm" prepend="shape">
       <b-form-select v-model="v.shape" :options="shapes" size="sm" class="mt-3"></b-form-select>
@@ -79,13 +78,52 @@
       </div>
     </b-input-group>
   </b-card>
+
+
+  <b-card>
+    <b-input-group size="sm" prepend="Id">
+      <b-form-input v-model="v.id"></b-form-input>
+    </b-input-group>
+  </b-card>
+
+  <b-card>
+    <b-input-group size="sm" prepend="Cluster id">
+      <b-form-input type="number" min="1" v-model="v.cid"></b-form-input>
+    </b-input-group>
+  </b-card>
+
+
+
+
 </b-collapse>
 
-<b-collapse id="collapse-node-expert">
 
-  <b-input-group size="sm" prepend="expert">
-    <b-form-input v-model="v.id"></b-form-input>
-  </b-input-group>
+<b-collapse id="collapse-node-props">
+  <b-card>
+    <b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Property" label-for="input-prop">
+      <b-form-input id="input-prop" v-model="newProp.prop" size="sm" placeholder="Property"></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Value" label-for="input-val">
+      <b-form-input id="input-val" size="sm" v-model="newProp.val" placeholder="Value"></b-form-input>
+    </b-form-group>
+    <b-button size="sm" class="mb-2" variant="success" @click="addProp">
+      <b-icon icon="plus" aria-hidden="true"></b-icon> Add a property
+    </b-button>
+  </b-card>
+
+  <b-card v-if="v.props!=undefined" >
+    Props : {{ v.props.length }}
+    <b-list-group>
+      <b-list-group-item v-for="(p,k) in v.props" :key="k" variant="light">
+         {{p.prop}} :
+         {{p.val}}
+
+       </b-list-group-item>
+    </b-list-group>
+
+  </b-card>
+
+
 
 </b-collapse>
 
@@ -136,7 +174,8 @@ export default {
         {value: "text", text: "text" },
         {value: "star", text: "star" },
         {value: "hexagon", text: "hexagon" },
-      ]
+      ],
+      newProp: {prop:"", val:""}
     }
   },
   watch:{
@@ -151,20 +190,37 @@ export default {
       this.v.icon.color = this.icon_color
     },
     node(){
-        this.v = this.node
-      console.log("vvvv",this.v)
+      this.v = this.node
+      this.v.props == undefined ? this.v.props = [] : ""
+      console.info("Node",this.v)
       //  this.v.color == undefined ? this.v.color = {background: "#D2E5FF", border: "#2B7CE9"} : ""
-    //  this.v.node_type == undefined ? this.v.node_type = 'default' : ""
+      //  this.v.node_type == undefined ? this.v.node_type = 'default' : ""
     }
   },
   methods: {
+    addProp(){
+      console.log(this.newProp)
+
+      // this.v.props[this.newProp.prop] == undefined ? this.v.props[this.newProp.prop] = [] : ""
+      // !this.v.props[this.newProp.prop].includes(this.newProp.val) ? this.v.props[this.newProp.prop].push(this.newProp.val) : alert ("Already in Node props :"+ this.newProp.prop+ " / "+this.newProp.val)
+      // console.log(this.v)
+      let p = {
+        prop : this.newProp.prop,
+        val: this.newProp.val
+      }
+      this.v.props.push(p)
+      console.log(this.v.props)
+
+      this.newProp.prop = ""
+      this.newProp.val = ""
+    },
     addNodeModal(){
       // if (this.v.shape == 'icon'){
       //   // !this.icon.code.startsWith("\u") ? this.icon.code = '\\u'+this.icon.code : ""
       //   //  this.icon.code = "\uf007"
       // }
       //
-console.log("VVVVVVV",this.v)
+      console.log("VVVVVVV",this.v)
       let isUUID = this.v.id.split`-`.map(x=>x.length+`0x${x}0`*0)=="8,4,4,4,12"
       if(isUUID){
         this.v.id= "#"+this.v.label.trim().split(' ').join('_')

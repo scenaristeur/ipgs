@@ -8,6 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
+    <small>0.0.1 - node properties</small>
   </div>
 </template>
 <script>

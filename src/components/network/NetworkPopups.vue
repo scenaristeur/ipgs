@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      node: {label: "", color: {  background: '#D2E5FF', border: '#2B7CE9'}, shape: 'ellipse'},
+      node: {label: "", color: {  background: '#D2E5FF', border: '#2B7CE9'}, shape: 'ellipse', props: []},
       edge: {},
       n: null
     }
