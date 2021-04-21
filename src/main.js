@@ -41,10 +41,9 @@ Vue.use(VueIpfs);
 // } */)
 //
 // import VueFontAwesomePicker from "vfa-picker";
-//
 // Vue.use(VueFontAwesomePicker);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 new Vue({
   router,

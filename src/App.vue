@@ -8,7 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
-    <small>0.0.1 - node properties</small>
+    <small>0.0.2 - node properties & agora view</small>
   </div>
 </template>
 <script>
