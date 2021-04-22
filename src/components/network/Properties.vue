@@ -39,6 +39,9 @@ export default {
       newProp: {prop:"", val:""},
     }
   },
+  created(){
+    this.props = this.properties
+  },
   methods: {
     addProp(){
       console.log(this.newProp)
@@ -65,6 +68,7 @@ export default {
   watch:{
     properties(){
       this.props = this.properties
+      console.log(this.props)
     }
   }
 }

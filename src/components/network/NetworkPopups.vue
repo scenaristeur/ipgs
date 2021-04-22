@@ -51,10 +51,12 @@ export default {
       switch (this.action.action) {
         case 'editNode':
         this.node = this.network.nodes.find(x => x.id==this.action.node.id) || this.action.node
+        console.log("props",this.node.props)
         this.$bvModal.show("node-popup")
         break;
         case 'editEdge':
-        this.edge = this.network.nodes.find(x => x.id==this.action.edge.id) || this.action.edge
+        this.edge = this.network.edges.find(x => x.id==this.action.edge.id) || this.action.edge
+        console.log("props",this.edge.props)
         this.$bvModal.show("edge-popup")
         break;
         case 'import':

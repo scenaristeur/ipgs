@@ -5,7 +5,7 @@
 
       <b-container>
         <b-input-group class="mt-3">
-          <b-form-input  v-model="new_graph_name" placeholder="New Graph Name" v-on:keyup.enter="save"></b-form-input>
+          <b-form-input ref="graph_name_input" v-model="new_graph_name" placeholder="New Graph Name" v-on:keyup.enter="save"></b-form-input>
           <b-input-group-append>
             <b-button variant="info" @click="save">create</b-button>
           </b-input-group-append>
@@ -53,7 +53,7 @@
 
     <b-list-group-item variant="light"
     class="item list-group-item d-flex justify-content-between"
-    v-for="fi in folder.files" :key="fi.url"  button> <!-- @click="save(fi)" -->
+    v-for="fi in folder.files" :key="fi.url"  button @click="replace(fi)">
     <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
   </b-list-group-item>
 </b-list-group>
@@ -103,10 +103,17 @@ export default {
     // }
   },
   methods: {
+    async replace(fi){
+      console.log(fi)
+      this.new_graph_name = fi.name
+      this.$refs.graph_name_input.focus()
+    },
     async save(){
       if(this.new_graph_name.length>0){
         console.log('dataToSave', this.dataToSave)
-        let new_file_url = this.url+this.new_graph_name+'.'+this.dataToSave.format
+        let new_file_url = this.url+this.new_graph_name
+        !new_file_url.includes('.') ? new_file_url = new_file_url+'.'+this.dataToSave.format : ""
+
         let content = this.dataToSave.content
         if (this.dataToSave.format ==  'jsonld'){
           let jsonld_data = JSON.parse(this.dataToSave.content)
