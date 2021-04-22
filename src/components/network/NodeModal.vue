@@ -32,50 +32,50 @@
 <!-- Element to collapse -->
 <b-collapse id="collapse-node-vis">
   <b-card>
-      <b-input-group>
-    <label for="backgroundcolorpicker" class="mt-3">Background: </label>
-    <v-swatches id="backgroundcolorpicker" v-model="v.color.background" value="#D2E5FF"  show-fallback
-    fallback-input-type="color" popover-x="left" class="m-2">
-  </v-swatches>
+    <b-input-group>
+      <label for="backgroundcolorpicker" class="mt-3">Background: </label>
+      <v-swatches id="backgroundcolorpicker" v-model="v.color.background" value="#D2E5FF"  show-fallback
+      fallback-input-type="color" popover-x="left" class="m-2">
+    </v-swatches>
     <label for="bordercolorpicker" class="mt-3">Border: </label>
     <v-swatches id="bordercolorpicker" v-model="v.color.border" value="#2B7CE9"  show-fallback
     fallback-input-type="color" popover-x="left" class="m-2">
   </v-swatches>
-    <b-button @click="defaultColor" size="sm" variant="warning" class="ml-auto" >reset colors</b-button>
+  <b-button @click="defaultColor" size="sm" variant="warning" class="ml-auto" >reset colors</b-button>
+</b-input-group>
+</b-card>
+
+<b-card>
+  <b-input-group size="sm" prepend="shape">
+    <b-form-select v-model="v.shape" :options="shapes" size="sm" class="mt-3"></b-form-select>
+    <a href="https://visjs.github.io/vis-network/docs/network/nodes.html" target="_blank"><b-icon icon="question" aria-hidden="true" ></b-icon></a>
+    <!-- <b-form-input v-if="v.shape=='icon'" v-model="icon_code"></b-form-input>
+    <div v-if="v.shape=='icon'">
+    Icon must be selected in shape <a href="https://fontawesome.com/cheatsheet" target="_blank">icon list</a>
+    <vfa-picker  v-model="icon_code" is-unicode="true">
+    <template v-slot:activator="{ on }">
+    <input v-model="icon_code" @click="on" placeholder="Icon Unicode" type="text" />
+  </template>
+</vfa-picker>
+<input v-model="icon_color" label="icon color" type="color" />
+</div> -->
+</b-input-group>
+</b-card>
+
+
+<b-card>
+  <b-input-group size="sm" prepend="Id ( ??? Are you sure ???  !!! changing id will break links !!! )">
+    <b-form-input v-model="v.id"></b-form-input>
   </b-input-group>
-  </b-card>
+</b-card>
 
-  <b-card>
-    <b-input-group size="sm" prepend="shape">
-      <b-form-select v-model="v.shape" :options="shapes" size="sm" class="mt-3"></b-form-select>
-        <a href="https://visjs.github.io/vis-network/docs/network/nodes.html" target="_blank"><b-icon icon="question" aria-hidden="true" ></b-icon></a>
-      <!-- <b-form-input v-if="v.shape=='icon'" v-model="icon_code"></b-form-input>
-      <div v-if="v.shape=='icon'">
-        Icon must be selected in shape <a href="https://fontawesome.com/cheatsheet" target="_blank">icon list</a>
-        <vfa-picker  v-model="icon_code" is-unicode="true">
-          <template v-slot:activator="{ on }">
-            <input v-model="icon_code" @click="on" placeholder="Icon Unicode" type="text" />
-          </template>
-        </vfa-picker>
-        <input v-model="icon_color" label="icon color" type="color" />
-      </div> -->
-    </b-input-group>
-  </b-card>
+<b-card>
+  <b-input-group size="sm" prepend="Cluster id">
+    <b-form-input type="number" min="1" v-model="v.cid"></b-form-input>
+    <a href="https://visjs.github.io/vis-network/docs/network/#methodClustering" target="_blank"><b-icon icon="question" aria-hidden="true" ></b-icon></a>
+  </b-input-group>
 
-
-  <b-card>
-    <b-input-group size="sm" prepend="Id ( ??? Are you sure ???  !!! changing id will break links !!! )">
-      <b-form-input v-model="v.id"></b-form-input>
-    </b-input-group>
-  </b-card>
-
-  <b-card>
-    <b-input-group size="sm" prepend="Cluster id">
-      <b-form-input type="number" min="1" v-model="v.cid"></b-form-input>
-      <a href="https://visjs.github.io/vis-network/docs/network/#methodClustering" target="_blank"><b-icon icon="question" aria-hidden="true" ></b-icon></a>
-    </b-input-group>
-
-  </b-card>
+</b-card>
 
 
 
@@ -84,34 +84,7 @@
 
 
 <b-collapse id="collapse-node-props">
-  <b-card>
-    <b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Property" label-for="input-prop">
-      <b-form-input id="input-prop" ref="inputProp" v-model="newProp.prop" size="sm" placeholder="Property"></b-form-input>
-    </b-form-group>
-    <b-form-group label-cols="4" label-cols-lg="2" label-size="sm" label="Value" label-for="input-val">
-      <b-form-input id="input-val" size="sm" v-model="newProp.val" placeholder="Value" v-on:keyup.enter="addProp"></b-form-input>
-    </b-form-group>
-    <b-button size="sm" class="mb-2" variant="success" @click="addProp">
-      <b-icon icon="plus" aria-hidden="true"></b-icon> Add a property
-    </b-button>
-  </b-card>
-
-  <b-card v-if="v.props!=undefined" >
-    Props : {{ v.props.length }}
-    <div style="height=40px;overflow-y: scroll;">
-      <b-list-group >
-        <b-list-group-item v-for="(p,k) in v.props" :key="k" variant="light">
-          {{p.prop}} :
-          {{p.val}}
-
-        </b-list-group-item>
-      </b-list-group>
-    </div>
-
-  </b-card>
-
-
-
+  <Properties :properties="v.props" @propsUpdated="onPropsUpdate"/>
 </b-collapse>
 
 </b-modal>
@@ -123,9 +96,8 @@ export default {
   name: 'NodeModal',
   props: ['node'],
   components: {
-    //  Network,
     'VSwatches': () => import('vue-swatches'),
-    //  'network': () => import('vue-vis-network')
+    'Properties': () => import('@/components/network/Properties'),
   },
   mounted(){
 
@@ -162,7 +134,7 @@ export default {
         {value: "star", text: "star" },
         {value: "hexagon", text: "hexagon" },
       ],
-      newProp: {prop:"", val:""}
+
     }
   },
   watch:{
@@ -185,26 +157,8 @@ export default {
     }
   },
   methods: {
-    addProp(){
-      console.log(this.newProp)
-
-      // this.v.props[this.newProp.prop] == undefined ? this.v.props[this.newProp.prop] = [] : ""
-      // !this.v.props[this.newProp.prop].includes(this.newProp.val) ? this.v.props[this.newProp.prop].push(this.newProp.val) : alert ("Already in Node props :"+ this.newProp.prop+ " / "+this.newProp.val)
-      // console.log(this.v)
-      if(this.newProp.prop.length > 0 && this.newProp.val.length > 0){
-        let p = {
-          prop : this.newProp.prop,
-          val: this.newProp.val
-        }
-        this.v.props.push(p)
-        console.log(this.v.props)
-
-        this.newProp.prop = ""
-        this.newProp.val = ""
-         this.$refs.inputProp.focus();
-      }else{
-        alert("Property and Value can't be null")
-      }
+    onPropsUpdate(props){
+      this.v.props = props
     },
     addNodeModal(){
       // if (this.v.shape == 'icon'){
