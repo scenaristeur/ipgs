@@ -1,10 +1,14 @@
 <template>
-  <b-modal id="ipfs-modal" title="Storage" size="lg">
+  <b-modal id="ipfs-modal" title="IPFS" size="lg">
     A copy has been saved on IPFS with cid:<br><br> {{ cid }}
 
-    <br><br>
+    <br>
     You can see it at <br>
     <a :href="'https://ipfs.io/ipfs/'+cid" target="_blank">https://ipfs.io/ipfs/{{cid}}</a>
+
+<br>
+and keep IPNS reference for future updates : <br>
+<a :href="ipns" target="_blank">{{ipns}}</a>
 
   </b-modal>
 </template>
@@ -23,9 +27,10 @@ export default {
   components: {
     //  'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
   },
-  props: ['cid'],
+  props: ['cid', 'ipfs'],
   data() {
     return {
+      ipns: ""
       // folder: {folders:[], files: []},
       // url: "",
       // new_graph_name : "",
@@ -49,10 +54,26 @@ export default {
     // }
   },
   methods: {
+    async makeIpns(){
+      let app = this
+      // The address of your files.
+      const addr = '/ipfs/'+this.cid
 
+      await this.ipfs.name.publish(addr).then(function (res) {
+        // You now receive a res which contains two fields:
+        //   - name: the name under which the content was published.
+        //   - value: the "real" address to which Name points.
+        console.log(res)
+        app.ipns = `https://gateway.ipfs.io/ipns/${res.name}`
+        console.log(app.ipns)
+      })
+    }
   },
   watch:{
-
+    cid(){
+      console.log(this.cid)
+      this.makeIpns()
+    }
   },
   computed: {
 

@@ -42,7 +42,7 @@
 </div>
 </editor>
 <StorageModal />
-<IpfsModal :cid="cid" />
+<IpfsModal :cid="cid" :ipfs="ipfs" />
 </b-modal>
 </template>
 
