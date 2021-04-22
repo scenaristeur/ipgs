@@ -156,6 +156,7 @@ export default {
       let node = this.network.nodes.find(x => x.id==nodeId);
       console.log(node)
 
+
       if (nodeId.startsWith('http')){
         if (this.$route.query.url != nodeId){
           this.$router.push({ path: '/', query: { url: nodeId } })
@@ -168,6 +169,13 @@ export default {
     },
     networkClickEvent(ev){
       console.log(ev)
+      let item = {}
+      if (ev.nodes.length > 0 ){
+        item = this.network.nodes.find(x => x.id==ev.nodes[0]);
+      }else if (ev.edges.length >0){
+        item = this.network.edges.find(x => x.id==ev.edges[0]);
+      }
+      this.$store.commit('ipgs/setCurrentItem', item)
     },
     networkEvent(ev) {
       console.log(ev)

@@ -4,6 +4,7 @@
     <EdgeModal :edge="edge" @ok="saveEdge"/>
     <ImportModal />
     <ExportModal />
+    <PropertiesPopup />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ export default {
     'EdgeModal': () => import('@/components/network/EdgeModal'),
     'ImportModal': () => import('@/components/network/ImportModal'),
     'ExportModal': () => import('@/components/network/ExportModal'),
+    'PropertiesPopup': () => import('@/components/network/PropertiesPopup'),
   },
   data() {
     return {

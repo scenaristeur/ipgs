@@ -14,7 +14,8 @@ const state = () => ({
   editorContent: {},
   dataToSave: {},
   socketMessageUrl: "gr",
-  newGraph: {}
+  newGraph: {},
+  currentItem: {},
   // graphs: [],
   // currentGraphId: null,
   // network: {
@@ -100,6 +101,10 @@ const mutations = {
   setNewGraph(state, g){
     state.newGraph = g
   },
+  setCurrentItem(state, i){
+    console.log(i)
+    state.currentItem = i
+  },
   setInputObject(state, io){
     console.log(io)
     if (io.type == 'commande'){
@@ -147,7 +152,7 @@ const mutations = {
     state.spinner++
   },
   spinnerRemove(state){
-      console.log("spinnerRemove", new Date())
+    console.log("spinnerRemove", new Date())
     state.spinner--
   },
   spinnerInit(state){

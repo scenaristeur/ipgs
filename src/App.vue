@@ -8,7 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
-    <small>0.0.3 - props to edge</small>
+    <small>0.0.4 - show props</small>
   </div>
 </template>
 <script>
