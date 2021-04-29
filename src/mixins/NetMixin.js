@@ -38,7 +38,7 @@ export default {
   mixins: [networkUtilMixin],
   data() {
     return {
-
+      network:{}
       // A VIRER
       //  loader: new Loader(),
     }
