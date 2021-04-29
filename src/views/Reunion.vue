@@ -25,8 +25,8 @@
 
           <canvas id="canvasCode"></canvas>
           <div  v-if="createdUrl.length > 0">
-            <b-button :to="'network?url='+createdUrl" variant="warning">Open</b-button>
-            <b-button :to="'network?url='+createdUrl" variant="warning" disabled>Share</b-button>
+            <b-button :to="'?url='+createdUrl" variant="warning">Open</b-button>
+            <b-button :to="'?url='+createdUrl" variant="warning" disabled>Share</b-button>
           </div>
 
 
@@ -35,9 +35,6 @@
 
       </b-row>
       <b-row>
-
-
-
         {{createdUrl}}
       </b-row>
     </b-container>
@@ -182,7 +179,7 @@ export default {
     },
     codeChanged(){
       console.log("code found", this.code)
-      this.$router.push({ path: 'network', query: { url: this.code.data.split('?url=')[1] } })
+      this.$router.push({ path: '/', query: { url: this.code.data.split('?url=')[1] } })
     },
     async initReunions(){
       this.reunions = []

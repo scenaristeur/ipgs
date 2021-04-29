@@ -69,7 +69,8 @@ export default {
     return {
       content: "content",
       format: 'json',
-      cid: ""
+      cid: "",
+      ipfs: null,
     }
   },
   created(){

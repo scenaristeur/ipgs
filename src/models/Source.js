@@ -126,20 +126,46 @@ export default class Source {
     doc.jsonld = JSON.parse(doc.document)
     delete doc.document
     console.log(doc)
+    await this.addContext(doc)
     await this.ldpToGraph(doc)
   }
 
+  async addContext(doc){
+    let context = doc.jsonld['@context']
+    console.log(context)
+    context == undefined ? context = {} : ""
+    // "id": "@id",
+    // "type": "@type",
+    if(typeof context == 'object'){
+      // if (context['@base'] == undefined || context['@base'].length == 0 ){
+      //   context['@base'] = doc.documentUrl
+      // }
+      context.id = "@id"
+      context.type = "@type"
+      context.graph = "@graph"
+      //  context.label = [{'@id': 'pair:label'}, {'@id': 'rdfs:label'}]
+      //  context.base = '@base'
+      doc.jsonld['@context'] = context
+    }
+    console.log("context",doc.jsonld['@context'])
+  }
+
+
+
   async ldpToGraph(doc){
+    console.log(doc)
     let graph
 
     if (Array.isArray(doc.jsonld.nodes) && Array.isArray(doc.jsonld.edges) && doc.jsonld.nodes.length > 0){
       graph = doc.jsonld
-
+      console.log("1")
     }else if (Array.isArray(doc.jsonld["ldp:contains"]) && doc.jsonld["ldp:contains"].length > 0){
       graph = await this.pairToGraph(doc)
+      console.log("2")
     }else{
       //alert("no ldp:contains for ", doc.documentUrl)
       graph = await this.oneItemToGraph(doc)
+      console.log("3")
     }
     this.graphs.push(graph)
   }
@@ -176,6 +202,8 @@ export default class Source {
     let graph = {nodes: [], edges: []}
     let item = doc.jsonld
     graph.nodes.push(item)
+    graph.nodes.map(n => n.id == null ? n.id = n['@id'] : '')
+    console.log(graph.nodes)
     return graph
   }
 

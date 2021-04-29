@@ -8,7 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
-    <small>0.0.5 - ipns</small>
+    <small>0.0.6 - bug chrome move network to mounted</small>
   </div>
 </template>
 <script>

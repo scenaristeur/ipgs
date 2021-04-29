@@ -104,7 +104,7 @@ export default {
 
       } else{
         if(!omitted.includes(k) && typeof v == "object"){
-
+          v['@id'] != undefined ? v.id = v['@id'] : ''
           var indexOBJ = network.nodes.findIndex(x => x.id==v.id);
           if(indexOBJ === -1){
             console.log("ADDING",n.id, typeof v,k, v)
@@ -113,7 +113,7 @@ export default {
 
           }
           network.edges.push({from: n.id, to: v.id, label: k})
-          console.log("ADDING edge",n.id, k, v.id)
+          console.log("ADDING edge",n.id, k, v.id, v)
         }
         else  if(!omitted.includes(k) && typeof v == "number"){
           console.log("TODO",n.id, typeof v,k, v)
