@@ -171,7 +171,7 @@ export default {
           interaction: {
             navigationButtons: true,
           //  tooltipDelay: 200,
-          //  hideEdgesOnDrag: true,
+            hideEdgesOnDrag: true,
           },
         },
         options1: {
