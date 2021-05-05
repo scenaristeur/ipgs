@@ -239,6 +239,8 @@ IRI : The absolute form of an IRI containing a scheme along with a path and opti
       - https://data.fabmob.io/middleware/resources sameas http://51.210.159.54:3000/resources/
       -> http://51.210.159.54:3000/resources/utilisateur_nicolas_roesch
       - https://grappe.io/data/api/5c98eeee4a490f002e459cbe-fabric-mob-Flodjson
+      - http://127.0.0.1:8080?url=https://data.fabmob.io/middleware/resources/utilisateur_nicolas_roesch
+      - nouveau wiki : https://wiki.lafabriquedesmobilites.fr/api.php?action=ask&query=[[Cat%C3%A9gorie:Projet]]|?ShortDescription|?Theme&format=json
 
       SParql Semapps : POST to https://data.virtual-assembly.org/sparql/
       ```
