@@ -6,6 +6,9 @@ InterPlanetary Graph System based on Solid & Ipfs
 ```
 npm run generate-docs
 ```
+# vis manipulations
+- manipulation with vis/vuejs https://github.com/Thomaash/me/blob/release/src/components/Vis.vue
+
 
 # new load test
 - see menu/Suggested
@@ -276,6 +279,11 @@ transformation visjs en jsonld ->ajout d'un context
 - https://gist.github.com/maxim75/1037392
 - https://fr.wikipedia.org/w/api.php
 
+# npm update outdated
+https://www.carlrippon.com/upgrading-npm-dependencies/
+```
+npx npm-check-updates -u
+```
 
 # semantic-forms :
 - http://semantic-forms.cc:1952

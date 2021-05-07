@@ -4,8 +4,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-import { Network } from "vue-vis-network";
-Vue.component('network', Network);
+// import { Network } from "vue-vis-network";
+// Vue.component('network', Network);
 
 import VueSocialSharing from 'vue-social-sharing'
 Vue.use(VueSocialSharing);
@@ -25,10 +25,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import "bootswatch/dist/superhero/bootstrap.min.css";
 
 
-import VueIpfs from './plugins/vue-ipfs';
-
-// Load our IPFS plugin.
-Vue.use(VueIpfs);
+// import VueIpfs from './plugins/vue-ipfs';
+//
+// // Load our IPFS plugin.
+// Vue.use(VueIpfs);
 
 
 

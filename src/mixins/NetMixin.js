@@ -43,56 +43,20 @@ export default {
       //  loader: new Loader(),
     }
   },
-  async created(){
-
-
-
-    //  this.network.options.manipulation.editEdge.editWithoutDrag = async (edge, callback) => {app.editWithoutDrag(edge, callback)}
-
-
-
-    // if (this.$route.query.url != undefined ){
-    //   this.url = this.$route.query.url
-    //   console.log('url',this.url)
-    //
-    // }
-    // this.storage = this.$store.state.solid.storage
-    //
-    // if(this.storage != null){
-    //   console.log("storage",this.storage)
-    // }
-
-    // if (this.$route.query.url != undefined ){
-    //   this.url = this.$route.query.url
-    //   console.log("OLD LOAD load url",this.url)
-    // //  await this.load(this.url)
-    // }else{
-    //   this.storage = this.$store.state.solid.storage
-    //   //console.log(this.storage)
-    //   if (this.storage != null){
-    //     console.log("load storage",this.storage)
-    //     await this.load(this.storage)
-    //   }
-    // }
-
-
-
-
-  },
 
   mounted() {
-    let app = this
-    console.log(this.network)
-    this.network.options.manipulation = {
-      initiallyActive: true,
-      addNode: async (node, callback) => { node.label = "" ; app.editNode(node, callback) },
-      editNode: async (node, callback) => { app.editNode(node, callback) },
-      addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
-      editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
-
-      //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
-      //  editEdge: {}
-    }
+    // let app = this
+    // console.log(this.network)
+    // this.network.options.manipulation = {
+    //   initiallyActive: true,
+    //   addNode: async (node, callback) => { node.label = "" ; app.editNode(node, callback) },
+    //   editNode: async (node, callback) => { app.editNode(node, callback) },
+    //   addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
+    //   editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
+    //
+    //   //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
+    //   //  editEdge: {}
+    // }
 
     var cids = [...new Set(this.network.nodes.map(item => item.cid))].filter(Boolean);
     console.log("cids",cids)
