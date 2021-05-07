@@ -44,7 +44,6 @@ export default class Source {
         break;
         default:
         try{
-
           await this.loadFolder(s)
         }catch(e){
           await this.loadTtl(s)
@@ -187,7 +186,7 @@ export default class Source {
   }
 
 
-  parse(n, k, v){
+  parse11(n, k, v){
     if (typeof v == "string"){
       v = v.trim()
       let edgeLength = undefined
@@ -295,7 +294,7 @@ export default class Source {
 
 
 
-  parse1(n, k, v){
+  parse(n, k, v){
 
     console.log(n, k, v)
     switch (typeof v) {
@@ -303,42 +302,117 @@ export default class Source {
       v = v.trim()
       this.parseString(n,k,v)
       break;
-      case "object":
-      this.parseObject(n,k,v)
-      break;
-      case "array":
-      this.parseArray(n,k,v)
-      break;
+      // case "object":
+      // this.parseObject(n,k,v)
+      // break;
+      // case "array":
+      // this.parseArray(n,k,v)
+      // break;
+      // case "number":
+      // this.parseNumber(n,k,v)
+      // break;
       default:
-
+      console.log("TODO",n.id, typeof v,k, v)
     }
 
   }
 
   parseString(n,k,v){
+    let edgeLength = undefined
     if(!omitted.includes(k) && v.length > 0){
-      let ob = this.nodes.get(v)
-      if(ob == null){
-        ob = {id: v, shape: "box", mass: 1}
-        ob = this.shortLabel(ob)
+      var indexO = this.nodes.findIndex(x => x.id==v);
+      if(indexO === -1){
+        let ob =   {id: v, shape: "box", mass: 1}
+        if (v.length > 20 ){
+          ob.label = v.substring(0,20)+".."
+          ob.title = v
+        }
+        else{
+          ob.label = v
+        }
 
+        if (v.startsWith('http')){
+          ob.color = "#7FD1B9"
+          if (v.length > 50 ){
+            let lab = v.endsWith('/') ? v.slice(0, -1) : v
+            ob.label = lab.substr(lab.lastIndexOf('/') + 1);
+            ob.label = ob.label.length > 20 ? ob.label.substring(0,20)+".." : ob.label
+            ob.label = "->"+ob.label
+            ob.title = v
+
+          }else{
+            ob.label = v
+          }
+        }else{
+          ob.color = "#ECC046"
+          edgeLength = 1
+          ob.mass = 1
+        }
+        if( k == "type"){
+          ob.shape = "star"
+          ob.color= "#DE6E4B"
+        }
+
+
+        ob.built = true
+        this.nodes.push(ob)
       }else{
-        ob.mass++
-
+        this.nodes[indexO].mass == undefined ? this.nodes[indexO].mass=1 : this.nodes[indexO].mass++
       }
-      this.nodes.update(ob)
-      console.log("OBOB",ob)
+      let o = this.nodes.find(n => n.id == v)
+      o.mass++
+      // if( k == "type"){
+      //   // must do this test a second time after the node has been added to get network.nodes.length ????
+      //   edgeLength = 1000
+      // }
+      let edge = {from: n.id, to: o.id, label: k }
+      if (edgeLength != undefined){
+        edge.length = edgeLength
+        //edge.strength = 300
+      }
+      this.edges.push(edge)
 
-      let edge = {from: n.id, to: ob.id, label: k }
-      this.edges.add(edge)
+    }else{
+      k == "pair:label" ? n.label = v : ""
+      k == "label" ? n.label = v : ""
+      k == "name" ? n.label = v : ""
+      if(k ==  "image"){
+        n.shape = "circularImage"
+        n.image = v
+      }
+      if(k ==  "depiction"){
+        n.shape = "circularImage"
+        n.image = v
+      }
+      if(k == "publicKey"){
+        delete n[k]
+      }
+
     }
     this.debug('string',n,k,v)
   }
   parseObject(n,k,v){
+    v['@id'] != undefined ? v.id = v['@id'] : ''
+    var indexOBJ = this.nodes.findIndex(x => x.id==v.id);
+    if(indexOBJ === -1){
+      console.log("ADDING",n.id, typeof v,k, v)
+      this.nodes.push(v)
+
+
+    }
+    this.edges.push({from: n.id, to: v.id, label: k})
+    console.log("ADDING edge",n.id, k, v.id, v)
     this.debug('object',n,k,v)
   }
   parseArray(n,k,v){
+    v.forEach((_v) => {
+      this.parse(n,k,_v)
+    });
     this.debug('array',n,k,v)
+  }
+
+  parseNumber(n,k,v){
+    console.log("TODO",n.id, typeof v,k, v)
   }
 
 

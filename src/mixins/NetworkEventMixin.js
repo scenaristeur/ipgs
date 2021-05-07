@@ -259,6 +259,7 @@ export default {
   },
   watch:{
     graphs(){
+      this.$store.commit('ipgs/spinnerAdd')
       console.log(this.graphs)
       this.graphsChanged()
       console.info("TEST WITH ONE GRAPH")
@@ -270,6 +271,13 @@ export default {
       //   }
       // });
       this.net.setData(net)
+      this.$store.commit('ipgs/spinnerRemove')
+      console.log("Now we can explode", net.nodes)
+
+
+
+
+
     }
   },
   computed: {

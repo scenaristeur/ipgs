@@ -78,7 +78,7 @@ export default {
           },
         },
         physics: {
-        //  stabilization: false,
+          //  stabilization: false,
           stabilization : {onlyDynamicEdges: true},
           barnesHut: {
             gravitationalConstant: -8000, //-8000
@@ -111,6 +111,15 @@ export default {
       //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
       //  editEdge: {}
     }
+    this.datasetOptions = {
+      queue: {
+        delay: 500,
+        //The queue will be flushed automatically after an inactivity of this delay in milliseconds. Default value is null.
+        //max: number
+      }
+    }
+
+
 
     const nodes = this.nodes = new DataSet([
       { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
@@ -122,7 +131,7 @@ export default {
       { id: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "-> Archipel Semapps", shape: 'box', color: '#7FD1B9', cid: 2},
       { id: "https://spoggy-test9.solidcommunity.net/public/", label: "-> Spoggy-test9 Public Folder", shape: 'box', color: '#7FD1B9', cid: 2},
 
-    ])
+    ], this.datasetOptions)
 
     const edges = this.edges = new DataSet([
       { id: 'e1', from: 'n1', to: 'n2', label: 'type' },
@@ -132,7 +141,7 @@ export default {
       { id: 'e5', from: 'n1', to: 'n6', label: 'help' },
       { id: 'e6', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "example"},
       { id: 'e7', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/", label: "example"}
-    ])
+    ], this.datasetOptions)
     // It's necessary to load the items now, otherwise the network would be labeld as ready before the items are visible.
     // this.replaceItems()
     // Create the network
@@ -172,23 +181,23 @@ export default {
       let nodeId = evt.nodes[0]
 
       let n = nodes.get(nodeId);
-    this.$store.commit('ipgs/setCurrentItem', n)
+      this.$store.commit('ipgs/setCurrentItem', n)
 
-    if ( this.net.isCluster(nodeId)){
-      console.log("is cluster")
-      this.net.openCluster(nodeId)
-      return
-    }
-
-    if (nodeId.startsWith('http')){
-      if (this.$route.query.url != nodeId){
-        this.$router.push({ path: '/', query: { url: nodeId } })
-      }else{
-        alert ("you are already watching this resource !")
+      if ( this.net.isCluster(nodeId)){
+        console.log("is cluster")
+        this.net.openCluster(nodeId)
+        return
       }
-    }else{
-      this.$store.commit('ipgs/setCommandInput', n.label+' ')
-    }
+
+      if (nodeId.startsWith('http')){
+        if (this.$route.query.url != nodeId){
+          this.$router.push({ path: '/', query: { url: nodeId } })
+        }else{
+          alert ("you are already watching this resource !")
+        }
+      }else{
+        this.$store.commit('ipgs/setCommandInput', n.label+' ')
+      }
 
 
 
@@ -199,7 +208,7 @@ export default {
       let e_id = evt.edges[0]
 
       let e = edges.get(e_id);
-    this.$store.commit('ipgs/setCurrentItem', e)
+      this.$store.commit('ipgs/setCurrentItem', e)
     })
 
   },

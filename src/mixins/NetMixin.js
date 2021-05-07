@@ -5,7 +5,7 @@ import networkUtilMixin from '@/mixins/networkUtilMixin'
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
-
+import { DataSet } from 'vis-data/peer'
 
 // 1 to 99 reserved for technical configs, other cid can start at 100
 // cid are used to cluster/group nodes in a network
@@ -202,15 +202,17 @@ export default {
         }
       },
       saveNode(n){
-        var index = this.nodes.findIndex(x => x.id==n.id);
-        index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
+        this.nodes.update(n)
+        // var index = this.nodes.get(n.id);
+        // index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
         this.sendUpdate(n)
       },
       saveEdge(e){
         console.log(e)
-        var index = this.edges.findIndex(x => x.id==e.id);
-        index === -1 ? this.edges.push(e) : Object.assign(this.edges[index], e)
-        console.log(this.network)
+        this.edges.update(e)
+        // var index = this.edges.findIndex(x => x.id==e.id);
+        // index === -1 ? this.edges.push(e) : Object.assign(this.edges[index], e)
+        // console.log(this.network)
         this.sendUpdate(e)
       },
     },
@@ -258,11 +260,14 @@ export default {
         let seenN = [], seenE = []
         let n_list = []
         let e_list= []
+        let nodes = new DataSet([], this.datasetOptions)
+        let edges = new DataSet([], this.datasetOptions)
         switch (this.action.action) {
           case 'newGraph':
           // this.nodes = []
           // this.edges = []
-          this.net.setData({nodes: [], edges: []})
+
+          this.net.setData({nodes: nodes, edges: edges})
           break;
           case 'capture':
           this.downloadCanvas()
