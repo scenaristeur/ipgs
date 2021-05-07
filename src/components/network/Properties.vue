@@ -45,7 +45,7 @@ export default {
   methods: {
     addProp(){
       console.log(this.newProp)
-
+      this.props == undefined ? this.props = [] : ""
       // this.v.props[this.newProp.prop] == undefined ? this.v.props[this.newProp.prop] = [] : ""
       // !this.v.props[this.newProp.prop].includes(this.newProp.val) ? this.v.props[this.newProp.prop].push(this.newProp.val) : alert ("Already in Node props :"+ this.newProp.prop+ " / "+this.newProp.val)
       // console.log(this.v)

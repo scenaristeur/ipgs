@@ -4,7 +4,7 @@
     <div ref="container"  class="vis-container">
       <div ref="vis" class="vis-root" />
     </div>
-
+    <NetworkPopups :nodes="nodes" :edges="edges" />
   </div>
 </template>
 
@@ -12,11 +12,46 @@
 import { DataSet } from 'vis-data/peer'
 import { Network } from 'vis-network/peer'
 import 'vis-network/styles/vis-network.css'
+import NetMixin from '@/mixins/NetMixin'
+import NetworkEvent from '@/mixins/NetworkEventMixin'
+
+let cid_config = {
+  // Standard
+  1: { id: "help", label: "Help / Aide"},
+  2: { id: "examples", label: "Examples", shape: 'star', color: '#7FD1B9'},
+  //Vis
+  5: { id: "networks", label: "Networks"},
+  6: { id: "history", label: "Navigation History"},
+  //Solid
+  20: { id: "storage", label: "Storage"},
+  21: { id: "profile", label: "User Profile"},
+  22: { id: "friends", label: "Solid Friends"},
+  //Data
+  30: { id: "sources", label: "Data Sources"},
+  // Types
+  40: { id: "type", label: "Types"},
+  41: { id: "literal", label: "Literals"},
+  42: { id: "resource", label: "Resources"},
+  43: { id: "actors", label: "Persons or Actors / Agents"},
+  // Forms
+  50: { id: "input", label: "Inputs"},
+  51: { id: "checkbox", label: "Checkboxes"},
+}
+
+
 
 export default {
   name: 'NetworkVis',
+  mixins: [NetworkEvent, NetMixin],
+  components: {
+    //  Network,
+    'NetworkPopups': () => import('@/components/network/NetworkPopups'),
+    // 'network': () => import('vue-vis-network')
+  },
   data(){
     return {
+      nodes: [],
+      edges: [],
       options: {
         locale: navigator.language,
         manipulation: true,
@@ -43,7 +78,8 @@ export default {
           },
         },
         physics: {
-          stabilization: false,
+        //  stabilization: false,
+          stabilization : {onlyDynamicEdges: true},
           barnesHut: {
             gravitationalConstant: -8000, //-8000
             springConstant: 0.03, //0.001 //0.01
@@ -63,7 +99,18 @@ export default {
     const options = this.options
     // Create and fill datasets
 
+    let app = this
+    console.log(this.network)
+    this.options.manipulation = {
+      initiallyActive: true,
+      addNode: async (node, callback) => { node.label = "" ; app.editNode(node, callback) },
+      editNode: async (node, callback) => { app.editNode(node, callback) },
+      addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
+      editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
 
+      //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
+      //  editEdge: {}
+    }
 
     const nodes = this.nodes = new DataSet([
       { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
@@ -101,6 +148,60 @@ export default {
     //   ;(this.storeActions[type] || (() => {}))(payload, data)
     // }))
     this.$emit('ready', { container, net, nodes, edges })
+
+    var cids = [...new Set(this.nodes.map(item => item.cid))].filter(Boolean);
+    console.log("cids",cids)
+    //  var clusterOptionsByData = function(cid) ;
+    // this.$refs.network is necessary to use network function
+    cids.forEach((cid) => {
+      this.net.cluster({
+        joinCondition: function (childOptions) {
+          return childOptions.cid == cid;
+        },
+        clusterNodeProperties: {
+          id: cid_config[cid] && cid_config[cid].id ? cid_config[cid].id : cid,
+          borderWidth: 3,
+          shape: cid_config[cid] && cid_config[cid].shape ? cid_config[cid].shape : "box",
+          color: cid_config[cid] && cid_config[cid].color ? cid_config[cid].color : "#ECC046",
+          label: cid_config[cid] &&cid_config[cid].label ? cid_config[cid].label : "no name group"
+        },
+      });
+    });
+
+    this.net.on('selectNode', evt => {
+      let nodeId = evt.nodes[0]
+
+      let n = nodes.get(nodeId);
+    this.$store.commit('ipgs/setCurrentItem', n)
+
+    if ( this.net.isCluster(nodeId)){
+      console.log("is cluster")
+      this.net.openCluster(nodeId)
+      return
+    }
+
+    if (nodeId.startsWith('http')){
+      if (this.$route.query.url != nodeId){
+        this.$router.push({ path: '/', query: { url: nodeId } })
+      }else{
+        alert ("you are already watching this resource !")
+      }
+    }else{
+      this.$store.commit('ipgs/setCommandInput', n.label+' ')
+    }
+
+
+
+
+    })
+
+    this.net.on('selectEdge', evt => {
+      let e_id = evt.edges[0]
+
+      let e = edges.get(e_id);
+    this.$store.commit('ipgs/setCurrentItem', e)
+    })
+
   },
   options (v) {
     this.net.setOptions(v)

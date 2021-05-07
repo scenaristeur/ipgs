@@ -11,6 +11,7 @@ npm run generate-docs
 
 
 # new load test
+- todo Solid on Wikidata https://www.wikidata.org/wiki/Q55408718
 - see menu/Suggested
 * solid
 - turtle file http://127.0.0.1:8080/network?url=https%3A%2F%2Fipgs.solidcommunity.net%2Fpublic%2Factivity%2Flog.ttl

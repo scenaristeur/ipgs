@@ -11,17 +11,17 @@
   <div class="input-group" style="display:table; width:100%;">
     <!-- <b-button v-b-toggle="'collapse-node-vis'" class="m-1" variant="dark" size="sm">Vis</b-button> -->
     <b-button v-b-toggle="'collapse-node-props'" class="m-1" variant="dark" size="sm">Props</b-button>
-  <!--
+    <!--
     <span style="display: table-cell; width: 190px;">
-      <b-button @click="newGraphFromNode" class="m-1" variant="light" size="sm">New Graph from this node</b-button>
-    </span> -->
-  </div>
+    <b-button @click="newGraphFromNode" class="m-1" variant="light" size="sm">New Graph from this node</b-button>
+  </span> -->
+</div>
 
 
 
-  <b-collapse id="collapse-node-props">
-    <Properties :properties="v.props" @propsUpdated="onPropsUpdate"/>
-  </b-collapse>
+<b-collapse id="collapse-node-props">
+  <Properties :properties="v.props" @propsUpdated="onPropsUpdate"/>
+</b-collapse>
 
 </b-modal>
 </template>
@@ -33,13 +33,14 @@ export default {
   components: {
     'Properties': () => import('@/components/network/Properties'),
   },
-data(){
-  return {
-    v: null
-  }
-},
+  data(){
+    return {
+      v: null
+    }
+  },
   created(){
     this.v = this.edge
+    console.log(this.v)
   },
   methods: {
     addEdgeModal(){
@@ -53,7 +54,8 @@ data(){
   },
   watch:{
     edge(){
-        this.v = this.edge
+      console.log(this.edge)
+      this.v = this.edge
     }
   },
 }

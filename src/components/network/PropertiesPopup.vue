@@ -1,6 +1,6 @@
 <template>
 
-    <div id="trans" v-if="currentItem.props != undefined && currentItem.props.length > 0" >
+    <div id="trans" v-if="currentItem!= null && currentItem.props != undefined && currentItem.props.length > 0" >
       <!-- {{ JSON.stringify(currentItem.props) }} -->
 
         <div v-for="(p, k) in currentItem.props" :key="k"> <small>{{ p.prop}}: {{p.val}}</small></div>

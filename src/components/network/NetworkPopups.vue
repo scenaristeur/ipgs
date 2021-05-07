@@ -11,7 +11,7 @@
 <script>
 export default {
   name: "NetworkPopups",
-  props: ['network'],
+  props: ['nodes', 'edges'],
   components: {
     'NodeModal': () => import('@/components/network/NodeModal'),
     'EdgeModal': () => import('@/components/network/EdgeModal'),
@@ -27,7 +27,8 @@ export default {
     }
   },
   created(){
-    this.n = this.network
+    this.n_list = this.nodes
+    this.e_list = this.edges
   },
   computed: {
     action: {
@@ -37,35 +38,37 @@ export default {
   },
   methods: {
     saveNode(n) {
-      var index = this.network.nodes.findIndex(x => x.id==n.id);
-      index === -1 ? this.n.nodes.push(n) : Object.assign(this.network.nodes[index], n)
+      this.nodes.update(n)
+      // var index = this.nodes.findIndex(x => x.id==n.id);
+      // index === -1 ? this.n_list.push(n) : Object.assign(this.nodes[index], n)
     },
     saveEdge(e){
       console.log(e)
-      var index = this.network.edges.findIndex(x => x.id==e.id);
-      index === -1 ? this.n.edges.push(e) : Object.assign(this.network.edges[index], e)
+      this.edges.update(e)
+      // var index = this.edges.findIndex(x => x.id==e.id);
+      // index === -1 ? this.e_list.push(e) : Object.assign(this.edges[index], e)
     },
   },
   watch:{
     action(){
+      console.log(this.action)
+
       switch (this.action.action) {
         case 'editNode':
-        this.node = this.network.nodes.find(x => x.id==this.action.node.id) || this.action.node
+        this.node = this.nodes.get(this.action.node.id) || this.action.node
         console.log("props",this.node.props)
         this.$bvModal.show("node-popup")
         break;
         case 'editEdge':
-        this.edge = this.network.edges.find(x => x.id==this.action.edge.id) || this.action.edge
+        console.log(this.action.edge)
+        this.edge = this.action.edge
         console.log("props",this.edge.props)
         this.$bvModal.show("edge-popup")
         break;
         case 'import':
         this.$bvModal.show("import-popup")
         break;
-        case 'export':
-        this.$store.commit('ipgs/setEditorContent', {content: {nodes: this.network.nodes, edges: this.network.edges}, format: 'json'})
-        this.$bvModal.show("export-popup")
-        break;
+    
         default:
       }
     },

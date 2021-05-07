@@ -9,28 +9,6 @@ const fc = new FC( auth )
 
 // 1 to 99 reserved for technical configs, other cid can start at 100
 // cid are used to cluster/group nodes in a network
-let cid_config = {
-  // Standard
-  1: { id: "help", label: "Help / Aide"},
-  2: { id: "examples", label: "Examples", shape: 'star', color: '#7FD1B9'},
-  //Vis
-  5: { id: "networks", label: "Networks"},
-  6: { id: "history", label: "Navigation History"},
-  //Solid
-  20: { id: "storage", label: "Storage"},
-  21: { id: "profile", label: "User Profile"},
-  22: { id: "friends", label: "Solid Friends"},
-  //Data
-  30: { id: "sources", label: "Data Sources"},
-  // Types
-  40: { id: "type", label: "Types"},
-  41: { id: "literal", label: "Literals"},
-  42: { id: "resource", label: "Resources"},
-  43: { id: "actors", label: "Persons or Actors / Agents"},
-  // Forms
-  50: { id: "input", label: "Inputs"},
-  51: { id: "checkbox", label: "Checkboxes"},
-}
 
 
 
@@ -58,24 +36,7 @@ export default {
     //   //  editEdge: {}
     // }
 
-    var cids = [...new Set(this.network.nodes.map(item => item.cid))].filter(Boolean);
-    console.log("cids",cids)
-    //  var clusterOptionsByData = function(cid) ;
-    // this.$refs.network is necessary to use network function
-    cids.forEach((cid) => {
-      this.$refs.network.cluster({
-        joinCondition: function (childOptions) {
-          return childOptions.cid == cid;
-        },
-        clusterNodeProperties: {
-          id: cid_config[cid] && cid_config[cid].id ? cid_config[cid].id : cid,
-          borderWidth: 3,
-          shape: cid_config[cid] && cid_config[cid].shape ? cid_config[cid].shape : "box",
-          color: cid_config[cid] && cid_config[cid].color ? cid_config[cid].color : "#ECC046",
-          label: cid_config[cid] &&cid_config[cid].label ? cid_config[cid].label : "no name group"
-        },
-      });
-    });
+
 
 
   },
@@ -107,11 +68,11 @@ export default {
 
       if(this.json != undefined && this.json["@context"] != "https://data.virtual-assembly.org/context.json"){
         console.log("TODO must send only if different ")
-        let identiques = this.arraysEqual(this.json.nodes, this.network.nodes) && this.arraysEqual(this.json.edges, this.network.edges)
+        let identiques = this.arraysEqual(this.json.nodes, this.nodes) && this.arraysEqual(this.json.edges, this.edges)
         console.log("identiques",identiques)
         if (identiques == false && this.url != undefined){
-          this.json.nodes = this.network.nodes
-          this.json.edges = this.network.edges
+          this.json.nodes = this.nodes
+          this.json.edges = this.edges
           this.json.modified = new Date()
           console.log(this.json)
 
@@ -190,7 +151,7 @@ export default {
       },
       downloadCanvas(){
         // get canvas data
-        var srcCanvas = document.getElementById( 'network' ).childNodes[0].canvas;
+        var srcCanvas = this.$refs.vis.childNodes[0].canvas;
         console.log(srcCanvas)
         let destinationCanvas = document.createElement("canvas");
         destinationCanvas.width = srcCanvas.width;
@@ -241,14 +202,14 @@ export default {
         }
       },
       saveNode(n){
-        var index = this.network.nodes.findIndex(x => x.id==n.id);
-        index === -1 ? this.network.nodes.push(n) : Object.assign(this.network.nodes[index], n)
+        var index = this.nodes.findIndex(x => x.id==n.id);
+        index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
         this.sendUpdate(n)
       },
       saveEdge(e){
         console.log(e)
-        var index = this.network.edges.findIndex(x => x.id==e.id);
-        index === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[index], e)
+        var index = this.edges.findIndex(x => x.id==e.id);
+        index === -1 ? this.edges.push(e) : Object.assign(this.edges[index], e)
         console.log(this.network)
         this.sendUpdate(e)
       },
@@ -275,11 +236,11 @@ export default {
       newGraph(){
         console.log('New Graph',this.newGraph)
 
-        this.network.nodes = []
-        this.network.edges = []
+        this.nodes = []
+        this.edges = []
         let n = this.newGraph.node
         n.id = this.newGraph.url
-        this.network.nodes.push (n)
+        this.nodes.push (n)
         //  alert ("todo: you must create a new file")
         let inputObject = {}
         inputObject.type = "commande";
@@ -294,14 +255,37 @@ export default {
       // //  this.$store.commit('ipgs/setWebsocketMesssage', "")
       // },
       action(){
-        console.log(this.action)
+        let seenN = [], seenE = []
+        let n_list = []
+        let e_list= []
         switch (this.action.action) {
           case 'newGraph':
-          this.network.nodes = []
-          this.network.edges = []
+          // this.nodes = []
+          // this.edges = []
+          this.net.setData({nodes: [], edges: []})
           break;
           case 'capture':
           this.downloadCanvas()
+          break;
+          case 'export':
+          n_list = JSON.stringify(this.net.body.nodes, function(key, val) {
+            if (typeof val == "object") {
+              if (seenN.indexOf(val) >= 0)
+              return
+              seenN.push(val)
+            }
+            return val
+          }, 2)
+          e_list = JSON.stringify(this.net.body.edges, function(key, val) {
+            if (typeof val == "object") {
+              if (seenE.indexOf(val) >= 0)
+              return
+              seenE.push(val)
+            }
+            return val
+          }, 2)
+          this.$store.commit('ipgs/setEditorContent', {content: {nodes: n_list, edges: e_list}, format: 'json'})
+          this.$bvModal.show("export-popup")
           break;
 
           default:
