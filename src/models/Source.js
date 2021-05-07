@@ -5,6 +5,7 @@ const fc = new FC( auth )
 import * as jsonld from 'jsonld';
 import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
 import { getSolidDataset/*, saveSolidDatasetAt*/ } from "@inrupt/solid-client";
+let omitted = [ "@context", "id", "label", "pair:label", "name",  "inbox", "outbox", "followers", "following", "publicKey", "shape", /*"type",*/ "title", "color", "image"]
 
 /**
 * Represents a Source of Data.
@@ -161,14 +162,207 @@ export default class Source {
       console.log("1")
     }else if (Array.isArray(doc.jsonld["ldp:contains"]) && doc.jsonld["ldp:contains"].length > 0){
       graph = await this.pairToGraph(doc)
+      this.predsToEdge(graph)
       console.log("2")
     }else{
       //alert("no ldp:contains for ", doc.documentUrl)
       graph = await this.oneItemToGraph(doc)
       console.log("3")
     }
+
     this.graphs.push(graph)
   }
+
+  predsToEdge(graph){
+    this.nodes = graph.nodes
+    this.edges = graph.edges
+    let app = this
+    this.nodes.forEach( function (n) {
+      for (const [k, v] of Object.entries(n)) {
+        app.parse(n,k,v)
+      }
+    });
+
+    console.warn(graph)
+  }
+
+
+  parse(n, k, v){
+    if (typeof v == "string"){
+      v = v.trim()
+      let edgeLength = undefined
+      if(!omitted.includes(k) && v.length > 0){
+        var indexO = this.nodes.findIndex(x => x.id==v);
+        if(indexO === -1){
+          let ob =   {id: v, shape: "box", mass: 1}
+          if (v.length > 20 ){
+            ob.label = v.substring(0,20)+".."
+            ob.title = v
+          }
+          else{
+            ob.label = v
+          }
+
+          if (v.startsWith('http')){
+            ob.color = "#7FD1B9"
+            if (v.length > 50 ){
+              let lab = v.endsWith('/') ? v.slice(0, -1) : v
+              ob.label = lab.substr(lab.lastIndexOf('/') + 1);
+              ob.label = ob.label.length > 20 ? ob.label.substring(0,20)+".." : ob.label
+              ob.label = "->"+ob.label
+              ob.title = v
+
+            }else{
+              ob.label = v
+            }
+          }else{
+            ob.color = "#ECC046"
+            edgeLength = 1
+            ob.mass = 1
+          }
+          if( k == "type"){
+            ob.shape = "star"
+            ob.color= "#DE6E4B"
+          }
+
+
+          ob.built = true
+          this.nodes.push(ob)
+        }else{
+          this.nodes[indexO].mass == undefined ? this.nodes[indexO].mass=1 : this.nodes[indexO].mass++
+        }
+        let o = this.nodes.find(n => n.id == v)
+        o.mass++
+        // if( k == "type"){
+        //   // must do this test a second time after the node has been added to get network.nodes.length ????
+        //   edgeLength = 1000
+        // }
+        let edge = {from: n.id, to: o.id, label: k }
+        if (edgeLength != undefined){
+          edge.length = edgeLength
+          //edge.strength = 300
+        }
+        this.edges.push(edge)
+
+      }else{
+        k == "pair:label" ? n.label = v : ""
+        k == "label" ? n.label = v : ""
+        k == "name" ? n.label = v : ""
+        if(k ==  "image"){
+          n.shape = "circularImage"
+          n.image = v
+        }
+        if(k ==  "depiction"){
+          n.shape = "circularImage"
+          n.image = v
+        }
+        if(k == "publicKey"){
+          delete n[k]
+        }
+
+      }
+    }else if (Array.isArray(v)){
+      //console.log(v)
+      v.forEach((_v) => {
+        this.parse(n,k,_v)
+      });
+
+
+    } else{
+      if(!omitted.includes(k) && typeof v == "object"){
+        v['@id'] != undefined ? v.id = v['@id'] : ''
+        var indexOBJ = this.nodes.findIndex(x => x.id==v.id);
+        if(indexOBJ === -1){
+          console.log("ADDING",n.id, typeof v,k, v)
+          this.nodes.push(v)
+
+
+        }
+        this.edges.push({from: n.id, to: v.id, label: k})
+        console.log("ADDING edge",n.id, k, v.id, v)
+      }
+      else  if(!omitted.includes(k) && typeof v == "number"){
+        console.log("TODO",n.id, typeof v,k, v)
+        //  this.parse(n, k, v)
+      }
+      else
+      {
+        console.log("TODO",n.id, typeof v,k, v)
+      }
+
+    }
+  }
+
+
+
+  parse1(n, k, v){
+
+    console.log(n, k, v)
+    switch (typeof v) {
+      case "string":
+      v = v.trim()
+      this.parseString(n,k,v)
+      break;
+      case "object":
+      this.parseObject(n,k,v)
+      break;
+      case "array":
+      this.parseArray(n,k,v)
+      break;
+      default:
+
+    }
+
+  }
+
+  parseString(n,k,v){
+    if(!omitted.includes(k) && v.length > 0){
+      let ob = this.nodes.get(v)
+      if(ob == null){
+        ob = {id: v, shape: "box", mass: 1}
+        ob = this.shortLabel(ob)
+
+      }else{
+        ob.mass++
+
+      }
+      this.nodes.update(ob)
+      console.log("OBOB",ob)
+
+      let edge = {from: n.id, to: ob.id, label: k }
+      this.edges.add(edge)
+    }
+    this.debug('string',n,k,v)
+  }
+  parseObject(n,k,v){
+    this.debug('object',n,k,v)
+  }
+  parseArray(n,k,v){
+    this.debug('array',n,k,v)
+  }
+
+
+
+  // shortLabel(n){
+  //   if (n.id.length > 50 ){
+  //     console.warn("todo text must not be a id")
+  //   }
+  //   if (n.id.length > 20 ){
+  //     n.label = n.id.substring(0,20)+".."
+  //     n.title = n.id
+  //   }
+  //   else{
+  //     n.label = n.id
+  //   }
+  //   return n
+  // },
+
+  debug(p,n,k,v){
+    console.warn(p,n,k,v)
+  }
+
+
+
 
   async folderToGraph(f){
     let nodes = [], edges = []

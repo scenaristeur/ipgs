@@ -16,21 +16,86 @@ export default {
     //     }
     //   });
     // },
-    buildEdges(n){
+    buildEdges(n, net){
       for (const [k, v] of Object.entries(n)) {
-        this.parse(n,k,v)
+        this.parse(n,k,v, net)
       }
       n.built = true
+    },
+
+    parse(n, k, v, net){
+
+      console.log(n, k, v)
+      switch (typeof v) {
+        case "string":
+        v = v.trim()
+        this.parseString(n,k,v, net)
+        break;
+        case "object":
+        this.parseObject(n,k,v, net)
+        break;
+        case "array":
+        this.parseArray(n,k,v, net)
+        break;
+        default:
+
+      }
 
     },
 
-    parse(n, k, v){
-console.log(n)
+    parseString(n,k,v, net){
+      if(!omitted.includes(k) && v.length > 0){
+        let ob = this.nodes.get(v)
+        if(ob == null){
+          ob = {id: v, shape: "box", mass: 1}
+          ob = this.shortLabel(ob)
+
+        }else{
+          ob.mass++
+
+        }
+  net.nodes.update(ob)
+        console.log("OBOB",ob)
+
+        let edge = {from: n.id, to: ob.id, label: k }
+        net.edges.add(edge)
+      }
+      this.debug('string',n,k,v)
+    },
+    parseObject(n,k,v, net){
+      this.debug('object',n,k,v, net)
+    },
+    parseArray(n,k,v, net){
+      this.debug('array',n,k,v, net)
+    },
+
+
+
+    shortLabel(n){
+      if (n.id.length > 50 ){
+        console.warn("todo text must not be a id")
+      }
+      if (n.id.length > 20 ){
+        n.label = n.id.substring(0,20)+".."
+        n.title = n.id
+      }
+      else{
+        n.label = n.id
+      }
+      return n
+    },
+
+    debug(p,n,k,v){
+      console.warn(p,n,k,v)
+    },
+
+    parse1(n, k, v){
+
       if (typeof v == "string"){
         v = v.trim()
         let edgeLength = undefined
         if(!omitted.includes(k) && v.length > 0){
-          var indexO = this.nodes.get(v);
+          var indexO = this.nodes.findIndex(x => x.id==v);
           if(indexO === -1){
             let ob =   {id: v, shape: "box", mass: 1}
             if (v.length > 20 ){
@@ -106,7 +171,7 @@ console.log(n)
       } else{
         if(!omitted.includes(k) && typeof v == "object"){
           v['@id'] != undefined ? v.id = v['@id'] : ''
-          var indexOBJ = this.nodes.get(v.id);
+          var indexOBJ = this.nodes.findIndex(x => x.id==v.id);
           if(indexOBJ === -1){
             console.log("ADDING",n.id, typeof v,k, v)
             this.nodes.push(v)
@@ -197,13 +262,13 @@ console.log(n)
       console.log(this.graphs)
       this.graphsChanged()
       console.info("TEST WITH ONE GRAPH")
-      let app = this
+    //  let app = this
       let net = this.graphs[0]
-      net.nodes.forEach( function (n) {
-        if(n.built == undefined){
-          app.buildEdges(n)
-        }
-      });
+      // net.nodes.forEach( function (n) {
+      //   if(n.built == undefined){
+      //     app.buildEdges(n, net)
+      //   }
+      // });
       this.net.setData(net)
     }
   },
