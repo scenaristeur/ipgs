@@ -8,7 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
-    <small>0.0.5c - replace file</small>
+    <small>0.0.5c1 - replace file</small>
   </div>
 </template>
 <script>

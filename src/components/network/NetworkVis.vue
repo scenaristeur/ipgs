@@ -161,7 +161,7 @@ export default {
             },
           },
           physics: {
-            stabilization: false,
+            stabilization: {onlyDynamicEdges: true},
             barnesHut: {
               gravitationalConstant: -8000, //-8000
               springConstant: 0.03, //0.001 //0.01

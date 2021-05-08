@@ -220,7 +220,7 @@ export default class Source {
     let graph = {nodes: [], edges: []}
     let dataset = await getSolidDataset(s.url, { fetch: fetch });
     console.log(dataset)
-    await dataset.quads.forEach(async function (q)  {
+    await dataset._quads.forEach(async function (q)  {
       let [s,p,o] = [
         {id:q.subject.id, label: await module.lastPart(q.subject.id)},
         q.predicate.id,
