@@ -8,7 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
-    <small>0.0.4 - show props</small>
+    <small>0.0.5c - replace file</small>
   </div>
 </template>
 <script>

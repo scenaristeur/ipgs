@@ -7,6 +7,10 @@ InterPlanetary Graph System based on Solid & Ipfs
 npm run generate-docs
 ```
 
+# replace main by another
+
+https://stackoverflow.com/questions/4359681/want-to-change-my-master-to-an-older-commit-how-can-i-do-this
+
 # new load test
 - see menu/Suggested
 * solid
