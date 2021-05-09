@@ -1,4 +1,5 @@
 //import Source from '@/models/Source'
+
 import Graph from '@/Entity/Graph'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -28,7 +29,7 @@ export default {
         //
         // console.log("URL", url)
 
-        let g = new Graph({url: url, store: this.$store})
+        let g = new Graph({id: uuidv4(), name:"init Graph from url",  url: url, store: this.$store})
         this.$store.commit('ipgs/addGraphs', [g])
 
       }else{
@@ -36,7 +37,7 @@ export default {
         //console.log(this.storage)
         if (this.storage != null){
           console.log("TODO TODO TODO load storage",this.storage)
-        //  await this.load({name:"Storage", url:this.storage})
+          //  await this.load({name:"Storage", url:this.storage})
         }
       }
 

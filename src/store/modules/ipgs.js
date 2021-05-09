@@ -168,6 +168,10 @@ const mutations = {
     state.graphs = [...state.graphs, ...graphs]
     console.log(state.graphs)
   },
+  updateGraph(state, graph){
+    var index = state.graphs.findIndex(x => x.id==graph.id);
+    index === -1 ? state.graphs.push(graph) : Object.assign(this.graphs[index], graph)
+  },
   toggleGraphsPanel(state){
     state.graphsPanelShow = !state.graphsPanelShow
   }

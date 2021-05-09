@@ -2,7 +2,7 @@
   <div>
 
     <b-list-group class="graphlist">
-      <b-list-group-item variant="info" v-for="g in graphs" :key="g.id">{{g.name}}</b-list-group-item>
+      <b-list-group-item variant="info" v-for="g in graphs" :key="g.id">{{ g.id}}: {{g.name}}</b-list-group-item>
     </b-list-group>
       <!-- {{ graphs}} -->
   </div>

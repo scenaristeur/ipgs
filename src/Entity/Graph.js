@@ -14,6 +14,7 @@ export default class Graph extends Network {
       let loader = new Loader(this.options)
       let loaded = await loader.load()
       console.log("LOADED",loaded)
+      this.options.store.commit('ipgs/updateGraph', loaded)
     }
 
 

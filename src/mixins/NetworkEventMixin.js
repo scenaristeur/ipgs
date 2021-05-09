@@ -192,8 +192,8 @@ export default {
       this.network = {nodes: [],edges: []}
       this.graphs.forEach(g => {
         console.log(g)
-        this.network.nodes = [...this.network.nodes, ...g.network.nodes]
-        this.network.edges = [...this.network.edges, ...g.network.edges]
+        this.network.nodes = [...this.network.nodes, ...g.nodes]
+        this.network.edges = [...this.network.edges, ...g.edges]
 
       });
 
