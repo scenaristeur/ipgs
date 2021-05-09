@@ -198,6 +198,26 @@ export default {
       });
 
     }
+
+    // graphsChanged(){
+    //   console.log("GRAPHS CHANGED", this.graphs)
+    //   console.info("TEST WITH ONE GRAPH")
+    //   //  this.network = {nodes: [],edges: []}
+    //   for (let g of this.graphs) {
+    //     console.log(g)
+    //     // alternative temporaire pour prendre tout en compte tant que c'est pas nickel
+    //     let nodes = g.network!= undefined && g.network.nodes.length>0 ? g.network.nodes : g.nodes
+    //     let edges = g.network != undefined && g.network.edges.length > 0 ? g.network.edges : g.edges
+    //     this.network.nodes.concat(nodes)
+    //     this.network.edges.concat(edges)
+    //     console.log(this.network)
+    //   }
+    //
+    //   console.log(this.network)
+    //   this.nodes = this.network.nodes
+    //   this.edges = this.network.edges
+    //
+    // }
   },
   watch:{
     graphs(){

@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <Navbar size="sm" />
-    <b-spinner variant="primary" style="z-index:6" class="ml-auto" v-if="spinner>0"></b-spinner>
+    <!-- workers : {{ workers }} -->
+    <b-spinner variant="primary" style="z-index:6" class="ml-auto" v-for="w in workers" :key="w.id"></b-spinner>
 
     <Graphs />
     <transition name="slide">
@@ -35,8 +36,8 @@ export default {
     },
   },
   computed: {
-    spinner: {
-      get () { return this.$store.state.ipgs.spinner},
+    workers: {
+      get () { return this.$store.state.ipgs.workers},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   }

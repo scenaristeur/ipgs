@@ -1,0 +1,61 @@
+
+
+
+//import { v4 as uuidv4 } from 'uuid';
+
+/**
+* Represents a Source of Data.
+* @constructor
+* @param {array} sources - An array of sources [{name: "blabla", url:"https://..."}].
+*/
+
+export default class Source {
+  constructor(sources) {
+    console.log(sources)
+    this.sources = sources
+    this.graphs = []
+  }
+
+  async load(clear = true){
+    console.log(this.sources)
+    clear == true ? this.graphs = [] : ""
+    for await (let s of this.sources) {
+      //this.tryGetHeaders()
+      s.url == undefined ? alert("undefined url for ", s.name) : ""
+      s.type == undefined ? await this.findType(s) : ""
+      console.log(s);
+      switch (s.type) {
+        case "folder":
+        await this.loadFolder(s)
+        break;
+        case "profile":
+        case "ttl":
+        await this.loadTtl(s)
+        break;
+        case "json":
+        await this.loadJson(s)
+        break;
+        case "jsonld":
+        await this.loadJsonld(s)
+        break;
+        default:
+        try{
+
+          await this.loadFolder(s)
+        }catch(e){
+          await this.loadTtl(s)
+
+        }
+
+
+        //  alert("I dont know how to read ",s.url)
+      }
+    }
+    return this.graphs
+  }
+
+
+
+
+
+}

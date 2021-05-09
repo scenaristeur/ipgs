@@ -8,9 +8,9 @@
         </div>
       </div>
     </div>
-    <vue-window-modal  :active="graphsPanelShow"  title="Client 1"  v-on:clickClose="visibleFormCrudUpdate(false)">
-    FOO TEXT ON DEFAULT SLOT :DDDDD 1
-</vue-window-modal>
+    <!-- <vue-window-modal  :active="graphsPanelShow"  title="Graphs"  v-on:clickClose="toggleGraphsPanel">
+      <GraphsList />
+    </vue-window-modal> -->
     <b-button @click="toggleGraphsPanel">Toogle Graphs Panel</b-button>
   </div>
 </template>

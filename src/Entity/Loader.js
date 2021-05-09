@@ -1,64 +1,58 @@
+import { v4 as uuidv4 } from 'uuid';
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
-
 import * as jsonld from 'jsonld';
-import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
 import { getSolidDataset/*, saveSolidDatasetAt*/ } from "@inrupt/solid-client";
-import { v4 as uuidv4 } from 'uuid';
+import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
 
-/**
-* Represents a Source of Data.
-* @constructor
-* @param {array} sources - An array of sources [{name: "blabla", url:"https://..."}].
-*/
 
-export default class Source {
-  constructor(sources) {
-    console.log(sources)
-    this.sources = sources
-    this.graphs = []
+export default class Loader {
+  constructor(opts) {
+    this.options = opts
+
+    this.loaded = {}
+    console.log(this)
   }
 
-  async load(clear = true){
-    console.log(this.sources)
-    clear == true ? this.graphs = [] : ""
-    for await (let s of this.sources) {
-      //this.tryGetHeaders()
-      s.url == undefined ? alert("undefined url for ", s.name) : ""
-      s.type == undefined ? await this.findType(s) : ""
-      console.log(s);
-      switch (s.type) {
-        case "folder":
-        await this.loadFolder(s)
-        break;
-        case "profile":
-        case "ttl":
-        await this.loadTtl(s)
-        break;
-        case "json":
-        await this.loadJson(s)
-        break;
-        case "jsonld":
-        await this.loadJsonld(s)
-        break;
-        default:
-        try{
+  async load(){
+    let worker = {id: uuidv4(), action: "Loader.load"}
+    this.options.store.commit('ipgs/workersAdd', worker)
+    console.log(this.options)
+    this.options.type == undefined ? await this.findType(this.options) : ""
+    console.log(this.options);
+    switch (this.options.type) {
+      case "folder":
+      this.loaded = await this.loadFolder(this.options)
+      break;
+      case "profile":
+      case "ttl":
+      this.loaded = await this.loadTtl(this.options)
+      break;
+      case "json":
+      this.loaded = await this.loadJson(this.options)
+      break;
+      case "jsonld":
+      this.loaded = await this.loadJsonld(this.options)
+      break;
+      default:
+      try{
 
-          await this.loadFolder(s)
-        }catch(e){
-          await this.loadTtl(s)
+        this.loaded = await this.loadFolder(this.options)
+      }catch(e){
+        this.loaded = await this.loadTtl(this.options)
 
-        }
-
-
-        //  alert("I dont know how to read ",s.url)
       }
+
+
+      //  alert("I dont know how to read ",s.url)
     }
-    return this.graphs
+
+    this.options.store.commit('ipgs/workersRemove', worker)
+    return this.loaded
   }
 
-  async findType(s){
+  async findType(o){
     // var myHeaders = new Headers();
     //
     // var myInit = { method: 'GET',
@@ -78,13 +72,15 @@ export default class Source {
     //   console.log(data.contentType, data.raw);
     // });
 
-    s.url.endsWith('/') ? s.type = "folder" : ""
-    s.url.endsWith('.ttl') ? s.type = "ttl" : ""
-    s.url.endsWith('card#me') ? s.type = "profile" : ""
-    s.url.endsWith('.json') ? s.type = "json" : ""
-    s.url.endsWith('.jsonld') ? s.type = "jsonld" : ""
-    return s
+    o.url.endsWith('/') ? o.type = "folder" : ""
+    o.url.endsWith('.ttl') ? o.type = "ttl" : ""
+    o.url.endsWith('card#me') ? o.type = "profile" : ""
+    o.url.endsWith('.json') ? o.type = "json" : ""
+    o.url.endsWith('.jsonld') ? o.type = "jsonld" : ""
+    o.url.startsWith('ipfs://') ? o.type = "ipfs" : ""
+    return o
   }
+
 
   async loadFolder(s){
     console.log("Solid Folder or Semapps container ?",s)
@@ -92,19 +88,21 @@ export default class Source {
     let folder = await fc.readFolder(s.url)
     if (folder.size == undefined){
 
-      await this.loadJsonld(s)
+      return await this.loadJsonld(s)
     }else{
       console.log(folder)
-      await this.folderToGraph(folder)
+      return await this.folderToGraph(folder)
     }
     // }catch(e){
     //   alert(e)
     // }
   }
 
+
+
   async loadTtl(s){
     console.log("Load",s)
-    await this.rdfParse(s)
+    return await this.rdfParse(s)
   }
 
   // async loadProfile(s){
@@ -113,10 +111,12 @@ export default class Source {
 
   async loadJson(s){
     console.log("Load",s)
-    await this.loadJsonld(s)
+    return await this.loadJsonld(s)
   }
 
   async loadJsonld(s){
+    let worker = {id: uuidv4(), action: "Loader.load"+s.url}
+    this.options.store.commit('ipgs/workersAdd', worker)
     let documentLoaderType = 'xhr'
     await jsonld.useDocumentLoader(documentLoaderType/*, options*/);
     let doc = await jsonld.documentLoader(s.url, function(err) {
@@ -127,7 +127,8 @@ export default class Source {
     doc.jsonld = JSON.parse(doc.document)
     delete doc.document
     console.log(doc)
-    await this.ldpToGraph(doc)
+        this.options.store.commit('ipgs/workersRemove', worker)
+    return await this.ldpToGraph(doc)
   }
 
   async ldpToGraph(doc){
@@ -144,8 +145,8 @@ export default class Source {
     }
     // graph.id == undefined ? graph.id = new Date(): ""
     // graph.name == undefined ? graph.name = "a jsonld graph": ""
-    this.graphs.push(graph)
-    console.log(this.graphs)
+    return graph
+
   }
 
   async folderToGraph(f){
@@ -166,7 +167,7 @@ export default class Source {
     let g = {nodes: nodes, edges: edges}
     g.id == undefined ? g.id = uuidv4(): ""
     g.name == undefined ? g.name = "a folder graph": ""
-    this.graphs.push(g)
+    return g
   }
 
 
@@ -240,7 +241,7 @@ export default class Source {
       var indexP = graph.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
       indexP === -1 ? graph.edges.push(edge) : console.log("object already exists")
     });
-    this.graphs.push(graph)
+    return graph
   }
 
   // async readFolder(url){
@@ -332,4 +333,59 @@ export default class Source {
 
 
 
+
+
+  async loadIpfs(opts){
+
+    const CID = opts.url.replace('ipfs://', '')
+
+    try {
+      // Await for ipfs node instance.
+      this.ipfs = await this.$ipfs;
+      console.log(this.ipfs)
+      // Call ipfs `id` method.
+      // Returns the identity of the Peer.
+      const { agentVersion, id } = await this.ipfs.id();
+      console.log(agentVersion);
+      console.log(id);
+      // Set successful status text.
+      console.log("Connected to IPFS =)")
+      console.log(CID)
+      const stream =  await this.ipfs.cat(CID)
+      let data = ''
+      console.log("st",stream)
+      for await (const chunk of stream) {
+        console.log(chunk)
+        // chunks of data are returned as a Buffer, convert it back to a string
+        data += chunk.toString()
+      }
+      //  this.restit = data
+      console.log(data)
+      console.info("must take a look at this solution if always preload error: https://github.com/ipfs/js-ipfs/issues/1481")
+
+      try{
+        let d = JSON.parse(data)
+        console.log(d)
+        d.id = uuidv4()
+        d.name = "an ipfs network"
+        if (Array.isArray(d.nodes) && Array.isArray(d.edges) && d.nodes.length > 0){
+          return d
+
+        }else{
+          console.log("no node or edge")
+        }
+
+      }catch(e){
+        console.log("i can't parse", data)
+      }
+
+
+
+    } catch (err) {
+      // Set error status text.
+      console.log(`Error: ${err}`);
+    }
+
+
+  }
 }
