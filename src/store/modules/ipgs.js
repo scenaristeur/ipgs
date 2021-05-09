@@ -158,8 +158,8 @@ const mutations = {
   workersAdd(state, worker){
     state.workers.push(worker)
   },
-  workersRemove(state,worker){
-    state.workers = state.workers.filter(w => {return w.id != worker.id}  )
+  workersRemove(state,id){
+    state.workers = state.workers.filter(w => {return w.id = id}  )
   },
   workersInit(state){
     state.workers = []
@@ -170,6 +170,8 @@ const mutations = {
   },
   updateGraph(state, graph){
     var index = state.graphs.findIndex(x => x.id==graph.id);
+    console.log(state.graphs)
+    console.log(index, graph.id)
     index === -1 ? state.graphs.push(graph) : Object.assign(this.graphs[index], graph)
   },
   toggleGraphsPanel(state){

@@ -48,7 +48,7 @@ export default class Loader {
       //  alert("I dont know how to read ",s.url)
     }
 
-    this.options.store.commit('ipgs/workersRemove', worker)
+    this.options.store.commit('ipgs/workersRemove', worker.id)
     return this.loaded
   }
 
@@ -127,7 +127,7 @@ export default class Loader {
     doc.jsonld = JSON.parse(doc.document)
     delete doc.document
     console.log(doc)
-        this.options.store.commit('ipgs/workersRemove', worker)
+    this.options.store.commit('ipgs/workersRemove', worker.id)
     return await this.ldpToGraph(doc)
   }
 
@@ -165,21 +165,21 @@ export default class Loader {
       edges.push({from: f.url, to: fi.url, label: 'contains'})
     });
     let g = {nodes: nodes, edges: edges}
-    g.id == undefined ? g.id = uuidv4(): ""
+
     g.name == undefined ? g.name = "a folder graph": ""
     return g
   }
 
 
   async pairToGraph(doc){
-    let graph = {id: uuidv4(), name: "a pairTograph", nodes: [], edges: []}
+    let graph = { name: "a pairTograph", nodes: [], edges: []}
     let items = doc.jsonld["ldp:contains"]
     graph.nodes = items//.map(obj=> ({ ...obj, label: this.getLabel(obj) })) // if no name -> id as label
     return graph
   }
 
   async oneItemToGraph(doc){
-    let graph = {id: uuidv4(), name: "a oneItemTograph",nodes: [], edges: []}
+    let graph = { name: "a oneItemTograph",nodes: [], edges: []}
     let item = doc.jsonld
     graph.nodes.push(item)
     return graph
@@ -223,7 +223,7 @@ export default class Loader {
 
   async rdfParse(s){
     let module = this
-    let graph = {id: new uuidv4(), name: "a rdfParse", nodes: [], edges: []}
+    let graph = { name: "a rdfParse", nodes: [], edges: []}
     let dataset = await getSolidDataset(s.url, { fetch: fetch });
     console.log(dataset)
     await dataset._quads.forEach(async function (q)  {
@@ -366,7 +366,7 @@ export default class Loader {
       try{
         let d = JSON.parse(data)
         console.log(d)
-        d.id = uuidv4()
+
         d.name = "an ipfs network"
         if (Array.isArray(d.nodes) && Array.isArray(d.edges) && d.nodes.length > 0){
           return d

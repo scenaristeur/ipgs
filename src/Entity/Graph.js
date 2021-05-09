@@ -1,8 +1,11 @@
 import Network from './Network.js'
 import Loader from './Loader.js'
+import { v4 as uuidv4 } from 'uuid';
+
 export default class Graph extends Network {
   constructor(opts) {
     super()
+    this.id = uuidv4()
     this.options = opts
     this.checkOptions()
     console.log(this)

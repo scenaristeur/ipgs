@@ -3,9 +3,9 @@
     <div id="outerContainer">
       <div id="container" ref="container">
         <GraphsList />
-        <div id="item" ref="item">
+        <!-- <div id="item" ref="item">
 
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- <vue-window-modal  :active="graphsPanelShow"  title="Graphs"  v-on:clickClose="toggleGraphsPanel">

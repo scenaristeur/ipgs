@@ -3,7 +3,7 @@
     <Navbar size="sm" />
     <p v-for="w in workers" :key="w.id">{{w.action}}</p>
     <b-spinner variant="primary" style="z-index:6" class="ml-auto" :title="w.action" v-for="w in workers" :key="w.id"></b-spinner>
-
+    <Landing />
     <Graphs />
     <transition name="slide">
       <router-view/>
@@ -24,6 +24,7 @@ export default {
     'Navbar': () => import('@/components/layout/Navbar'),
     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
     'HelpView': () => import('@/views/HelpView'),
+    'Landing': () => import('@/views/Landing'),
     'Graphs': () => import('@/components/graphs/Graphs'),
     //  'Fab': () => import('@/components/basic/Fab.vue')
   },

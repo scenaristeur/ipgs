@@ -95,6 +95,7 @@
 
 <script>
 import "vue-vis-network/node_modules/vis-network/dist/vis-network.css";
+import IpgsMixin from '@/mixins/IpgsMixin'
 
 import NetMixin from '@/mixins/NetMixin'
 import NetworkEvent from '@/mixins/NetworkEventMixin'
@@ -125,7 +126,7 @@ let defEdges = [
 
 export default {
   name: "NetworkVis",
-  mixins: [NetworkEvent, NetMixin],
+  mixins: [IpgsMixin, NetworkEvent, NetMixin],
   components: {
     //  Network,
     'NetworkPopups': () => import('@/components/network/NetworkPopups'),
