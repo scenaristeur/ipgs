@@ -30,6 +30,10 @@ import VueIpfs from './plugins/vue-ipfs';
 // Load our IPFS plugin.
 Vue.use(VueIpfs);
 
+import  VueWindowModal  from  'vue-window-modal'
+
+Vue.use(VueWindowModal)
+
 
 
 // import VueFab from 'vue-float-action-button'

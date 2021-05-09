@@ -1,9 +1,17 @@
 //let ldflex = window.solid
+import { v4 as uuidv4 } from 'uuid';
 
 const state = () => ({
   //  sources: [],
   spinner: 0,
-  graphs: [],
+  graphs: [
+    {"id": uuidv4(), "name": "Graph1", format: "jsonld", "type": "local", network: {nodes: [], edges: []}, source: {url: "http://blal", params:[]}},
+    {"id": uuidv4(), "name": "Graph2", format: "jsonld", "type": "podResource", network: {nodes: [], edges: []}, source: {url: "http://blal", params:[]}},
+    {"id": uuidv4(), "name": "Graph3", format: "jsonld", "type": "podFolder", network: {nodes: [], edges: []}, source: {url: "http://blal", params:[]}},
+    {"id": uuidv4(), "name": "Graph4", format: "jsonld", "type": "remote", network: {nodes: [], edges: []}, source: {url: "http://blal", params:[]}},
+    {"id": uuidv4(), "name": "Graph5", format: "jsonld", "type": "remote", network: {nodes: [], edges: []}, source: {url: "http://blal", params:[]}},
+  ],
+  graphsPanelShow: true,
 
   /////////////////////////////////////
   inputObject: null,
@@ -158,8 +166,12 @@ const mutations = {
   spinnerInit(state){
     state.spinner = 0
   },
-  setGraphs(state, graphs){
-    state.graphs = graphs
+  addGraphs(state, graphs){
+    state.graphs = [...state.graphs, ...graphs]
+    console.log(state.graphs)
+  },
+  toggleGraphsPanel(state){
+    state.graphsPanelShow = !state.graphsPanelShow
   }
 
 

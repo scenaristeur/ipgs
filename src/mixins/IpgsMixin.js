@@ -1,4 +1,5 @@
 import Source from '@/models/Source'
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   // async  created(){
@@ -72,8 +73,10 @@ export default {
         try{
           let d = JSON.parse(data)
           console.log(d)
+          d.id = uuidv4()
+          d.name = "an ipfs network"
           if (Array.isArray(d.nodes) && Array.isArray(d.edges) && d.nodes.length > 0){
-          this.$store.commit('ipgs/setGraphs', [d])
+            this.$store.commit('ipgs/addGraphs', [d])
 
           }
 
@@ -93,7 +96,11 @@ export default {
     async load(s){
 
       console.log("TODO, find another way to not clear the graph when navig with Solid folder, and allow expanding when clicking on a node for ldp semapps container")
-      this.$store.commit('ipgs/setGraphs', [{nodes:[], edges: []}])
+      let g = {network: {nodes:[], edges: []}}
+      g.id = uuidv4()
+      g.name = "find another way to not clear the graph when navig with Solid folder"
+
+      this.$store.commit('ipgs/addGraphs', [g])
 
       this.$store.commit('ipgs/spinnerAdd')
 
@@ -102,7 +109,7 @@ export default {
       let source = new Source(sources)
       let graphs = await source.load()
       console.log(graphs)
-      this.$store.commit('ipgs/setGraphs', graphs)
+      this.$store.commit('ipgs/addGraphs', graphs)
       //       this.$router.push(({ name: 'Network', query: { url: this.$route.query.url } }))
 
       this.$store.commit('ipgs/spinnerRemove')

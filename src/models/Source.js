@@ -5,6 +5,7 @@ const fc = new FC( auth )
 import * as jsonld from 'jsonld';
 import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
 import { getSolidDataset/*, saveSolidDatasetAt*/ } from "@inrupt/solid-client";
+import { v4 as uuidv4 } from 'uuid';
 
 /**
 * Represents a Source of Data.
@@ -141,7 +142,10 @@ export default class Source {
       //alert("no ldp:contains for ", doc.documentUrl)
       graph = await this.oneItemToGraph(doc)
     }
+    // graph.id == undefined ? graph.id = new Date(): ""
+    // graph.name == undefined ? graph.name = "a jsonld graph": ""
     this.graphs.push(graph)
+    console.log(this.graphs)
   }
 
   async folderToGraph(f){
@@ -159,21 +163,22 @@ export default class Source {
       nodes.push({id: fi.url, label: fi.name, shape: "image", image: "./assets/document.png", type: "file", built: true})
       edges.push({from: f.url, to: fi.url, label: 'contains'})
     });
-
-
-    this.graphs.push({nodes: nodes, edges: edges})
+    let g = {nodes: nodes, edges: edges}
+    g.id == undefined ? g.id = uuidv4(): ""
+    g.name == undefined ? g.name = "a folder graph": ""
+    this.graphs.push(g)
   }
 
 
   async pairToGraph(doc){
-    let graph = {nodes: [], edges: []}
+    let graph = {id: uuidv4(), name: "a pairTograph", nodes: [], edges: []}
     let items = doc.jsonld["ldp:contains"]
     graph.nodes = items//.map(obj=> ({ ...obj, label: this.getLabel(obj) })) // if no name -> id as label
     return graph
   }
 
   async oneItemToGraph(doc){
-    let graph = {nodes: [], edges: []}
+    let graph = {id: uuidv4(), name: "a oneItemTograph",nodes: [], edges: []}
     let item = doc.jsonld
     graph.nodes.push(item)
     return graph
@@ -217,7 +222,7 @@ export default class Source {
 
   async rdfParse(s){
     let module = this
-    let graph = {nodes: [], edges: []}
+    let graph = {id: new uuidv4(), name: "a rdfParse", nodes: [], edges: []}
     let dataset = await getSolidDataset(s.url, { fetch: fetch });
     console.log(dataset)
     await dataset._quads.forEach(async function (q)  {

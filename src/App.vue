@@ -2,6 +2,8 @@
   <div id="app">
     <Navbar size="sm" />
     <b-spinner variant="primary" style="z-index:6" class="ml-auto" v-if="spinner>0"></b-spinner>
+
+    <Graphs />
     <transition name="slide">
       <router-view/>
     </transition>
@@ -21,6 +23,7 @@ export default {
     'Navbar': () => import('@/components/layout/Navbar'),
     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
     'HelpView': () => import('@/views/HelpView'),
+    'Graphs': () => import('@/components/graphs/Graphs'),
     //  'Fab': () => import('@/components/basic/Fab.vue')
   },
   async created(){

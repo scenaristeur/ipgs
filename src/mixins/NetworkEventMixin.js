@@ -188,14 +188,26 @@ export default {
 
     graphsChanged(){
       console.log("GRAPHS CHANGED", this.graphs)
+      console.info("TEST WITH ONE GRAPH")
+      this.network = {nodes: [],edges: []}
+      this.graphs.forEach(g => {
+        console.log(g)
+        this.network.nodes = [...this.network.nodes, ...g.network.nodes]
+        this.network.edges = [...this.network.edges, ...g.network.edges]
+
+      });
+
     }
   },
   watch:{
     graphs(){
       console.log(this.graphs)
       this.graphsChanged()
-      console.info("TEST WITH ONE GRAPH")
-      this.network = this.graphs[0]
+
+
+
+
+
     }
   },
   computed: {
