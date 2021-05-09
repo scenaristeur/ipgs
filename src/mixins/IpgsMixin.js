@@ -9,10 +9,22 @@ export default {
   //
   //   },
   methods: {
+    async loadStorage(){
+      this.storage = this.$store.state.solid.storage
+      //console.log(this.storage)
+      if (this.storage != null){
+        let worker = {id: uuidv4(), action: "Loading Pod Storage"}
+        this.$store.commit('ipgs/workersAdd', worker)
+        console.log("load storage",this.storage)
+        let g = new Graph({id: uuidv4(), name:"init Graph from storage",  url: this.storage,  status: "start", store: this.$store})
+        this.$store.commit('ipgs/addGraphs', [g])
+        this.$store.commit('ipgs/workersRemove', worker)
+      }
+    },
     async  checkQueryUrl() {
       this.$store.commit('ipgs/workersInit')
-      let worker = {id: uuidv4(), action: "init"}
-      this.$store.commit('ipgs/workersAdd', worker)
+
+
       if (this.$route.query.url != undefined && this.$route.query.url.length > 0){
         //  console.log(this.$route)
         let url = this.$route.query.url
@@ -28,20 +40,16 @@ export default {
         // }
         //
         // console.log("URL", url)
-
-        let g = new Graph({id: uuidv4(), name:"init Graph from url",  url: url, store: this.$store})
+        let worker = {id: uuidv4(), action: "Loading "+url}
+        this.$store.commit('ipgs/workersAdd', worker)
+        let g = new Graph({id: uuidv4(), name:"init Graph from url",  url: url,  status: "start", store: this.$store})
         this.$store.commit('ipgs/addGraphs', [g])
-
-      }else{
-        this.storage = this.$store.state.solid.storage
-        //console.log(this.storage)
-        if (this.storage != null){
-          console.log("TODO TODO TODO load storage",this.storage)
-          //  await this.load({name:"Storage", url:this.storage})
-        }
+        this.$store.commit('ipgs/workersRemove', worker)
       }
 
-      this.$store.commit('ipgs/workersRemove', worker)
+
+
+
     },
 
     // async load(s){

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Navbar size="sm" />
-    <!-- workers : {{ workers }} -->
-    <b-spinner variant="primary" style="z-index:6" class="ml-auto" v-for="w in workers" :key="w.id"></b-spinner>
+    <p v-for="w in workers" :key="w.id">{{w.action}}</p>
+    <b-spinner variant="primary" style="z-index:6" class="ml-auto" :title="w.action" v-for="w in workers" :key="w.id"></b-spinner>
 
     <Graphs />
     <transition name="slide">
