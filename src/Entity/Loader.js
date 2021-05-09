@@ -8,11 +8,14 @@ import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from 
 
 
 export default class Loader {
-  constructor(opts) {
-    this.options = opts
+  constructor(graph) {
+    this.options = graph.options
+    this.callback = graph.callback
+    //this.id = this.options.id
 
     this.loaded = {}
     console.log(this)
+
   }
 
   async load(){
@@ -47,7 +50,9 @@ export default class Loader {
 
       //  alert("I dont know how to read ",s.url)
     }
-
+    console.log("callback in loader1")
+    this.callback(this)
+    console.log("callback in loader2")
     // this.options.store.commit('ipgs/workersRemove', worker.id)
     return this.loaded
   }

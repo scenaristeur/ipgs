@@ -2,17 +2,32 @@ import Graph from '@/Entity/Graph'
 
 export default {
   methods:{
-    createGraph(options){
+    async createGraph(options){
       // options.onUpdate = this.onUpdate
-      let graph = new Graph(options)
+      return  await new Graph(options, this.onProgress)
 
-      console.log(graph)
-      this.$store.commit('ipgs/addGraphs', [this])
+      // console.log(graph)
+      // await this.$store.commit('ipgs/updateGraph', graph)
+    //  this.$store.commit('ipgs/addGraphs', [graph])
+    //  return graph
     },
-    //onUpdate(g){
-    //   console.log("ONUPDATE",g)
-    // //  this.$store.commit('ipgs/updateGraph', g)
-    // }
+    async updateGraph(g){
+    await this.onProgres(g)
+    },
+    async onProgress(g){
+
+      console.log("ONUPDATE",g)
+      // let graph = {
+      //   id: g.options.id,
+      //   name: g.options.name,
+      //   nodes: g.loaded.nodes,
+      //   edges: g.loaded.edges
+      //
+      // }
+      //
+      // console.log("graph",graph)
+      await this.$store.commit('ipgs/updateGraph', g)
+    }
 
   }
 }

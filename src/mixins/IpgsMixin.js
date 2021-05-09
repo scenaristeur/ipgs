@@ -10,7 +10,7 @@ export default {
     async loadStorage(){
       if (this.storage != null){
         let w_storage = this.w_start("Loading Pod Storage")
-        this.createGraph({name:"init Graph from storage",  url: this.storage,  status: "start"})
+        this.createGraph({name:"init Graph from storage",  url: this.storage})
 
         this.w_kill(w_storage)
       }
@@ -20,7 +20,7 @@ export default {
       if (this.$route.query.url != undefined && this.$route.query.url.length > 0){
         let url = this.$route.query.url
         let worker_url = this.w_start("Loading "+url)
-        this.createGraph({name:"init Graph from url",  url: url,  status: "start"})
+        this.createGraph({name:"init Graph from url",  url: url})
 
         this.w_kill(worker_url)
       }

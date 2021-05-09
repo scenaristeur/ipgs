@@ -65,7 +65,10 @@ export default {
       editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
     }
 
-     this.createGraph({name:"Help",  type: "default",status: "ready", nodes: defNodes, edges: defEdges})
+     let graph = await this.createGraph({name:"Help",  type: "default",status: "ready"})
+     graph.nodes = defNodes
+     graph.edges = defEdges
+    // this.updateGraph(graph)
 
   },
 
