@@ -1,6 +1,7 @@
 //import { v4 as uuidv4 } from 'uuid';
 let omitted = [ "@context", "id", "label", "pair:label", "name",  "inbox", "outbox", "followers", "following", "publicKey", "shape", /*"type",*/ "title", "color", "image"]
 
+
 export default {
 
   methods: {
@@ -186,16 +187,29 @@ export default {
     },
 
 
-    graphsChanged(){
+    async graphsChanged(){
       console.log("GRAPHS CHANGED", this.graphs)
       console.info("TEST WITH ONE GRAPH")
-      this.network = {nodes: [],edges: []}
-      this.graphs.forEach(g => {
+      //this.network = {nodes: [],edges: []}
+      for await (let g of this.graphs) {
         console.log(g)
-        this.network.nodes = [...this.network.nodes, ...g.nodes]
-        this.network.edges = [...this.network.edges, ...g.edges]
 
-      });
+        for await (let n of g.nodes){
+        //  n.cid = g.id
+        let worker_n = this.w_start("Loading "+n.id)
+          var indexN = this.network.nodes.findIndex(x => x.id==n.id);
+          indexN === -1 ? this.network.nodes.push(n) : Object.assign(this.network.nodes[indexN], n)
+          this.w_kill(worker_n)
+        }
+
+        for await (let e of g.edges){
+          var indexE = this.network.edges.findIndex(x => x.id==e.id || (x.from == e.from && x.to == e.to && x.label == e.label));
+          indexE === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[indexE], e)
+        }
+
+
+      }
+      console.log("network",this.network)
 
     }
 

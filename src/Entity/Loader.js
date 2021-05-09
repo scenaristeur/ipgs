@@ -9,6 +9,8 @@ import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from 
 
 export default class Loader {
   constructor(graph) {
+    console.log(graph)
+    this.id = graph.id
     this.options = graph.options
     this.callback = graph.callback
     //this.id = this.options.id

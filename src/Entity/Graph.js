@@ -1,8 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
 import Network from './Network.js'
 import Loader from './Loader.js'
 export default class Graph extends Network {
   constructor(opts, callback) {
     super()
+    this.id = uuidv4()
     this.options = opts
     this.callback = callback
     this.status = "graph constructor"

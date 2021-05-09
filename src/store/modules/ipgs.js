@@ -172,7 +172,7 @@ const mutations = {
     var index = state.graphs.findIndex(x => x.id==graph.id);
     console.log(state.graphs)
     console.log(index, graph.id)
-    index === -1 ? state.graphs.push(graph) : Object.assign(this.graphs[index], graph)
+    index === -1 ? state.graphs.push(graph) : Object.assign(state.graphs[index], graph)
   },
   toggleGraphsPanel(state){
     state.graphsPanelShow = !state.graphsPanelShow
