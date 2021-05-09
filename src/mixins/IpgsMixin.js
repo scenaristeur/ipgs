@@ -1,8 +1,8 @@
-import Graph from '@/Entity/Graph'
+import GraphMixin from '@/mixins/GraphMixin'
 import WorkerMixin from '@/mixins/WorkerMixin'
 
 export default {
-  mixins: [WorkerMixin],
+  mixins: [WorkerMixin, GraphMixin],
   mounted(){
     this.storage = this.$store.state.solid.storage
   },
@@ -10,8 +10,8 @@ export default {
     async loadStorage(){
       if (this.storage != null){
         let w_storage = this.w_start("Loading Pod Storage")
-        let g = new Graph({name:"init Graph from storage",  url: this.storage,  status: "start", store: this.$store})
-        this.$store.commit('ipgs/addGraphs', [g])
+        this.createGraph({name:"init Graph from storage",  url: this.storage,  status: "start"})
+
         this.w_kill(w_storage)
       }
     },
@@ -20,8 +20,8 @@ export default {
       if (this.$route.query.url != undefined && this.$route.query.url.length > 0){
         let url = this.$route.query.url
         let worker_url = this.w_start("Loading "+url)
-        let g = new Graph({name:"init Graph from url",  url: url,  status: "start", store: this.$store})
-        this.$store.commit('ipgs/addGraphs', [g])
+        this.createGraph({name:"init Graph from url",  url: url,  status: "start"})
+
         this.w_kill(worker_url)
       }
     },

@@ -1,11 +1,8 @@
+import GraphMixin from '@/mixins/GraphMixin'
 import networkUtilMixin from '@/mixins/networkUtilMixin'
-//import Network from '@/models/Network.js'
-//import Loader from '@/util/Loader.js'
-
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
-
 
 // 1 to 99 reserved for technical configs, other cid can start at 100
 // cid are used to cluster/group nodes in a network
@@ -32,17 +29,32 @@ let cid_config = {
   51: { id: "checkbox", label: "Checkboxes"},
 }
 
+let defNodes = [
+  { id: 'n1', label: "Ipgs", color: {background: 'red'}, shape: 'circle' },
+  { id: 'n2', label: "WebApp", color: {background: 'green'}, shape: 'star', cid: 40 },
+  { id: 'n3', label: "InterPlanetary Graph System", shape: 'box'},
+  { id: 'n4', label: "Mindmap App", cid: 40 },
+  { id: 'n5', label: "To know how to use Ipgs,\n type /h in the top input box and hit Enter", shape: 'box', color: "#ECC046", cid: 1},
+  { id: 'n6', label: "Pour savoir comment utiliser Ipgs,\n tapez /h dans le champ de saisie tout en haut", shape: 'box', color: "#ECC046", cid: 1 },
+  { id: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "-> Archipel Semapps", shape: 'box', color: '#7FD1B9', cid: 2},
+  { id: "https://spoggy-test9.solidcommunity.net/public/", label: "-> Spoggy-test9 Public Folder", shape: 'box', color: '#7FD1B9', cid: 2},
+
+]
+
+let defEdges = [
+  { id: 'e1', from: 'n1', to: 'n2', label: 'type' },
+  { id: 'e2', from: 'n1', to: 'n3', label: 'name' },
+  { id: 'e3', from: 'n1', to: 'n4', label: 'type' },
+  { id: 'e4', from: 'n1', to: 'n5', label: 'help' },
+  { id: 'e5', from: 'n1', to: 'n6', label: 'help' },
+  { id: 'e6', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "example"},
+  { id: 'e7', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/", label: "example"}
+]
+
 
 
 export default {
-  mixins: [networkUtilMixin],
-  data() {
-    return {
-
-      // A VIRER
-      //  loader: new Loader(),
-    }
-  },
+  mixins: [networkUtilMixin, GraphMixin],
   async created(){
     let app = this
     this.network.options.manipulation = {
@@ -51,48 +63,13 @@ export default {
       editNode: async (node, callback) => { app.editNode(node, callback) },
       addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
       editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
-
-      //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
-      //  editEdge: {}
     }
 
-
-    //  this.network.options.manipulation.editEdge.editWithoutDrag = async (edge, callback) => {app.editWithoutDrag(edge, callback)}
-
-
-
-    // if (this.$route.query.url != undefined ){
-    //   this.url = this.$route.query.url
-    //   console.log('url',this.url)
-    //
-    // }
-    // this.storage = this.$store.state.solid.storage
-    //
-    // if(this.storage != null){
-    //   console.log("storage",this.storage)
-    // }
-
-    // if (this.$route.query.url != undefined ){
-    //   this.url = this.$route.query.url
-    //   console.log("OLD LOAD load url",this.url)
-    // //  await this.load(this.url)
-    // }else{
-    //   this.storage = this.$store.state.solid.storage
-    //   //console.log(this.storage)
-    //   if (this.storage != null){
-    //     console.log("load storage",this.storage)
-    //     await this.load(this.storage)
-    //   }
-    // }
-
-
-
+     this.createGraph({name:"Help",  type: "default",status: "ready", nodes: defNodes, edges: defEdges})
 
   },
 
   mounted() {
-    //do something after mounting vue instance
-
     var cids = [...new Set(this.network.nodes.map(item => item.cid))].filter(Boolean);
     console.log("cids",cids)
     //  var clusterOptionsByData = function(cid) ;
@@ -158,44 +135,6 @@ export default {
         }
 
       },
-
-      // async load1(url){
-      //   console.log("load",url)
-      //   let d = new Date()
-      //   this.net = new Network()
-      //   let dat = await this.loader.load(url)
-      //   //  console.log("DAT",dat)
-      //   await this.net.hydrate(dat)
-      //   this.network.nodes = this.net.visRepresentation.nodes
-      //   this.network.edges = this.net.visRepresentation.edges
-      //   console.warn(d, this.network)
-      //
-      //   //console.warn(this.network)
-      // },
-      // onSelectNode(p){
-      //   console.log(p)
-      //   console.log(p.nodes[0])
-      //   //console.log(this.nodes)
-      //   let node = this.network.nodes.find(x => x.id==p.nodes[0]);
-      //   console.log(node)
-      //   this.$store.commit('ipgs/addToHistory', node)
-      //   //  if(node.type == 'folder' || node.type == 'file'){
-      //   try{
-      //     if(node.id.startsWith('http')){
-      //       this.load(node.id)
-      //     }else{
-      //       this.$store.commit('ipgs/setCommandInput', node.label+' ')
-      //     }
-      //   }catch(e){
-      //     alert(e)
-      //   }
-      //   // console.log(this.nodeData)
-      //   //
-      //   // this.$bvModal.show("node-menu")
-      //
-      //   //}
-      //
-      // },
       editNode(node, callback){
         //    this.node = node
         node.color == undefined ? node.color =  {  background: '#D2E5FF', border: '#2B7CE9'} : ""

@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
@@ -16,8 +16,8 @@ export default class Loader {
   }
 
   async load(){
-    let worker = {id: uuidv4(), action: "Loader.load"}
-    this.options.store.commit('ipgs/workersAdd', worker)
+    // let worker = {id: uuidv4(), action: "Loader.load"}
+    // this.options.store.commit('ipgs/workersAdd', worker)
     console.log(this.options)
     this.options.type == undefined ? await this.findType(this.options) : ""
     console.log(this.options);
@@ -48,7 +48,7 @@ export default class Loader {
       //  alert("I dont know how to read ",s.url)
     }
 
-    this.options.store.commit('ipgs/workersRemove', worker.id)
+    // this.options.store.commit('ipgs/workersRemove', worker.id)
     return this.loaded
   }
 
@@ -115,8 +115,8 @@ export default class Loader {
   }
 
   async loadJsonld(s){
-    let worker = {id: uuidv4(), action: "Loader.load"+s.url}
-    this.options.store.commit('ipgs/workersAdd', worker)
+    // let worker = {id: uuidv4(), action: "Loader.load"+s.url}
+    // this.options.store.commit('ipgs/workersAdd', worker)
     let documentLoaderType = 'xhr'
     await jsonld.useDocumentLoader(documentLoaderType/*, options*/);
     let doc = await jsonld.documentLoader(s.url, function(err) {
@@ -127,7 +127,7 @@ export default class Loader {
     doc.jsonld = JSON.parse(doc.document)
     delete doc.document
     console.log(doc)
-    this.options.store.commit('ipgs/workersRemove', worker.id)
+    // this.options.store.commit('ipgs/workersRemove', worker.id)
     return await this.ldpToGraph(doc)
   }
 

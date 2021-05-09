@@ -1,23 +1,28 @@
 import Network from './Network.js'
 import Loader from './Loader.js'
-import { v4 as uuidv4 } from 'uuid';
-
 export default class Graph extends Network {
   constructor(opts) {
     super()
-    this.id = uuidv4()
     this.options = opts
-    this.checkOptions()
+    this.init()
+
     console.log(this)
+
+  }
+
+  async init(){
+    let loaded = await this.checkOptions()
+    console.log("LOADED",loaded)
+    this.options.onUpdate(loaded)
+    await this.options.onUpdate(loaded)
   }
 
   async checkOptions(){
 
     if (this.options.url != undefined){
-      let loader = new Loader(this.options)
-      let loaded = await loader.load()
-      console.log("LOADED",loaded)
-      this.options.store.commit('ipgs/updateGraph', loaded)
+      let loader = new Loader(this)
+      return await loader.load()
+
     }
 
 
