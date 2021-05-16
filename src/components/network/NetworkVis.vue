@@ -171,37 +171,7 @@ export default {
           interaction: {
             navigationButtons: true,
           //  tooltipDelay: 200,
-          //  hideEdgesOnDrag: true,
-          },
-        },
-        options1: {
-          interaction: {
-            navigationButtons: true,
-          },
-          //  manipulation: true,
-          nodes: {
-            // shape: "circle",
-            // size:24,
-            // color: {
-            //   background: '#D2E5FF',
-            //   border: '#2B7CE9',
-            //   highlight: {
-            //     border: 'black',
-            //     background: 'white'
-            //   },
-            // hover: {
-            //   border: 'orange',
-            //   background: 'grey'
-            // }
-            //  },
-            font:{color:'black'},
-            // shapeProperties: {
-            //   useBorderWithImage:true
-            // }
-          },
-          edges: {
-            arrows: 'to',
-            //  color: 'lightgray'
+            hideEdgesOnDrag: true,
           },
         }
       }
