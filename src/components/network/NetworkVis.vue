@@ -136,7 +136,7 @@ export default {
       network: {
         nodes: defNodes.slice(0),
         edges: defEdges.slice(0),
-        options: {
+        optionsBUGCHROME: {
           locale: navigator.language,
           nodes: {
             //  shape: "dot",
@@ -171,7 +171,37 @@ export default {
           interaction: {
             navigationButtons: true,
           //  tooltipDelay: 200,
-            hideEdgesOnDrag: true,
+          //  hideEdgesOnDrag: true,
+          },
+        },
+        options: {
+          interaction: {
+            navigationButtons: true,
+          },
+            manipulation: true,
+          nodes: {
+            // shape: "circle",
+            // size:24,
+            // color: {
+            //   background: '#D2E5FF',
+            //   border: '#2B7CE9',
+            //   highlight: {
+            //     border: 'black',
+            //     background: 'white'
+            //   },
+            // hover: {
+            //   border: 'orange',
+            //   background: 'grey'
+            // }
+            //  },
+            font:{color:'black'},
+            // shapeProperties: {
+            //   useBorderWithImage:true
+            // }
+          },
+          edges: {
+            arrows: 'to',
+            //  color: 'lightgray'
           },
         }
       }

@@ -44,17 +44,17 @@ export default {
     }
   },
   async created(){
-    let app = this
-    this.network.options.manipulation = {
-      initiallyActive: true,
-      addNode: async (node, callback) => { node.label = "" ; app.editNode(node, callback) },
-      editNode: async (node, callback) => { app.editNode(node, callback) },
-      addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
-      editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
-
-      //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
-      //  editEdge: {}
-    }
+    // let app = this
+    // this.network.options.manipulation = {
+    //   initiallyActive: true,
+    //   addNode: async (node, callback) => { node.label = "" ; app.editNode(node, callback) },
+    //   editNode: async (node, callback) => { app.editNode(node, callback) },
+    //   addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
+    //   editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
+    //
+    //   //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
+    //   //  editEdge: {}
+    // }
 
 
     //  this.network.options.manipulation.editEdge.editWithoutDrag = async (edge, callback) => {app.editWithoutDrag(edge, callback)}
@@ -85,13 +85,28 @@ export default {
     //   }
     // }
 
-
+  console.log(this.network)
 
 
   },
 
   mounted() {
     //do something after mounting vue instance
+    let app = this
+    console.log(this.network)
+
+  //this.network.options.locale =  navigator.language,
+
+    this.network.options.manipulation = {
+      initiallyActive: true,
+      addNode: async (node, callback) => { node.label = "" ; app.editNode(node, callback) },
+      editNode: async (node, callback) => { app.editNode(node, callback) },
+      addEdge: async (edge, callback) => { app.addEdge(edge, callback) },
+      editEdge: { editWithoutDrag: async (edge, callback) => {app.editWithoutDrag(edge, callback)} }
+
+      //  editEdge: async (edge, callback) => { app.editWithoutDrag(edge, callback) },
+      //  editEdge: {}
+    }
 
     var cids = [...new Set(this.network.nodes.map(item => item.cid))].filter(Boolean);
     console.log("cids",cids)
