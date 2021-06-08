@@ -170,8 +170,8 @@ export default {
           },
           interaction: {
             navigationButtons: true,
-          //  tooltipDelay: 200,
-          //  hideEdgesOnDrag: true,
+            //  tooltipDelay: 200,
+            //  hideEdgesOnDrag: true,
           },
         },
         options: {
@@ -180,7 +180,7 @@ export default {
             tooltipDelay: 200,
             hideEdgesOnDrag: true,
           },
-            manipulation: true,
+          manipulation: true,
           nodes: {
             // shape: "circle",
             // size:24,
@@ -200,6 +200,7 @@ export default {
             // shapeProperties: {
             //   useBorderWithImage:true
             // }
+            
           },
           edges: {
             arrows: 'to',
