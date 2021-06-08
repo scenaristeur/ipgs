@@ -177,6 +177,8 @@ export default {
         options: {
           interaction: {
             navigationButtons: true,
+            tooltipDelay: 200,
+            hideEdgesOnDrag: true,
           },
             manipulation: true,
           nodes: {
