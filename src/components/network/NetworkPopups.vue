@@ -42,8 +42,8 @@ export default {
     },
     saveEdge(e){
       console.log(e)
-      var index = this.network.edges.findIndex(x => x.id==e.id);
-      index === -1 ? this.n.edges.push(e) : Object.assign(this.network.edges[index], e)
+      var index = this.network.edges.findIndex(x => x.id==e.id || (x.from == e.from && x.to == e.to && x.label == e.label));
+      index === -1 ? this.network.edges.push(e) : Object.assign(this.network.edges[index], e)
     },
   },
   watch:{
