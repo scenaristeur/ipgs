@@ -3,7 +3,7 @@
     <div id="mynetwork" class="network">N/A</div>
 
     <b-button @click="clusterByGroup">Cluster By group</b-button>
-    source : {{ source}}
+    source : {{ src}}
   </div>
 </template>
 
@@ -11,14 +11,23 @@
 import { DataSet } from "vis-data";
 import { Network } from "vis-network";
 import "vis-network/styles/vis-network.css";
+import Source from '@/models/Source'
 
 export default {
   name: 'Network',
   props: ['source'],
-  // created(){
-  //   this.localResources = this.$store.state.localResources
-  //   console.log(this.localResources)
-  // },
+  data(){
+    return{
+      pathsep:'/',
+      src: null,
+      useSource: false // test avec l'ancien Source ou avec getSolidDataset
+    }
+  },
+  created(){
+    this.src = this.source
+    // this.localResources = this.$store.state.localResources
+    // console.log(this.localResources)
+  },
   mounted(){
 
     // create an array with nodes
@@ -47,6 +56,7 @@ export default {
       edges: edges
     };
     const options = {
+      manipulation: true,
       interaction: {
         navigationButtons: true,
         //  keyboard: true,
@@ -65,6 +75,9 @@ export default {
             console.log("input.value", n_id)
             let n = this.data.nodes.get(n_id);
             console.log("selected",n)
+            this.src = n.id
+            // this.currentRemoteUrl = n.id
+            // this.$setCurrentThingUrl(n.id)
 
             if (n.type == 'file'){
 
@@ -124,23 +137,31 @@ export default {
 
       add(item){
         let color = '#55D5E0'
+
         let label = item.path.split(this.pathsep).pop()
-        this.data.nodes.update([{
-          id: item.path, label:label, color:color, type: 'file', group: "file"
-        }])
+        let node= { id: item.path, label:label, color:color, type: 'file', group: "file"}
+        console.log(node)
+        this.data.nodes.update([node])
         this.linkContainer(item)
-        if (label.startsWith('_')){
-          this.$socket.emit('read file', {path: item.path, callback: 'vatch/processMetaFile'});
-        }
+        // if (label.startsWith('_')){
+        //   this.$socket.emit('read file', {path: item.path, callback: 'vatch/processMetaFile'});
+        // }
 
       },
       addDir(item){
         let p = item.path.split(this.pathsep)
         let color = p.length == 1 ? '#F26619' : '#F6B12D'
-        this.data.nodes.update([{
-          id: item.path, label:p.pop(),shape: 'box', color: color, type: 'folder', group: "folder"
-        }])
-        this.linkContainer(item)
+        let label = p.pop()
+        if (label.length == 0){
+          label = p.pop()
+        }
+        let node = {id: item.path, label:label,shape: 'box', color: color, type: 'folder', group: "folder"}
+        //  console.log(node)
+        this.data.nodes.update([node])
+        if(item.path != this.currentRemoteUrl){
+          this.linkContainer(item)
+        }
+
       },
       unlink(item){
         this.data.nodes.remove(item.path);
@@ -149,21 +170,24 @@ export default {
         this.data.nodes.remove(item.path);
       },
       linkContainer(item){
-        let splitted = item.path.split(this.pathsep)
-        if (splitted.length > 1){
-          let to = item.path
-          splitted.pop()
-          let from = splitted.join(this.pathsep)
-          let exist_edge =  this.data.edges.get({
-            filter: function (e) {
-              return e.from == from && e.to == to && e.label == "contains";
-            }
-          });
-          if(exist_edge.length == 0){
-            let edge = {from: from, to: to, label: "contains"}
-            this.data.edges.add([edge])
+        //  let splitted = item.path.split(this.pathsep)
+        //  if (splitted.length > 1){
+        let to = item.path
+        //  splitted.pop()
+        let from = this.currentRemoteUrl //splitted.join(this.pathsep)
+        let exist_edge =  this.data.edges.get({
+          filter: function (e) {
+            return e.from == from && e.to == to && e.label == "contains";
           }
+        });
+        //  console.log(exist_edge)
+        if(exist_edge.length == 0){
+          let edge = {from: from, to: to, label: "contains"}
+          //  console.log(edge)
+          this.data.edges.add([edge])
         }
+        //  }
+
       },
       unlinkContainer(item){
         let splitted = item.path.split(this.pathsep)
@@ -188,7 +212,66 @@ export default {
     },
     watch:{
       source(){
-        console.log(this.source)
+        this.src = this.source
+      },
+      async src(){
+        console.log(this.src)
+        if (this.useSource == true ){
+          // test avec l'acien Source ou avec getSolidDataset
+          let s = {
+            url : this.src
+          }
+          this.$store.commit('ipgs/spinnerAdd')
+
+          let sources = []
+          sources.push(s)
+          let source = new Source(sources)
+          let graphs = await source.load()
+          console.log(graphs)
+          this.data.nodes.update(graphs[0].nodes)
+          this.data.edges.update(graphs[0].edges)
+          this.$store.commit('ipgs/spinnerRemove')
+        }
+        else{
+          // let dataset =   await this.$exploreStorage(this.source)
+          // let dataset =   await this.$exploreUrl(this.source)
+          // console.log(dataset)
+          this.$setCurrentThingUrl(this.src)
+        }
+
+
+      },
+      currentRemoteUrl(){
+        console.log(this.currentRemoteUrl)
+      },
+      remoteResources(){
+        let root_node = {path: this.src}
+        this.addDir(root_node)
+        console.log(this.remoteResources)
+        this.remoteResources.forEach((r) => {
+          let item = {path: r}
+          r.endsWith('/') ? this.addDir(item) : this.add(item)
+
+          //recursive
+          // if (r.endsWith('/')){
+          //   this.$setCurrentThingUrl(r)
+          // }
+        });
+        console.log(this.data)
+      },
+      things(){
+        console.log(this.things)
+        let subjects = this.things.map(x => x.s)
+        let objects = this.things.map(x => x.o)
+        this.data.nodes.update(subjects)
+        this.data.nodes.update(objects)
+        let predicates = this.things.map(x => {return {from: x.s.id, to: x.o.id, label: x.p}})
+        console.log(predicates)
+        this.data.edges.update(predicates)
+
+      },
+      file(){
+        console.log(this.file, this.file.content)
       }
       // localResources(){
       //   this.process(this.localResources)
@@ -199,6 +282,22 @@ export default {
       // }
     },
     computed:{
+      currentRemoteUrl:{
+        get () { return this.$store.state.solid.currentRemoteUrl},
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
+      remoteResources:{
+        get () { return this.$store.state.solid.remoteResources},
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
+      things :{
+        get () { return this.$store.state.solid.things},
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
+      file :{
+        get () { return this.$store.state.solid.file},
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
       // pathsep:{
       //   get () { return this.$store.state.vatch.pathsep},
       //   set (/*value*/) { /*this.updateTodo(value)*/ }

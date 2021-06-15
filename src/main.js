@@ -4,7 +4,9 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import VueVis from './plugins/vue-vis';
+import VueSolid from './plugins/vue-solid';
 Vue.use(VueVis, {store: store});
+Vue.use(VueSolid, {store: store});
 
 import { Network } from "vue-vis-network";
 Vue.component('network', Network);

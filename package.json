@@ -13,6 +13,8 @@
   "dependencies": {
     "@inrupt/solid-client": "^1.6.0",
     "@inrupt/solid-client-authn-browser": "^1.7.2",
+    "@inrupt/vocab-common-rdf": "^0.7.4",
+    "@inrupt/vocab-solid-common": "^0.7.4",
     "@ldflex/rdflib": "^1.0.0",
     "@mapbox/node-pre-gyp": "^1.0.3",
     "@rdfjs/data-model": "^1.2.0",

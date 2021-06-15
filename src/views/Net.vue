@@ -18,9 +18,12 @@ export default {
       level: null,
       source : null,
       options: [
-        { value: null, text: 'Please select an option', disabled: true },
+        { value: null, text: 'Please select a level', disabled: true },
         { value: 'world', text: 'world' },
-        { value: 'pod', text: 'pod' },
+        { value: 'group', text: 'group' },
+        { value: 'pod', text: 'pod (Only available for the moment)' },
+        { value: 'friends', text: 'friends' },
+        { value: 'container', text: 'container' },
         { value: 'resource', text: 'resource' },
         { value: 'node', text: 'node' },
         { value: 'edge', text: 'edge' }

@@ -2,7 +2,11 @@ let ldflex = window.solid
 
 const state = () => ({
   webId: null,
-  storage: null
+  storage: null,
+  currentRemoteUrl: "",
+  remoteResources: [],
+  things: [],
+  file: {}
 })
 
 // getters
@@ -15,12 +19,12 @@ const actions = {
     if (webId != null){
       let storage = `${await ldflex.data[webId].storage}`
       context.commit('setStorage', storage)
-    //  console.log("rootstate",context.rootState.ldp_store)
-  //    context.commit('ldp_store/setServer', {name: webId+' storage', url: storage}, { root: true })
-    //  context.rootState.ldp_store.commit('setServer', {name: webId+' storage', url: storage})
+      //  console.log("rootstate",context.rootState.ldp_store)
+      //    context.commit('ldp_store/setServer', {name: webId+' storage', url: storage}, { root: true })
+      //  context.rootState.ldp_store.commit('setServer', {name: webId+' storage', url: storage})
     }else{
       context.commit('setStorage', null)
-    //  context.commit('ldp_store/setServer', {name: 'Localhost', url: 'http://localhost:3000'}, { root: true })
+      //  context.commit('ldp_store/setServer', {name: 'Localhost', url: 'http://localhost:3000'}, { root: true })
 
     }
     //   let groups = []
@@ -46,7 +50,18 @@ const mutations = {
     console.log(storage)
     state.storage = storage
   },
-
+  setCurrentRemoteUrl(state, url){
+    state.currentRemoteUrl = url
+  },
+  setRemoteResources(state, r){
+    state.remoteResources = r
+  },
+  setThings(state, things){
+    state.things = things
+  },
+  setFile(state, f){
+    state.file = f
+  },
 }
 
 export default {
