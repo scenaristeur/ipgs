@@ -3,6 +3,8 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import VueVis from './plugins/vue-vis';
+Vue.use(VueVis, {store: store});
 
 import { Network } from "vue-vis-network";
 Vue.component('network', Network);
