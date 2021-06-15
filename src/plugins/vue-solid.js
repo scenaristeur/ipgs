@@ -254,18 +254,6 @@ const plugin = {
 
     },
 
-    async function lastPart(text){
-      //  console.log(text, typeof text)
-      if (typeof text == 'object' && text['rdfs:label'] != undefined){
-        return text['rdfs:label']
-      }else if (typeof text == 'string' && text.startsWith('http')){
-        var n = text.lastIndexOf('/');
-        return text.substring(n + 1);
-      }
-      else{
-        return text
-      }
-    }
 
     Vue.prototype.$getPodInfos = async function(pod){
       try{
@@ -550,7 +538,11 @@ const plugin = {
       const API_URL = 'https://www.wikidata.org/w/api.php?action=wbgetentities&origin=*&format=json'
       let language =  navigator.language.split("-")[0] || 'en'
       language+='|en'
-
+      if (text.endsWith('card#me')){
+        let lab = text.split('/')[2]
+        console.log(lab)
+        return lab
+      }else
       if (text.startsWith(wikidata)){
         let splitext = text.split(wikidata)[1]
         //  console.log(splitext)
