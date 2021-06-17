@@ -4,7 +4,7 @@ const state = () => ({
   webId: null,
   storage: null,
   currentRemoteUrl: "",
-  remoteResources: [],
+  remoteResources: {},
   things: [],
   file: {}
 })

@@ -184,72 +184,62 @@ const plugin = {
       }
     }
 
-    Vue.prototype.$setCurrentThingUrl = async function(url){
-      try{
-        const file = await getFile(url, {fetch: sc.fetch});
-        // file is a Blob (see https://developer.mozilla.org/docs/Web/API/Blob)
-        console.log(
-          `Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`
-        );
-        console.log(`The file is ${isRawData(file) ? "not " : ""}a dataset.`);
+    Vue.prototype.$setCurrentThingUrl = async function(thing){
 
-        store.commit('solid/setCurrentRemoteUrl',url)
+      try{
+        const file = await getFile(thing.url, {fetch: sc.fetch});
+        // file is a Blob (see https://developer.mozilla.org/docs/Web/API/Blob)
+      //  console.log(
+      //    `Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`
+      //  );
+      //  console.log(`The file is ${isRawData(file) ? "not " : ""}a dataset.`);
+
+        store.commit('solid/setCurrentRemoteUrl',thing.url)
 
         if(isRawData(file)){
-
-          var reader = new FileReader();
-          reader.addEventListener("loadend", function() {
-            //  console.log(reader)
-            //  console.log(reader.result)
-            store.commit('solid/setFile', {
-              path: getSourceUrl(file),
-              content : reader.result,
-              type:{mime: getContentType(file)}
-            }, { root: true })
-            //  console.log("todo raw data", file)
-            // reader.result contient le contenu du
-            // blob sous la forme d'un tableau typé
-          });
-          reader.readAsText(file);
+          return
+          // var reader = new FileReader();
+          // reader.addEventListener("loadend", function() {
+          //   //  console.log(reader)
+          //   //  console.log(reader.result)
+          //   store.commit('solid/setFile', {
+          //     path: getSourceUrl(file),
+          //     content : reader.result,
+          //     type:{mime: getContentType(file)}
+          //   }, { root: true })
+          //   //  console.log("todo raw data", file)
+          //   // reader.result contient le contenu du
+          //   // blob sous la forme d'un tableau typé
+          // });
+          // reader.readAsText(file);
         }else{
-          const myDataset = await getSolidDataset( url, {fetch: sc.fetch});
-          console.log(myDataset)
+          const myDataset = await getSolidDataset( thing.url, {fetch: sc.fetch});
+          //    console.log(myDataset)
 
-          let resources = await getContainedResourceUrlAll(myDataset,{fetch: sc.fetch} )
-          console.log("Resources", resources)
-          if(resources.length > 0){
+          let res = await getContainedResourceUrlAll(myDataset,{fetch: sc.fetch} )
+          //    console.log("Resources", res)
+          if(res.length > 0){
+            let resources = {url: thing.url, resources: res, pos: thing.pos}
             store.commit('solid/setRemoteResources',resources)
           }else{
-            // const things = await getThingAll(
-            //   myDataset,
-            //   url,{fetch: sc.fetch}
-            // );
-            //  let t = `${things}`
-            // console.log(things)
-            let things = []
-            await myDataset._quads.forEach(async function (q)  {
-              console.log(q)
-              let s = {id:q.subject.id, label: await lastPart(q.subject.id)}
-              let p = q.predicate.id
-              let o =  {id:q.object.id, label: await lastPart(q.object.id)}
-              let spo = {s:s, p:p, o:o, g: url}
-              things.push(spo)
-              // var indexS = module.nodes.findIndex(x => x.id==s.id);
-              // indexS === -1 ? module.nodes.push(s) : console.log("object already exists")
-              // var indexO = module.nodes.findIndex(x => x.id==o.id);
-              // indexO === -1 ? module.nodes.push(o) : console.log("object already exists")
-              // let edge = {from: s.id, to: o.id, label: await module.lastPart(p)}
-              // var indexP = module.edges.findIndex(x => x.from==edge.from && x.to == edge.to && x.label == edge.label);
-              // indexP === -1 ? module.edges.push(edge) : console.log("object already exists")
-            });
-            // let t = things._quads.entries
-            // console.log(t)
-            store.commit('solid/setThings',things)
+            //  console.log("todo")
+            return
+            // let things = []
+            // await myDataset._quads.forEach(async function (q)  {
+            //   console.log(q)
+            //   let s = {id:q.subject.id, label: await lastPart(q.subject.id)}
+            //   let p = q.predicate.id
+            //   let o =  {id:q.object.id, label: await lastPart(q.object.id)}
+            //   let spo = {s:s, p:p, o:o, g: url}
+            //   things.push(spo)
+            // });
+            //
+            // store.commit('solid/setThings',things)
           }
         }
       }
       catch(e){
-        console.log(e)
+        console.log(thing, e)
       }
 
     },
@@ -258,16 +248,16 @@ const plugin = {
     Vue.prototype.$getPodInfos = async function(pod){
       try{
         const dataset = await getSolidDataset( pod.webId, { fetch: sc.fetch });
-      //  console.log("DATASET", dataset)
+        //  console.log("DATASET", dataset)
         let profile = await getThing( dataset, pod.webId );
         pod.name = await getStringNoLocale(profile, FOAF.name);
         pod.friends = await getUrlAll(profile, FOAF.knows).map(webId => {return {webId: webId}})
         pod.storage = await getUrl(profile, WS.storage);
         pod.photo = await getUrl(profile, VCARD.hasPhoto);
-      //  pod.publicTags = await this.$getTags(pod.storage+'public/tags.ttl')
-      //  store.commit("vatch/addToNetwork", pod.publicTags)
+        //  pod.publicTags = await this.$getTags(pod.storage+'public/tags.ttl')
+        //  store.commit("vatch/addToNetwork", pod.publicTags)
         //this.$subscribe(pod.storage)
-      //  console.log("getpodinfos",pod)
+        //  console.log("getpodinfos",pod)
       }catch(e)
       {
         console.log("erreur",e, pod)
