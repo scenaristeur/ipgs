@@ -3,7 +3,12 @@
     <div id="mynetwork" class="network">N/A</div>
 
     <b-button @click="clusterByGroup">Cluster By group</b-button>
+
     source : {{ src}}
+    <div v-if="data != null">
+      nodes : {{ data.nodes.length}}, edges : {{ data.edges.length}}
+    </div>
+
   </div>
 </template>
 
@@ -15,16 +20,20 @@ import Source from '@/models/Source'
 
 export default {
   name: 'Network',
-  props: ['source'],
+  props: ['source', 'level'],
   data(){
     return{
       pathsep:'/',
       src: null,
-      useSource: false // test avec l'ancien Source ou avec getSolidDataset
+      maxiFriends : 5000,
+      useSource: false, // test avec l'ancien Source ou avec getSolidDataset
+      center : {x:500,y:500},
+      data: null
     }
   },
   created(){
     this.src = this.source
+    this.lvl = this.level
     // this.localResources = this.$store.state.localResources
     // console.log(this.localResources)
   },
@@ -65,6 +74,8 @@ export default {
       this.network = new Network(container, this.data, options);
 
       this.network.on('selectNode', evt => {
+        console.log(evt)
+        this.center = evt.event.center
         if (evt.nodes.length == 1) {
           if (this.network.isCluster(evt.nodes[0]) == true) {
             this.network.openCluster(evt.nodes[0]);
@@ -75,7 +86,17 @@ export default {
             console.log("input.value", n_id)
             let n = this.data.nodes.get(n_id);
             console.log("selected",n)
-            this.src = n.id
+            switch (this.lvl) {
+              case "pod":
+              this.src = n.id
+              break;
+              case "friends":
+              this.exploreFriends(n.id)
+              break;
+              default:
+
+            }
+
             // this.currentRemoteUrl = n.id
             // this.$setCurrentThingUrl(n.id)
 
@@ -100,6 +121,87 @@ export default {
       clusterByGroup(){
         console.log("clu")
         this.$clusterByGroup(this.network)
+      },
+      async explorePod(){
+        if (this.useSource == true ){
+          // test avec l'acien Source ou avec getSolidDataset
+          let s = {
+            url : this.src
+          }
+          this.$store.commit('ipgs/spinnerAdd')
+
+          let sources = []
+          sources.push(s)
+          let source = new Source(sources)
+          let graphs = await source.load()
+          console.log(graphs)
+          this.data.nodes.update(graphs[0].nodes)
+          this.data.edges.update(graphs[0].edges)
+          this.$store.commit('ipgs/spinnerRemove')
+        }
+        else{
+          // let dataset =   await this.$exploreStorage(this.source)
+          // let dataset =   await this.$exploreUrl(this.source)
+          // console.log(dataset)
+          this.$setCurrentThingUrl(this.src)
+        }
+
+      },
+      async exploreFriends(webId){
+        if (this.data.nodes.length > this.maxiFriends){
+          return
+        }
+
+        //  console.log(this.data.nodes.length, webId)
+        let p = {webId: webId}
+        let pod = await this.$getPodInfos(p)
+        //  console.log(pod)
+        let nodes = []
+        let n = {
+          id: pod.webId,
+          label: pod.name || pod.webId,
+        }
+        if (pod.photo != null && pod.photo.length > 0){
+          n.shape= "image"
+          n.image= pod.photo
+        }
+        nodes.push(n)
+
+
+        for await (const f of pod.friends) {
+          f.webId = f.webId.replace('.solid.community', '.solidcommunity.net')
+
+
+          let nf = { id: f.webId, label: f.webId}
+          nodes.push(nf)
+          let edge = {from: webId, to: f.webId, label: "knows"}
+          let exist_edge =  this.data.edges.get({
+            filter: function (e) {
+              return e.from == edge.from && e.to == edge.to && e.label == edge.label;
+            }
+          });
+          if(exist_edge.length == 0){
+            this.data.edges.add([edge])
+          }
+
+          ( this.data.nodes.get(f.webId) == null && !f.webId.includes('verborgh')) ?  this.exploreFriends(f.webId) : ""
+        }
+
+
+        //  console.log(nodes, edges)
+        this.data.nodes.update(nodes)
+
+
+        // pod.friends.forEach((f, i) => {
+        //   console.log(i, f.webId)
+        //   let wi = f.webId
+        //   console.log(wi)
+        //   app.exploreFriends(wi)
+        // });
+
+
+
+
       },
 
       // process(msg){
@@ -139,7 +241,7 @@ export default {
         let color = '#55D5E0'
 
         let label = item.path.split(this.pathsep).pop()
-        let node= { id: item.path, label:label, color:color, type: 'file', group: "file"}
+        let node= { id: item.path, label:label, color:color, type: 'file', group: "file", x: this.center.x, y:this.center.y}
         console.log(node)
         this.data.nodes.update([node])
         this.linkContainer(item)
@@ -155,7 +257,7 @@ export default {
         if (label.length == 0){
           label = p.pop()
         }
-        let node = {id: item.path, label:label,shape: 'box', color: color, type: 'folder', group: "folder"}
+        let node = {id: item.path, label:label,shape: 'box', color: color, type: 'folder', group: "folder", x: this.center.x, y:this.center.y}
         //  console.log(node)
         this.data.nodes.update([node])
         if(item.path != this.currentRemoteUrl){
@@ -214,33 +316,27 @@ export default {
       source(){
         this.src = this.source
       },
+      level(){
+        this.lvl = this.level
+        console.log("level",this.level)
+      },
       async src(){
         console.log(this.src)
-        if (this.useSource == true ){
-          // test avec l'acien Source ou avec getSolidDataset
-          let s = {
-            url : this.src
-          }
-          this.$store.commit('ipgs/spinnerAdd')
+        switch (this.lvl) {
+          case "pod":
+          this.explorePod()
+          break;
+          case "friends":
 
-          let sources = []
-          sources.push(s)
-          let source = new Source(sources)
-          let graphs = await source.load()
-          console.log(graphs)
-          this.data.nodes.update(graphs[0].nodes)
-          this.data.edges.update(graphs[0].edges)
-          this.$store.commit('ipgs/spinnerRemove')
-        }
-        else{
-          // let dataset =   await this.$exploreStorage(this.source)
-          // let dataset =   await this.$exploreUrl(this.source)
-          // console.log(dataset)
-          this.$setCurrentThingUrl(this.src)
-        }
+          this.exploreFriends(this.src)
+          break;
+          default:
+          alert ("only pod or friends are available")
 
+        }
 
       },
+
       currentRemoteUrl(){
         console.log(this.currentRemoteUrl)
       },
@@ -252,10 +348,10 @@ export default {
           let item = {path: r}
           r.endsWith('/') ? this.addDir(item) : this.add(item)
 
-          //recursive
-          // if (r.endsWith('/')){
-          //   this.$setCurrentThingUrl(r)
-          // }
+          //  recursive
+          if (r.endsWith('/') || r.endsWith('#me')){
+            this.$setCurrentThingUrl(r)
+          }
         });
         console.log(this.data)
       },

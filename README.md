@@ -38,6 +38,7 @@ https://stackoverflow.com/questions/4359681/want-to-change-my-master-to-an-older
 - http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/users
 - http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/projects
 - http://127.0.0.1:8080/network?url=https://data.virtual-assembly.org/themes
+- https://data.gl.flod.io/projects
 
 # inspiration
 

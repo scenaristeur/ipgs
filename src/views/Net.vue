@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form-select v-model="level" :options="options"></b-form-select>
-    <Network :source="source" />
+    <Network :source="source" :level="level"/>
     storage : {{ storage}}<br>
     source: {{ source}}
   </div>
@@ -39,9 +39,17 @@ export default {
           alert("You must login or provide the url to explore")
           return
         }
-
         this.source = this.storage
         console.log(this.source)
+        break;
+        case 'friends':
+
+        if (this.$store.state.solid.webId ==  null){
+          alert("You must login or provide the url to explore")
+          return
+        }
+        this.source = this.$store.state.solid.webId
+
         break;
         default:
         this.source = null

@@ -109,7 +109,10 @@ let defNodes = [
   { id: 'n6', label: "Pour savoir comment utiliser Ipgs,\n tapez /h dans le champ de saisie tout en haut", shape: 'box', color: "#ECC046", cid: 1 },
   { id: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "-> Archipel Semapps", shape: 'box', color: '#7FD1B9', cid: 2},
   { id: "https://spoggy-test9.solidcommunity.net/public/", label: "-> Spoggy-test9 Public Folder", shape: 'box', color: '#7FD1B9', cid: 2},
-
+  { id: "https://data.gl.flod.io/organizations", label: "-> GLocal low-tech", shape: 'box', color: '#7FD1B9', cid: 2},
+  { id: "https://passerelle-normandie.data-players.com/middleware/organizations", label: "-> Passerelle Normandie", shape: 'box', color: '#7FD1B9', cid: 2},
+  { id: "https://data.permalieux.flod.io/organizations", label: "-> Permalieux", shape: 'box', color: '#7FD1B9', cid: 2},
+  { id: "https://data.fabmob.io/middleware/resources", label: "-> Fabrique des Mobilités (non optimisé)", shape: 'box', color: '#7FD1B9', cid: 2},
 ]
 
 let defEdges = [
@@ -119,7 +122,11 @@ let defEdges = [
   { id: 'e4', from: 'n1', to: 'n5', label: 'help' },
   { id: 'e5', from: 'n1', to: 'n6', label: 'help' },
   { id: 'e6', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/network/Semapps.jsonld", label: "example"},
-  { id: 'e7', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/", label: "example"}
+  { id: 'e7', from: 'n1', to: "https://spoggy-test9.solidcommunity.net/public/", label: "example"},
+  { id: 'e8', from: 'n1', to: "https://data.gl.flod.io/organizations", label: "example"},
+  { id: 'e9', from: 'n1', to: "https://passerelle-normandie.data-players.com/middleware/organizations", label: "example"},
+  { id: 'e10', from: 'n1', to: "https://data.permalieux.flod.io/organizations", label: "example"},
+  { id: 'e11', from: 'n1', to: "https://data.fabmob.io/middleware/resources", label: "example"}
 ]
 
 
@@ -134,46 +141,46 @@ export default {
   data(){
     return{
       network: {
-        nodes: defNodes.slice(0),
-        edges: defEdges.slice(0),
-        optionsBUGCHROME: {
-          locale: navigator.language,
-          nodes: {
-            //  shape: "dot",
-            scaling: {
-              min: 10,
-              max: 30,
-            },
-            font: {
-              size: 12,
-              face: "Tahoma",
-            },
-          },
-          edges: {
-            arrows: 'to',
-            width: 0.15,
-            color: { inherit: "from" },
-            font: {
-              align: 'top'
-            },
-            smooth: {
-              type: "continuous",
-            },
-          },
-          physics: {
-            stabilization: {onlyDynamicEdges: true},
-            barnesHut: {
-              gravitationalConstant: -8000, //-8000
-              springConstant: 0.03, //0.001 //0.01
-              springLength: 100, //200
-            },
-          },
-          interaction: {
-            navigationButtons: true,
-            //  tooltipDelay: 200,
-            //  hideEdgesOnDrag: true,
-          },
-        },
+        nodes: [],
+        edges: [],
+        // optionsBUGCHROME: {
+        //   locale: navigator.language,
+        //   nodes: {
+        //     //  shape: "dot",
+        //     scaling: {
+        //       min: 10,
+        //       max: 30,
+        //     },
+        //     font: {
+        //       size: 12,
+        //       face: "Tahoma",
+        //     },
+        //   },
+        //   edges: {
+        //     arrows: 'to',
+        //     width: 0.15,
+        //     color: { inherit: "from" },
+        //     font: {
+        //       align: 'top'
+        //     },
+        //     smooth: {
+        //       type: "continuous",
+        //     },
+        //   },
+        //   physics: {
+        //     stabilization: {onlyDynamicEdges: true},
+        //     barnesHut: {
+        //       gravitationalConstant: -8000, //-8000
+        //       springConstant: 0.03, //0.001 //0.01
+        //       springLength: 100, //200
+        //     },
+        //   },
+        //   interaction: {
+        //     navigationButtons: true,
+        //     //  tooltipDelay: 200,
+        //     //  hideEdgesOnDrag: true,
+        //   },
+        // },
         options: {
           interaction: {
             navigationButtons: true,
@@ -200,7 +207,7 @@ export default {
             // shapeProperties: {
             //   useBorderWithImage:true
             // }
-            
+
           },
           edges: {
             arrows: 'to',
@@ -210,6 +217,19 @@ export default {
       }
     }
   },
+  created(){
+    if (this.$route.query.url == undefined ){
+      console.log("pas d'url")
+      this.network.nodes = defNodes.slice(0)
+      this.network.edges = defEdges.slice(0)
+    }else{
+      console.log("loading", this.$route.query.url)
+      let g = this.$store.state.ipgs.graphs[0]
+      console.log(g)
+      this.network.nodes = g.nodes
+      this.network.edges = g.edges
+    }
+  }
 
 
 

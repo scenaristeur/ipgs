@@ -258,16 +258,16 @@ const plugin = {
     Vue.prototype.$getPodInfos = async function(pod){
       try{
         const dataset = await getSolidDataset( pod.webId, { fetch: sc.fetch });
-        console.log("DATASET", dataset)
+      //  console.log("DATASET", dataset)
         let profile = await getThing( dataset, pod.webId );
         pod.name = await getStringNoLocale(profile, FOAF.name);
         pod.friends = await getUrlAll(profile, FOAF.knows).map(webId => {return {webId: webId}})
         pod.storage = await getUrl(profile, WS.storage);
         pod.photo = await getUrl(profile, VCARD.hasPhoto);
-        pod.publicTags = await this.$getTags(pod.storage+'public/tags.ttl')
-        store.commit("vatch/addToNetwork", pod.publicTags)
+      //  pod.publicTags = await this.$getTags(pod.storage+'public/tags.ttl')
+      //  store.commit("vatch/addToNetwork", pod.publicTags)
         //this.$subscribe(pod.storage)
-        console.log("getpodinfos",pod)
+      //  console.log("getpodinfos",pod)
       }catch(e)
       {
         console.log("erreur",e, pod)
@@ -540,7 +540,6 @@ const plugin = {
       language+='|en'
       if (text.endsWith('card#me')){
         let lab = text.split('/')[2]
-        console.log(lab)
         return lab
       }else
       if (text.startsWith(wikidata)){
