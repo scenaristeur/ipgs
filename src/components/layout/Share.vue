@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- <b-button v-b-modal.share_current>Share</b-button> -->
-    <b-button size="sm" variant="outline-info"  @click.stop="share()">
-      <b-icon-share @click.stop="share()" variant="info" ></b-icon-share>
+    <b-button size="sm" :variant="'outline-'+variant"  @click.stop="share()">
+      <b-icon-share @click.stop="share()" :variant="variant" ></b-icon-share>
     </b-button>
 
-    <b-modal :id="'share-modal'+item.url" title="Share">
-      {{item.url}}
+    <b-modal :id="'share-modal'+it.url" title="Share">
+      {{it.url}}<br>
       <!-- https://nicolasbeauvais.github.io/vue-social-sharing/?path=/story/vuesocialsharing--dynamic-data -->
       <ShareNetwork
       v-for="network in networks"
@@ -37,10 +37,11 @@ export default {
     default: {url: "https://scenaristeur.github.io/ipgs", name: "InterPlanetaryGraphSystem"},
     variant: {
       type: String,
-      default: "outline-info"
+      default: "danger"
     },},
     data(){
       return {
+        it: {},
         sharing: {
           url: 'https://news.vuejs.org/issues/180',
           title: 'InterPlanetary Graph System.',
@@ -83,59 +84,67 @@ export default {
         ]
       }
     },
-    // created(){
-    //   if (this.$route.query.url != undefined ){
-    //     this.url = this.$route.query.url
-    //     console.log(this.url)
-    //   }
-    // },
+    created(){
+      if (this.item == undefined  || (this.item.url == undefined && this.$route.query.url != undefined )){
+        this.it.url = this.$route.query.url
+        this.it.name = 'ipgs'
+        console.log(this.it)
+      }else{
+        this.it = this.item
+      }
+
+    },
+
     methods: {
       async share(){
-
-        if (this.item.url == undefined && this.$route.query.url != undefined ){
-          this.item.url = this.$route.query.url
-          console.log(this.url)
+        if (this.it.url == undefined && this.$route.query.url != undefined ){
+          this.it.url = this.$route.query.url
+          this.it.name = 'ipgs'
+          console.log(this.it)
         }
-        // const res = await axios.post('https://link.infini.fr/a', {
-        //   "lsturl": 'https://scenaristeur.github.io/ipgs/?url='+this.item.url,
-        //   "lsturl-custom": this.item.name || 'IPGS',
-        //   "format": 'json'
-        // });
-
-        // fetch("vurl.com/api.php?url="+'https://scenaristeur.github.io/ipgs/?url='+this.item.url, {
-        //   // method: "POST",
-        //   // body: JSON.stringify({
-        //   //   // "lsturl": "https://scenaristeur.github.io/ipgs/", //'https://scenaristeur.github.io/ipgs/',//'?url='+this.item.url,
-        //   //   // "lsturl-custom":  "IPGS", //this.item.name ||
-        //   //   // "format": 'json'
-        //   //   url : 'https://scenaristeur.github.io/ipgs/?url='+this.item.url
-        //   // }),
-        // // mode: 'no-cors',
-        //  //  headers: {
-        //  //      "Content-type": "application/json; charset=UTF-8"
-        //  //  }
+        //let short = await
+        // fetch("https://link.infini.fr/a", {
+        //   method: "POST",
+        //   body: new URLSearchParams({
+        //     "lsturl": "https://scenaristeur.github.io/ipgs", //?url="+this.item.url,
+        //     "lsturl-custom":  "hello",
+        //     "format": 'json'
+        //   }),
+        //   mode: 'no-cors',
         // })
-        // .then(response => response.json())
+        // .then(response => {
+        // //  console.log(response)
+        //   response.json()
+        // })
+        // .then(data => {
+        //   console.log(data)
+        // })
+        // .catch(console.error);
+        //  let rep = JSON.parse(`${short}`)
+        //  //  let json = rep.json()
+        // console.log(rep)
+        // .then(response => {
+        // return
+        //   // response.json()
+        // })
+        //  .then(json => {
+        //     console.log(json)
+        // })
         // .then(json => {
         //   console.log(json)
-
-          this.sharing.url = 'https://scenaristeur.github.io/ipgs/?url='+this.item.url
-          this.sharing.description = 'Check out this IPGS graph :'+this.item.name
+          this.sharing.url = this.it.url != undefined ? 'https://scenaristeur.github.io/ipgs/?url='+this.it.url : "https://scenaristeur.github.io/ipgs"
+          this.sharing.description = 'Check out this IPGS graph :'+this.it.name
           //  this.sharing.title = 'IPGS',
           //  text: 'Check out this IPGS graph.',
           //  url: 'https://scenaristeur.github.io/ipgs/?url='+this.url,
-          this.$bvModal.show("share-modal"+this.item.url)
-      //    }
-      // );
-
-
-
-
-    },
+          this.$bvModal.show("share-modal"+this.it.url)
+        //
+        // })
+      }
+    }
   }
-}
-</script>
+  </script>
 
-<style>
+  <style>
 
-</style>
+  </style>

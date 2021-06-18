@@ -2,9 +2,10 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info" class="p-1 pl-sm-3">
       <b-navbar-brand>
-      <CommandInput />
+        <CommandInput />
       </b-navbar-brand>
       <Notification />
+      <Share variant="secondary"/>
 
       <!-- <b-button @click="help">?</b-button> -->
       <b-navbar-toggle target="nav-collapse" class="p-0 m-0"></b-navbar-toggle>
@@ -68,8 +69,9 @@ export default {
     //  'Menu': () => import('@/components/layout/Menu'),
     'CommandInput': () => import('@/components/layout/CommandInput'),
     'Notification': () => import('@/components/layout/Notification'),
+    'Share': () => import('@/components/layout/Share'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
-  //  'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
+    //  'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
   },
   // methods: {
   //   help() {

@@ -28,13 +28,14 @@
         <button class="btn btn-default" type="button"><span>ᐅ</span> Go!</button>
       </span> -->
 
-      <span style="display: table-cell; width: 40px;">
+      <span style="display: table-cell; width: 75px;">
         <!-- <button class="btn btn-default" type="button"><span>ᐅ</span>  Go!</button> -->
         <!-- class="unstyled-button" -->
-          <Share :item="fo" />
-        <b-button size="sm" variant="outline-info"  @click.stop="see(fo)">
+
+        <b-button size="sm" variant="outline-info"  @click.stop="see(fo)" style="float:left">
           <b-icon-eye @click.stop="see(fo)" variant="info" ></b-icon-eye>
         </b-button>
+        <Share :item="fo" style="float:left"/>
       </span>
 
     </div>
