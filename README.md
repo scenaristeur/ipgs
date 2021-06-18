@@ -2,10 +2,19 @@
 
 InterPlanetary Graph System based on Solid & Ipfs
 
+
+# short_url by chatons.org
+- https://link.infini.fr/siti
+- service https://link.infini.fr/
+- api : https://link.infini.fr/api
+
+
 # generate-docs in /out folder
 ```
 npm run generate-docs
 ```
+
+
 
 # replace main by another
 
