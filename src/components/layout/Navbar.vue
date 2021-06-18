@@ -5,7 +5,7 @@
         <CommandInput />
       </b-navbar-brand>
       <Notification />
-      <Share variant="secondary"/>
+
 
       <!-- <b-button @click="help">?</b-button> -->
       <b-navbar-toggle target="nav-collapse" class="p-0 m-0"></b-navbar-toggle>
@@ -22,6 +22,7 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
+                <Share variant="secondary"/>
           <b-nav-item to="/">InterPlanetary Graph System</b-nav-item>
           <b-nav-item to="/agora">Agora</b-nav-item>
           <b-nav-item to="/browser">Browser</b-nav-item>
