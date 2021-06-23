@@ -50,6 +50,7 @@
 <script>
 export default {
   name: 'ImportModal',
+  props: ['network'],
   data() {
     return {
       files: [],
@@ -129,12 +130,12 @@ export default {
       this.showimport=false
     }
   },
-  computed: {
-    network:{
-      get () { return this.$store.state.ipgs.network},
-      set (/*value*/) {  }
-    }
-  }
+  // computed: {
+  //   network:{
+  //     get () { return this.$store.state.ipgs.network},
+  //     set (/*value*/) {  }
+  //   }
+  // }
 }
 </script>
 
