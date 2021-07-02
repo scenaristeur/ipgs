@@ -1,5 +1,5 @@
 //import { v4 as uuidv4 } from 'uuid';
-let omitted = [ "@context", "id", "label", "pair:label", "name",  "inbox", "outbox", "followers", "following", "publicKey", "shape", /*"type",*/ "title", "color", "image"]
+let omitted = [ "@context", "id", "label", "@type", "@id", "pair:label", "name",  "inbox", "outbox", "followers", "following", "publicKey", "shape", /*"type",*/ "title", "color", "image"]
 
 export default {
 
@@ -196,6 +196,7 @@ export default {
       this.graphsChanged()
       console.info("TEST WITH ONE GRAPH")
       this.network = this.graphs[0]
+      console.log("network",this.network)
     }
   },
   computed: {

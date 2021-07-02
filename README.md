@@ -271,7 +271,7 @@ IRI : The absolute form of an IRI containing a scheme along with a path and opti
       - https://gitlab.com/fluidlog/cartosemapps/-/blob/master/assets/fluidgraph/app/convert.js
       - https://pad.lescommuns.org/lUf72zpWQz2bP2TsFI2X7Q?view
       - https://fluidlog.gitlab.io/cartosemapps/
-
+- https://data.resilience.data-players.com/sparql
 
 
 ##

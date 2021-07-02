@@ -79,7 +79,7 @@ export default {
       },
       physics:{
         stabilization: {
-          enabled: false,
+          enabled: true,
           iterations: 200,
           updateInterval: 20,
           onlyDynamicEdges: false,

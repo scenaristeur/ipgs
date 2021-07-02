@@ -41,16 +41,15 @@ export default class Source {
         case "jsonld":
         await this.loadJsonld(s)
         break;
+        case "sparql":
+        await this.loadSparql(s)
+        break;
         default:
         try{
-
           await this.loadFolder(s)
         }catch(e){
           await this.loadTtl(s)
-
         }
-
-
         //  alert("I dont know how to read ",s.url)
       }
     }
@@ -82,6 +81,7 @@ export default class Source {
     s.url.endsWith('card#me') ? s.type = "profile" : ""
     s.url.endsWith('.json') ? s.type = "json" : ""
     s.url.endsWith('.jsonld') ? s.type = "jsonld" : ""
+    s.url.endsWith('sparql') || s.url.endsWith('sparql/') ? s.type = "sparql" : ""
     return s
   }
 
@@ -127,6 +127,54 @@ export default class Source {
     delete doc.document
     console.log(doc)
     await this.ldpToGraph(doc)
+  }
+
+  async loadSparql(s){
+    console.log("loading sparql", s)
+    const query = `
+    CONSTRUCT {
+      ?s0 ?p0 ?o0
+    }
+    WHERE
+    {
+      ?s0 ?p0 ?o0 .
+    }`;
+    let  method = {
+      method: 'POST',
+      headers: {
+        'accept': 'application/ld+json',
+      },
+      body: query
+    };
+
+    try{
+      let response = await fetch(s.url, method);
+
+      if (response.ok){
+        let triples = await response.json();
+        console.log('Fin de récupération des données de Semapps...');
+        console.log("triples", triples)
+        //  let doc = {jsonld: triples}
+        let graph = {nodes: [], edges: []}
+        graph.nodes = triples['@graph'].map(obj=> ({ ...obj, id: obj['@id'] })) // if no name -> id as label
+        console.log('graph', graph)
+        this.graphs.push(graph)
+        //      console.log(thisGraph.d3Data);
+        console.log('Fin de conversion des données dans D3Data...');
+
+      }
+      else {
+        console.log("Erreur lors de la récupération des données : ", response.status)
+
+      }
+    }
+    catch (e){
+      console.error("Erreur lors de la récupération des données : "+e);
+
+    }
+    //  let nodes = [], edges = []
+
+
   }
 
   async ldpToGraph(doc){
