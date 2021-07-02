@@ -50,6 +50,7 @@
 <script>
 export default {
   name: 'ImportModal',
+  properties: ['network'],
   data() {
     return {
       files: [],

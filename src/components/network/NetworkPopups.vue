@@ -2,7 +2,7 @@
   <div>
     <NodeModal :node="node" @ok="saveNode"/>
     <EdgeModal :edge="edge" @ok="saveEdge"/>
-    <ImportModal />
+    <ImportModal :network="n" />
     <ExportModal />
     <PropertiesPopup />
   </div>
@@ -60,6 +60,7 @@ export default {
         this.$bvModal.show("edge-popup")
         break;
         case 'import':
+        this.$store.commit('ipgs/setNetwork', this.network)
         this.$bvModal.show("import-popup")
         break;
         case 'export':
