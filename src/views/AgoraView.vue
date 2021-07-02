@@ -63,8 +63,9 @@ export default {
       })
       let docu = JSON.parse(doc.document)
       let item = {}
-      item.name=  docu.object.label || docu.object['rdfs:label']
-      item.url=  docu.object['@id'] || docu.object.id || docu.object.url
+      console.log("docu", docu)
+      item.name=  docu.object.label || docu.object['rdfs:label'] || docu.object.nodes[0].label
+      item.url=  docu.object['@id'] || docu.object.id || docu.object.url || docu['@id']
       item.nodes = docu.object.nodes || [] // != undefined ? docu.object.nodes.length : 0
       item.edges = docu.object.edges || [] //nodes != undefined ? docu.object.nodes.length : 0 //docu.object['@graph'] != undefined ? docu.object['@graph'].length : 0
       item.type = docu.object.type ||  docu.object['@type']

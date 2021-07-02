@@ -14,7 +14,8 @@ InterPlanetary Graph System based on Solid & Ipfs
 npm run generate-docs
 ```
 
-
+# sparnatural
+- https://github.com/sparna-git/Sparnatural/blob/master/demos/sparnatural-demo-semapps/index.html
 
 # replace main by another
 

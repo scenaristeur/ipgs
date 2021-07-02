@@ -2,7 +2,7 @@
   <div>
     <NodeModal :node="node" @ok="saveNode"/>
     <EdgeModal :edge="edge" @ok="saveEdge"/>
-    <ImportModal :network="n" />
+    <ImportModal />
     <ExportModal />
     <PropertiesPopup />
   </div>
