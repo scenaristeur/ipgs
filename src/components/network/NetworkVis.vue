@@ -229,11 +229,7 @@ export default {
       this.network.nodes = g.nodes
       this.network.edges = g.edges
     }
-  }
-
-
-
-
+  },
 }
 </script>
 

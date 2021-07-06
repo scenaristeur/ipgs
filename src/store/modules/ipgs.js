@@ -16,6 +16,8 @@ const state = () => ({
   socketMessageUrl: "gr",
   newGraph: {},
   currentItem: {},
+  edgeFilter: {},
+  hiddenEdges : []
   // graphs: [],
   // currentGraphId: null,
   // network: {
@@ -160,6 +162,12 @@ const mutations = {
   },
   setGraphs(state, graphs){
     state.graphs = graphs
+  },
+  setEdgeFilter(state, f){
+    state.edgeFilter = f
+  },
+  setHiddenEdges(state, he){
+    state.hiddenEdges = he
   }
 
 

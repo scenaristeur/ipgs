@@ -69,6 +69,11 @@ https://stackoverflow.com/questions/4359681/want-to-change-my-master-to-an-older
 - mfs unix js https://github.com/ipfs/js-ipfs-unixfs
 - MFS tuto https://proto.school/mutable-file-system/01
 
+# todo
+- transiscope
+- http://127.0.0.1:8080/?url=https%3A%2F%2Ftransiscope.gogocarto.fr%2Fapi%2Felements.json%3Flimit%3D100
+- https://transiscope.gogocarto.fr/api/elements.jsonld?limit=100&bounds=4.81647%2C45.72967%2C4.88926%2C45.77758
+- https://transiscope.gogocarto.fr/api/elements?bounds=4.72402%2C45.80328%2C4.86038%2C45.84873%3B4.86038%2C45.66691%2C4.90584%2C45.84873%3B4.72402%2C45.66691%2C4.86038%2C45.71237%3B4.72402%2C45.71237%2C4.76948%2C45.80328%3B&boundsJson=%5B%7B%22_southWest%22%3A%7B%22lat%22%3A45.80328%2C%22lng%22%3A4.72402%7D%2C%22_northEast%22%3A%7B%22lat%22%3A45.84873%2C%22lng%22%3A4.86038%7D%7D%2C%7B%22_southWest%22%3A%7B%22lat%22%3A45.66691%2C%22lng%22%3A4.86038%7D%2C%22_northEast%22%3A%7B%22lat%22%3A45.84873%2C%22lng%22%3A4.90584%7D%7D%2C%7B%22_southWest%22%3A%7B%22lat%22%3A45.66691%2C%22lng%22%3A4.72402%7D%2C%22_northEast%22%3A%7B%22lat%22%3A45.71237%2C%22lng%22%3A4.86038%7D%7D%2C%7B%22_southWest%22%3A%7B%22lat%22%3A45.71237%2C%22lng%22%3A4.72402%7D%2C%22_northEast%22%3A%7B%22lat%22%3A45.80328%2C%22lng%22%3A4.76948%7D%7D%5D&categories=&fullRepresentation=true&ontology=gogofull
 
 # json-ld processor js
 - https://github.com/digitalbazaar/jsonld.js/

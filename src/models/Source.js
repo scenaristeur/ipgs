@@ -44,6 +44,12 @@ export default class Source {
         case "sparql":
         await this.loadSparql(s)
         break;
+        case "transiscope":
+        //  s.url = s.url+"&excludeExternal=true"
+        await this.loadJsonld(s)
+        console.log("transi",this.graphs)
+        break;
+
         default:
         try{
           await this.loadFolder(s)
@@ -82,6 +88,7 @@ export default class Source {
     s.url.endsWith('.json') ? s.type = "json" : ""
     s.url.endsWith('.jsonld') ? s.type = "jsonld" : ""
     s.url.endsWith('sparql') || s.url.endsWith('sparql/') ? s.type = "sparql" : ""
+    s.url.startsWith('https://transiscope.gogocarto.fr') ? s.type = "transiscope" : ""
     return s
   }
 
@@ -181,11 +188,14 @@ export default class Source {
     let graph
 
     if (Array.isArray(doc.jsonld.nodes) && Array.isArray(doc.jsonld.edges) && doc.jsonld.nodes.length > 0){
+      console.log("mode1")
       graph = doc.jsonld
 
     }else if (Array.isArray(doc.jsonld["ldp:contains"]) && doc.jsonld["ldp:contains"].length > 0){
+      console.log("mode2")
       graph = await this.pairToGraph(doc)
     }else{
+      console.log("mode3")
       //alert("no ldp:contains for ", doc.documentUrl)
       graph = await this.oneItemToGraph(doc)
     }
@@ -222,8 +232,13 @@ export default class Source {
 
   async oneItemToGraph(doc){
     let graph = {nodes: [], edges: []}
-    let item = doc.jsonld
-    graph.nodes.push(item)
+    if(doc.jsonld['@graph'] != undefined){
+      graph.nodes = doc.jsonld['@graph']
+    }else{
+      let item = doc.jsonld
+      graph.nodes.push(item)
+    }
+
     return graph
   }
 

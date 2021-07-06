@@ -38,7 +38,8 @@ export default {
     variant: {
       type: String,
       default: "danger"
-    },},
+    },
+  },
     data(){
       return {
         it: {},

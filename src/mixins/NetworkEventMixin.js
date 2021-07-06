@@ -1,5 +1,26 @@
 //import { v4 as uuidv4 } from 'uuid';
-let omitted = [ "@context", "id", "label", "@type", "@id", "pair:label", "name",  "inbox", "outbox", "followers", "following", "publicKey", "shape", /*"type",*/ "title", "color", "image"]
+let omitted = [ "@context",
+"id",
+"label",
+"@type",
+"@id",
+"pair:label",
+"name",
+"inbox",
+"outbox",
+"followers",
+"following",
+"publicKey",
+"shape",
+/*"type",*/
+"title",
+"color",
+"image",
+"categoriesFull", //transiscope
+"sourceKey" //transiscope
+//"createdAt", //transiscope
+//"abstract"
+]
 
 export default {
 
@@ -15,6 +36,17 @@ export default {
           app.buildEdges(n)
         }
       });
+
+      console.log(this.network.edges)
+      let edgeFilter = {};
+      this.network.edges.forEach(e =>{
+        edgeFilter[e.label] != undefined ? edgeFilter[e.label].nb++ : edgeFilter[e.label]= {nb:1, display: true}
+        // edgeFilter[e.label].nb > 30 ? edgeFilter[e.label].display = false : ""
+      })
+      console.log("Filter", edgeFilter)
+      this.edgeFilter = edgeFilter
+
+      //this.$store.commit('ipgs/setEdgeFilter', edgeFilter)
     },
     buildEdges(n){
       for (const [k, v] of Object.entries(n)) {
@@ -197,12 +229,40 @@ export default {
       console.info("TEST WITH ONE GRAPH")
       this.network = this.graphs[0]
       console.log("network",this.network)
+    },
+    edgeFilter:{
+      handler(f){
+        let hidden = []
+        let display = []
+        let edges = this.network.edges.concat(this.$store.state.ipgs.hiddenEdges)
+        edges.forEach((e) => {
+          if(f[e.label] != undefined){
+            if(f[e.label].display == false){
+              hidden.push(e)
+            }else{
+              display.push(e)
+            }
+          }else{
+            console.log('f[e.label] undefined ???',f[e])
+          }
+        });
+        this.network.edges = display
+        this.$store.commit('ipgs/setHiddenEdges', hidden)
+      },
+      deep: true
+
     }
+
   },
   computed: {
     graphs: {
       get () { return this.$store.state.ipgs.graphs},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+    edgeFilter: {
+      get () { return this.$store.state.ipgs.edgeFilter},
+      set (value) { this.$store.commit('ipgs/setEdgeFilter', value) }
+    },
+
   }
 }

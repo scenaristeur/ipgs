@@ -22,7 +22,8 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-                <Share variant="secondary"/>
+          <Share variant="secondary"/>
+          <EdgeFilterModal variant="secondary" />
           <b-nav-item to="/">InterPlanetary Graph System</b-nav-item>
           <b-nav-item to="/agora">Agora</b-nav-item>
           <b-nav-item to="/browser">Browser</b-nav-item>
@@ -30,6 +31,7 @@
           <b-nav-item to="/suggested">Suggested</b-nav-item>
           <b-nav-item to="/reunion">Reunion</b-nav-item>
           <b-nav-item to="/about">About</b-nav-item>
+
           <!-- <b-nav-item to="/simple">S</b-nav-item> -->
 
           <!-- <b-nav-item href="/browser">Share</b-nav-item> -->
@@ -71,6 +73,7 @@ export default {
     'CommandInput': () => import('@/components/layout/CommandInput'),
     'Notification': () => import('@/components/layout/Notification'),
     'Share': () => import('@/components/layout/Share'),
+    'EdgeFilterModal': () => import('@/components/layout/EdgeFilterModal'),
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     //  'NetworkToolBar': () => import('@/components/network/NetworkToolBar'),
   },
