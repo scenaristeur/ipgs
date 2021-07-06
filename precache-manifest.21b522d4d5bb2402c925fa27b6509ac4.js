@@ -64,8 +64,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/css/chunk-61ade157.11843638.css"
   },
   {
-    "revision": "e3080fbe00b4edeba73f",
-    "url": "/ipgs/css/chunk-753d53b2.a5bb52c9.css"
+    "revision": "73701d605a20290b9f64",
+    "url": "/ipgs/css/chunk-753d53b2.b8ce1a3d.css"
   },
   {
     "revision": "24b01266721343480f97",
@@ -144,7 +144,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/img/zoomExtends.5f78e86f.png"
   },
   {
-    "revision": "5ede3d8131126527e9f76fffcb50e6cf",
+    "revision": "add37eead35d000af50f1e4312fedcf3",
     "url": "/ipgs/index.html"
   },
   {
@@ -156,8 +156,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/agora.422b21fc.js"
   },
   {
-    "revision": "9bfda3681819476a28c3",
-    "url": "/ipgs/js/app.48c6307a.js"
+    "revision": "334e9acd74641c575e8d",
+    "url": "/ipgs/js/app.68530f8c.js"
   },
   {
     "revision": "9ab09c8539f1b1f3d120",
@@ -180,12 +180,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-1f47cca5.c8678d6b.js"
   },
   {
+    "revision": "2b5db56e54a6ca9e3afc",
+    "url": "/ipgs/js/chunk-2d0b3232.66264366.js"
+  },
+  {
     "revision": "a19d167a38245b8d064f",
     "url": "/ipgs/js/chunk-2d0cc5ba.6e043ac2.js"
   },
   {
-    "revision": "ee4cbc54f289256f5459",
-    "url": "/ipgs/js/chunk-2d0d0685.0c94debe.js"
+    "revision": "1db5908347daaf121719",
+    "url": "/ipgs/js/chunk-2d0d0685.b6b418e7.js"
   },
   {
     "revision": "f906a707d700e10ae835",
@@ -200,8 +204,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-2d0e2ce1.54bf4db2.js"
   },
   {
-    "revision": "4ea9be6af4a52e6c186b",
-    "url": "/ipgs/js/chunk-2d207f75.e61d8176.js"
+    "revision": "d0357668e42ad607013f",
+    "url": "/ipgs/js/chunk-2d207f75.e29fc372.js"
   },
   {
     "revision": "4bc96dcabf321ae76db9",
@@ -264,8 +268,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ipgs/js/chunk-749e9e5f.15b289af.js"
   },
   {
-    "revision": "e3080fbe00b4edeba73f",
-    "url": "/ipgs/js/chunk-753d53b2.82b1e283.js"
+    "revision": "73701d605a20290b9f64",
+    "url": "/ipgs/js/chunk-753d53b2.136c0808.js"
   },
   {
     "revision": "2e4c8a00942958576b18",
