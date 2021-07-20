@@ -44,7 +44,7 @@ export default {
       return {
         it: {},
         sharing: {
-          url: 'https://news.vuejs.org/issues/180',
+          url: 'https://scenaristeur.github.io/ipgs',
           title: 'InterPlanetary Graph System.',
           description: 'Check out this IPGS graph.',
           quote: 'Best way to easily share your thought',
