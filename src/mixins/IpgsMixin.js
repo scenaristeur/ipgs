@@ -28,7 +28,16 @@ export default {
         if (url.startsWith('ipfs://') ){
           const CID = url.replace('ipfs://', '')
           console.log(CID)
-          this.loadIpfs(CID)
+          this.ipfs = await this.$ipfs;
+          console.log(this.ipfs)
+          // Call ipfs `id` method.
+          // Returns the identity of the Peer.
+          const { agentVersion, id } = await this.ipfs.id();
+          console.log(agentVersion);
+          console.log(id);
+          // Set successful status text.
+          console.log("Connected to IPFS =)")
+          await this.loadIpfs(CID)
         }
 
         else{
@@ -47,38 +56,31 @@ export default {
 
       try {
         // Await for ipfs node instance.
-        this.ipfs = await this.$ipfs;
-        console.log(this.ipfs)
-        // Call ipfs `id` method.
-        // Returns the identity of the Peer.
-        const { agentVersion, id } = await this.ipfs.id();
-        console.log(agentVersion);
-        console.log(id);
-        // Set successful status text.
-        console.log("Connected to IPFS =)")
-        console.log(cid)
-        const stream =  await this.ipfs.cat(cid)
-        let data = ''
-        console.log("st",stream)
-        for await (const chunk of stream) {
-          console.log(chunk)
-          // chunks of data are returned as a Buffer, convert it back to a string
-          data += chunk.toString()
-        }
-        //  this.restit = data
-        console.log(data)
-        console.info("must take a look at this solution if always preload error: https://github.com/ipfs/js-ipfs/issues/1481")
 
+        console.log("loading",cid)
+          let data = ''
         try{
+          const stream =  await this.ipfs.cat(cid)
+
+          console.log("st",stream)
+          for await (const chunk of stream) {
+            console.log(chunk)
+            // chunks of data are returned as a Buffer, convert it back to a string
+            data += chunk.toString()
+          }
+          //  this.restit = data
+          console.log(data)
+          console.info("must take a look at this solution if always preload error: https://github.com/ipfs/js-ipfs/issues/1481")
+
           let d = JSON.parse(data)
           console.log(d)
           if (Array.isArray(d.nodes) && Array.isArray(d.edges) && d.nodes.length > 0){
-          this.$store.commit('ipgs/setGraphs', [d])
+            this.$store.commit('ipgs/setGraphs', [d])
 
           }
 
         }catch(e){
-          console.log("i can't parse", data)
+          console.log("i can't load", cid)
         }
 
 

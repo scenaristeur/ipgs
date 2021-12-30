@@ -225,9 +225,11 @@ export default {
     }else{
       console.log("loading", this.$route.query.url)
       let g = this.$store.state.ipgs.graphs[0]
+      if (g != undefined ){
       console.log(g)
       this.network.nodes = g.nodes
       this.network.edges = g.edges
+    }
     }
   },
 }
