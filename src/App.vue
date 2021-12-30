@@ -8,7 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
-    <small>0.0.5c2 - fix import</small>
+    <small>0.0.5c3 - fix ipfs</small>
   </div>
 </template>
 <script>

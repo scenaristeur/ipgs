@@ -14,7 +14,7 @@ export default class Activity {
       "@context": "https://www.w3.org/ns/activitystreams",
       "@type": "Create",
       "@id": agora+'data/'+uuidv4()+".json",
-    //  "actor": "https://example.net/~mallory",
+      //  "actor": "https://example.net/~mallory",
       "object": {
         "id": "https://example.com/~mallory/note/72",
         "type": "Note",
@@ -43,9 +43,11 @@ export default class Activity {
 
         let loc = f.headers.get('location')
         console.log("Activity send", loc)
-
-        await  ldflex[log]['https://www.dublincore.org/specifications/dublin-core/dcmi-terms/hasPart'].add(namedNode(loc))
-
+        try{
+          await  ldflex[log]['https://www.dublincore.org/specifications/dublin-core/dcmi-terms/hasPart'].add(namedNode(loc))
+        }catch(e){
+          console.log(e)
+        }
         //  this.getData({url: res_url, group: ""})
       }
     )
