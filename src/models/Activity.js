@@ -33,7 +33,7 @@ export default class Activity {
   }
 
   async publish(){
-    console.log(this.jsonld.['@id'])
+    console.log(this.jsonld['@id'])
 
 
     await fc.postFile(this.jsonld['@id'], JSON.stringify(this.jsonld), 'application/json').then(

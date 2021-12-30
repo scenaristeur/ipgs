@@ -30,7 +30,9 @@
 
         <div class="input-group" style="display:table; width:100%;">
 
-          <b-button class="unstyled-button" variant="outline-warning"><b-icon-folder-fill></b-icon-folder-fill></b-button>
+          <b-button class="unstyled-button" variant="outline-warning">
+            <b-icon-folder-fill></b-icon-folder-fill>
+          </b-button>
           {{ fo.name }}
           <!-- <span style="display: table-cell; border:1px solid #ccc; padding: 0 8px; vertical-align: middle;">Cras justo odio</span> -->
 
@@ -42,7 +44,8 @@
           <!-- <button class="btn btn-default" type="button"><span>ᐅ</span>  Go!</button> -->
           <!-- class="unstyled-button" -->
           <b-button size="sm" variant="outline-info"  @click.stop="see(fo)">
-            <b-icon-eye @click.stop="see(fo)" variant="info" ></b-icon-eye>
+            <b-icon-eye @click.stop="see(fo)" variant="info" >
+            </b-icon-eye>
           </b-button>
         </span>
 
@@ -54,7 +57,8 @@
     <b-list-group-item variant="light"
     class="item list-group-item d-flex justify-content-between"
     v-for="fi in folder.files" :key="fi.url"  button @click="replace(fi)">
-    <p class="p-0 m-0 flex-grow-1"><b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
+    <p class="p-0 m-0 flex-grow-1">
+      <b-icon-file-text></b-icon-file-text> {{ fi.name }}</p>
   </b-list-group-item>
 </b-list-group>
 </b-container>

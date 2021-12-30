@@ -319,3 +319,12 @@ ok http://semantic-forms.cc:9112/ldp/1492512243396-8193190185404223
 - https://github.com/artpi/roam-research-private-api/blob/master/examples/cmd.js
 - https://github.com/understory-garden/understory.garden
 - https://github.com/travis/concept/
+
+
+# npm outdated update
+https://koalatea.io/how-to-update-all-your-npm-packages-at-once/
+```
+sudo npm install -g npm-check
+npm-check
+or npm-check -u
+```

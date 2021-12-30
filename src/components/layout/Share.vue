@@ -37,7 +37,7 @@ export default {
     default: {url: "https://scenaristeur.github.io/ipgs", name: "InterPlanetaryGraphSystem"},
     variant: {
       type: String,
-      default: "danger"
+      default: "warning"
     },
   },
     data(){

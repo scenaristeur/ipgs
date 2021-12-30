@@ -9,9 +9,10 @@
       -  see it at <br>
       <a :href="'https://ipfs.io/ipfs/'+cid" target="_blank">
         https://ipfs.io/ipfs/{{cid}}</a> <br>
-        - and share it at <br>
-        <a :href="'https://scenaristeur.github.io/ipgs/?url=ipfs://'+cid" target="_blank">https://scenaristeur.github.io/ipgs/?url=ipfs://{{cid}}</a>
+        - and share it  at <br>
+        <Share :item="{url: 'https://scenaristeur.github.io/ipgs/?url=ipfs://'+cid }" style="float:left"/>
 
+        <a :href="'https://scenaristeur.github.io/ipgs/?url=ipfs://'+cid" target="_blank">https://scenaristeur.github.io/ipgs/?url=ipfs://{{cid}}</a>
       </b-modal>
     </template>
 
@@ -27,6 +28,7 @@
     export default {
       name: "StorageModal",
       components: {
+        'Share': () => import('@/components/layout/Share'),
         //  'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
       },
       props: ['cid'],

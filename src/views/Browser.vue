@@ -20,7 +20,9 @@
 
       <div class="input-group" style="display:table; width:100%;">
 
-        <b-button class="unstyled-button" variant="outline-warning"><b-icon-folder-fill></b-icon-folder-fill></b-button>
+        <b-button class="unstyled-button" variant="outline-warning">
+          <b-icon-folder-fill></b-icon-folder-fill>
+        </b-button>
         {{ fo.name }}
         <!-- <span style="display: table-cell; border:1px solid #ccc; padding: 0 8px; vertical-align: middle;">Cras justo odio</span> -->
 
@@ -33,7 +35,8 @@
         <!-- class="unstyled-button" -->
 
         <b-button size="sm" variant="outline-info"  @click.stop="see(fo)" style="float:left">
-          <b-icon-eye @click.stop="see(fo)" variant="info" ></b-icon-eye>
+          <b-icon-eye @click.stop="see(fo)" variant="info" >
+          </b-icon-eye>
         </b-button>
         <Share :item="fo" style="float:left"/>
       </span>
