@@ -2,7 +2,7 @@
   <b-container>
 
     <b-input-group class="mt-3">
-      <b-form-input  v-model="new_graph_name" placeholder="New Graph Name" v-on:keyup.enter="createNew"></b-form-input>
+      <b-form-input  v-model="new_graph_name" placeholder="graphname.json or graphname.ttl" v-on:keyup.enter="createNew"></b-form-input>
       <b-input-group-append>
         <b-button variant="info" @click="createNew">create</b-button>
       </b-input-group-append>
@@ -63,12 +63,6 @@
 
 </b-list-group-item>
 </b-list-group>
-
-
-
-
-
-
 
 </b-container>
 </template>

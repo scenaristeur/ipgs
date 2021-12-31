@@ -4,7 +4,7 @@ const fc = new FC( auth )
 
 import * as jsonld from 'jsonld';
 import { /*handleIncomingRedirect, login,*/ fetch/*, getDefaultSession */} from '@inrupt/solid-client-authn-browser'
-import { getSolidDataset/*, saveSolidDatasetAt*/ } from "@inrupt/solid-client";
+import { getSolidDataset/*, saveSolidDatasetAt*/, getFile } from "@inrupt/solid-client";
 
 /**
 * Represents a Source of Data.
@@ -63,32 +63,38 @@ export default class Source {
   }
 
   async findType(s){
-    // var myHeaders = new Headers();
-    //
-    // var myInit = { method: 'GET',
-    //                headers: myHeaders,
-    //                mode: 'no-cors',
-    //                cache: 'default' };
-    // fetch(s.url)
-    // .then(response => {
-    //   return response.blob().then(blob => {
-    //     return {
-    //       contentType: response.headers.get("Content-Type"),
-    //       raw: blob
-    //     }
-    //   })
-    // })
-    // .then(data => {
-    //   console.log(data.contentType, data.raw);
-    // });
+    let file = await getFile(s.url)
+    console.log(file)
+    if(file.type =="application/json" || s.url.endsWith('.json')){
+      s.type = "json"
+    }else{
+      // var myHeaders = new Headers();
+      //
+      // var myInit = { method: 'GET',
+      //                headers: myHeaders,
+      //                mode: 'no-cors',
+      //                cache: 'default' };
+      // fetch(s.url)
+      // .then(response => {
+      //   return response.blob().then(blob => {
+      //     return {
+      //       contentType: response.headers.get("Content-Type"),
+      //       raw: blob
+      //     }
+      //   })
+      // })
+      // .then(data => {
+      //   console.log(data.contentType, data.raw);
+      // });
 
-    s.url.endsWith('/') ? s.type = "folder" : ""
-    s.url.endsWith('.ttl') ? s.type = "ttl" : ""
-    s.url.endsWith('card#me') ? s.type = "profile" : ""
-    s.url.endsWith('.json') ? s.type = "json" : ""
-    s.url.endsWith('.jsonld') ? s.type = "jsonld" : ""
-    s.url.endsWith('sparql') || s.url.endsWith('sparql/') ? s.type = "sparql" : ""
-    s.url.startsWith('https://transiscope.gogocarto.fr') ? s.type = "transiscope" : ""
+      s.url.endsWith('/') ? s.type = "folder" : ""
+      s.url.endsWith('.ttl') ? s.type = "ttl" : ""
+      s.url.endsWith('card#me') ? s.type = "profile" : ""
+      s.url.endsWith('.jsonld') ? s.type = "jsonld" : ""
+      s.url.endsWith('sparql') || s.url.endsWith('sparql/') ? s.type = "sparql" : ""
+      s.url.startsWith('https://transiscope.gogocarto.fr') ? s.type = "transiscope" : ""
+    }
+    console.log(s)
     return s
   }
 

@@ -1,14 +1,18 @@
 <template>
   <b-modal id="ipfs-modal" title="Storage" size="lg">
-    A copy has been saved on IPFS with cid:<br><br> {{ cid }}
-
-    <br><br>
+    A copy has been saved on IPFS with cid:<b>{{ cid }}</b>.<br>
+    Don't forget to pin it with a service like
+    <a href="https://app.pinata.cloud/pinmanager" target="_blank">pinata</a>
+    if you want to keep it.
+    <br>
     <b>Note that it can take a little moment for the IPFS
       network to process that data,</b> <br>
       but you should be able to quickly : <br>
       -  see it at <br>
       <a :href="'https://ipfs.io/ipfs/'+cid" target="_blank">
         https://ipfs.io/ipfs/{{cid}}</a> <br>
+        or
+        <a :href="'https://gateway.pinata.cloud/ipfs/'+cid" target="_blank">pinate gateway</a><br>
         - and share it  at <br>
         <Share :item="{url: 'https://scenaristeur.github.io/ipgs/?url=ipfs://'+cid }" style="float:left"/>
 

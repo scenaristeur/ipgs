@@ -3,7 +3,7 @@ import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
 import ldflex from '@solid/query-ldflex/lib/exports/rdflib'
-import { namedNode } from "@rdfjs/data-model";
+import factory from "@rdfjs/data-model";
 let agora = "https://ipgs.solidcommunity.net/public/activity/"
 let log = agora+'log.ttl'
 
@@ -44,8 +44,9 @@ export default class Activity {
         let loc = f.headers.get('location')
         console.log("Activity send", loc)
         try{
-          await  ldflex[log]['https://www.dublincore.org/specifications/dublin-core/dcmi-terms/hasPart'].add(namedNode(loc))
+          await  ldflex[log]['https://www.dublincore.org/specifications/dublin-core/dcmi-terms/hasPart'].add(factory.namedNode(loc))
         }catch(e){
+          console.log(factory)
           console.log(e)
         }
         //  this.getData({url: res_url, group: ""})

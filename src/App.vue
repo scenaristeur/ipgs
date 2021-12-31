@@ -8,7 +8,7 @@
 
     <SolidTrackSession />
     <HelpView />
-    <small>0.0.5c3 - fix ipfs</small>
+    <small>0.0.5c4 - fix ipfs & gateway</small>
   </div>
 </template>
 <script>

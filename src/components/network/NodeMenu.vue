@@ -1,10 +1,7 @@
 <template>
   <b-modal id="node-menu" title="Node Menu">
-
     id : {{ value.id }}<br>
     label: {{ value.label }}<br>
-
-
     <b-button @click="follow">FOLLOW</b-button>
     <b-button @click="edit">Edit</b-button>
     <!-- {{ JSON.stringify(value) }} -->

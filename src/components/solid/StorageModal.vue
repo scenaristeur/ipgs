@@ -5,7 +5,10 @@
 
       <b-container>
         <b-input-group class="mt-3">
-          <b-form-input ref="graph_name_input" v-model="new_graph_name" placeholder="New Graph Name" v-on:keyup.enter="save"></b-form-input>
+          <b-form-input ref="graph_name_input"
+          v-model="new_graph_name"
+           placeholder="graph.json or graph.ttl"
+           v-on:keyup.enter="save"></b-form-input>
           <b-input-group-append>
             <b-button variant="info" @click="save">create</b-button>
           </b-input-group-append>

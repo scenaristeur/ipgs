@@ -32,17 +32,33 @@
 <!-- Element to collapse -->
 <b-collapse id="collapse-node-vis">
   <b-card>
-    <b-input-group>
-      <label for="backgroundcolorpicker" class="mt-3">Background: </label>
-      <v-swatches id="backgroundcolorpicker" v-model="v.color.background" value="#D2E5FF"  show-fallback
-      fallback-input-type="color" popover-x="left" class="m-2">
-    </v-swatches>
-    <label for="bordercolorpicker" class="mt-3">Border: </label>
-    <v-swatches id="bordercolorpicker" v-model="v.color.border" value="#2B7CE9"  show-fallback
-    fallback-input-type="color" popover-x="left" class="m-2">
-  </v-swatches>
-  <b-button @click="defaultColor" size="sm" variant="warning" class="ml-auto" >reset colors</b-button>
-</b-input-group>
+    <b-row>
+      <b-col>
+        <b-input-group>
+
+          <label for="backgroundcolorpicker">Background: </label>
+          <v-swatches id="backgroundcolorpicker"
+          v-model="v.color.background"
+          value="#D2E5FF"
+          show-fallback
+          fallback-input-type="color"
+          popover-x="left">
+        </v-swatches>
+        <label for="bordercolorpicker" >Border: </label>
+        <v-swatches id="bordercolorpicker"
+        v-model="v.color.border"
+        value="#2B7CE9"
+        show-fallback
+        fallback-input-type="color"
+        popover-x="left">
+      </v-swatches>
+
+    </b-input-group>
+  </b-col>
+  <b-col>
+    <b-button @click="defaultColor" size="sm" variant="warning" class="ml-auto" >reset colors</b-button>
+  </b-col>
+</b-row>
 </b-card>
 
 <b-card>
