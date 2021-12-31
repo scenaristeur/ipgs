@@ -14,7 +14,7 @@
         or
         <a :href="'https://gateway.pinata.cloud/ipfs/'+cid" target="_blank">pinate gateway</a><br>
         - and share it  at <br>
-        <Share :item="{url: 'https://scenaristeur.github.io/ipgs/?url=ipfs://'+cid }" style="float:left"/>
+        <Share :item="shareItem" style="float:left"/>
 
         <a :href="'https://scenaristeur.github.io/ipgs/?url=ipfs://'+cid" target="_blank">https://scenaristeur.github.io/ipgs/?url=ipfs://{{cid}}</a>
       </b-modal>
@@ -38,6 +38,7 @@
       props: ['cid'],
       data() {
         return {
+          shareItem: {}
           // folder: {folders:[], files: []},
           // url: "",
           // new_graph_name : "",
@@ -45,6 +46,7 @@
         }
       },
       created(){
+        this.shareItem = {url: 'ipfs://'+this.cid }
         //  alert ("A copy has been saved on IPFS with cid '"+results.cid+"'. You can see it at https://ipfs.io/ipfs/"+results.cid)
         // this.dataToSave = this.$store.state.ipgs.dataToSave
         // if (this.storage != null){
